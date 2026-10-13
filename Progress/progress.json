@@ -1,6 +1,6 @@
 {
   "project": "LGThinQ para macOS",
-  "updatedAt": "2026-10-13T12:02:05-03:00",
+  "updatedAt": "2026-10-13T15:42:04-03:00",
   "goal": "Controlar os aparelhos LG pela barra de menus, com SwiftUI e a API oficial ThinQ Connect.",
   "features": [
     {
@@ -30,46 +30,49 @@
       "id": "F03",
       "title": "Cliente Swift ThinQ",
       "description": "Roteamento regional, lista, perfil, estado e erros da API.",
-      "status": "active",
-      "note": "Luna implementa cliente, perfis, comandos e testes offline em ThinQCore.",
-      "updatedAt": "2026-10-13T12:02:05-03:00"
+      "status": "done",
+      "note": "Cliente REST Swift concluído; 9 testes offline passaram. Inclui perfis variáveis, unidade correta, cancelamento e validação de comandos.",
+      "updatedAt": "2026-10-13T12:12:52-03:00"
     },
     {
       "id": "F04",
       "title": "Interface na barra de menus",
       "description": "Conexão por PAT, seleção de aparelho, estado e demonstração.",
-      "status": "active",
-      "note": "Sol integra SwiftUI, fluxo de conexão, seleção, demonstração e estado de comandos.",
-      "updatedAt": "2026-10-13T12:02:05-03:00"
+      "status": "done",
+      "note": "Interface SwiftUI compilada e verificada: demonstração, seleção de dois aparelhos e formulário PAT/BR funcionando.",
+      "updatedAt": "2026-10-13T15:42:04-03:00"
     },
     {
       "id": "F05",
       "title": "Credenciais e preferências",
       "description": "Chaves do macOS, Client ID persistente e início de sessão opcional.",
-      "status": "active",
-      "note": "Luna implementa Chaves do macOS, Client ID persistente e Login Items.",
-      "updatedAt": "2026-10-13T12:02:05-03:00"
+      "status": "done",
+      "note": "PAT no Chaves, Client ID estável e Login Items implementados; código compilado. Uso real do Chaves/Login Items depende da instalação final.",
+      "updatedAt": "2026-10-13T12:12:52-03:00"
     },
     {
       "id": "F06",
       "title": "Controles e confirmação",
       "description": "Ligar/desligar, temperatura, modo, ventilação e direção conforme o perfil.",
-      "status": "todo",
-      "note": ""
+      "status": "done",
+      "note": "Controles de temperatura, modo, ventilação, oscilação e energia testados na demonstração; confirmação e bloqueios implementados. Hardware real pendente em F08.",
+      "updatedAt": "2026-10-13T15:42:04-03:00"
     },
     {
       "id": "F07",
       "title": "Testes e aplicativo local",
       "description": "Testes offline, compilação, empacotamento e verificação visual.",
-      "status": "todo",
-      "note": ""
+      "status": "done",
+      "note": "9 testes offline passaram; release empacotado, assinatura ad hoc verificada e app iniciado. Verificação visual documentada em Docs/VALIDATION.md.",
+      "updatedAt": "2026-10-13T15:42:04-03:00"
     },
     {
       "id": "F08",
       "title": "Validação com os aparelhos",
       "description": "Confirmar conexão e comandos com seu PAT e modelos reais.",
       "status": "pending",
-      "note": "Token será informado pelo usuário dentro do app; validação física ainda necessária."
+      "note": "Versão 0.1.0 pronta para o usuário inserir PAT no app e validar seus aparelhos reais; nenhum comando real foi enviado.",
+      "updatedAt": "2026-10-13T15:42:04-03:00"
     },
     {
       "id": "F09",
@@ -80,6 +83,62 @@
     }
   ],
   "events": [
+    {
+      "at": "2026-10-13T15:42:04-03:00",
+      "feature": "F08",
+      "title": "Validação com os aparelhos",
+      "action": "pending",
+      "note": "Versão 0.1.0 pronta para o usuário inserir PAT no app e validar seus aparelhos reais; nenhum comando real foi enviado."
+    },
+    {
+      "at": "2026-10-13T15:42:04-03:00",
+      "feature": "F07",
+      "title": "Testes e aplicativo local",
+      "action": "done",
+      "note": "9 testes offline passaram; release empacotado, assinatura ad hoc verificada e app iniciado. Verificação visual documentada em Docs/VALIDATION.md."
+    },
+    {
+      "at": "2026-10-13T15:42:04-03:00",
+      "feature": "F06",
+      "title": "Controles e confirmação",
+      "action": "done",
+      "note": "Controles de temperatura, modo, ventilação, oscilação e energia testados na demonstração; confirmação e bloqueios implementados. Hardware real pendente em F08."
+    },
+    {
+      "at": "2026-10-13T15:42:04-03:00",
+      "feature": "F04",
+      "title": "Interface na barra de menus",
+      "action": "done",
+      "note": "Interface SwiftUI compilada e verificada: demonstração, seleção de dois aparelhos e formulário PAT/BR funcionando."
+    },
+    {
+      "at": "2026-10-13T12:12:52-03:00",
+      "feature": "F05",
+      "title": "Credenciais e preferências",
+      "action": "done",
+      "note": "PAT no Chaves, Client ID estável e Login Items implementados; código compilado. Uso real do Chaves/Login Items depende da instalação final."
+    },
+    {
+      "at": "2026-10-13T12:12:52-03:00",
+      "feature": "F03",
+      "title": "Cliente Swift ThinQ",
+      "action": "done",
+      "note": "Cliente REST Swift concluído; 9 testes offline passaram. Inclui perfis variáveis, unidade correta, cancelamento e validação de comandos."
+    },
+    {
+      "at": "2026-10-13T12:10:05-03:00",
+      "feature": "F07",
+      "title": "Testes e aplicativo local",
+      "action": "start",
+      "note": "Primeira compilação passou; executando testes offline, revisão de concorrência e preparação do bundle macOS."
+    },
+    {
+      "at": "2026-10-13T12:06:21-03:00",
+      "feature": "F06",
+      "title": "Controles e confirmação",
+      "action": "start",
+      "note": "Controles derivados do perfil e confirmação do estado na nuvem; sem comandos em aparelhos durante desenvolvimento."
+    },
     {
       "at": "2026-10-13T12:02:05-03:00",
       "feature": "F05",
