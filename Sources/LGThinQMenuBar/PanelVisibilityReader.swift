@@ -1,7 +1,7 @@
 import AppKit
 import SwiftUI
 
-/// MenuBarExtra may keep its SwiftUI hierarchy alive after closing the popover.
+/// The hosting controller keeps its SwiftUI hierarchy alive after closing the popover.
 /// Read actual NSWindow visibility so polling stops while no panel is visible.
 struct PanelVisibilityReader: NSViewRepresentable {
     var onChange: (Bool) -> Void

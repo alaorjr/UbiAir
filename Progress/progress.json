@@ -1,6 +1,6 @@
 {
   "project": "LGThinQ para macOS",
-  "updatedAt": "2026-10-13T15:42:04-03:00",
+  "updatedAt": "2026-10-13T16:37:49-03:00",
   "goal": "Controlar os aparelhos LG pela barra de menus, com SwiftUI e a API oficial ThinQ Connect.",
   "features": [
     {
@@ -71,8 +71,8 @@
       "title": "Validação com os aparelhos",
       "description": "Confirmar conexão e comandos com seu PAT e modelos reais.",
       "status": "pending",
-      "note": "Versão 0.1.0 pronta para o usuário inserir PAT no app e validar seus aparelhos reais; nenhum comando real foi enviado.",
-      "updatedAt": "2026-10-13T15:42:04-03:00"
+      "note": "Conexão, listagem e estado reais observados na interface configurada pelo usuário. Comandos físicos e validação dos modelos continuam pendentes; o agente acionou controles somente em demonstração.",
+      "updatedAt": "2026-10-13T16:37:48-03:00"
     },
     {
       "id": "F09",
@@ -80,9 +80,38 @@
       "description": "Energia, eventos MQTT e controles adicionais disponíveis nos modelos.",
       "status": "todo",
       "note": "Planejado para após a validação básica; depende das capacidades da API."
+    },
+    {
+      "id": "F10",
+      "title": "Popover e visual inspirado no TCLimate",
+      "description": "Painel ancorado ao ícone, visual translúcido e ilustração do aparelho.",
+      "status": "done",
+      "note": "Versão 0.1.1: popover nativo ancorado e não destacável, sem janela separada; visual inspirado no GIF. Build release e assinatura passaram, 9 testes offline sem falhas, smoke de abertura/fechamento/reabertura e controles em demonstração conferidos pela interface.",
+      "updatedAt": "2026-10-13T16:37:49-03:00"
     }
   ],
   "events": [
+    {
+      "at": "2026-10-13T16:37:49-03:00",
+      "feature": "F10",
+      "title": "Popover e visual inspirado no TCLimate",
+      "action": "done",
+      "note": "Versão 0.1.1: popover nativo ancorado e não destacável, sem janela separada; visual inspirado no GIF. Build release e assinatura passaram, 9 testes offline sem falhas, smoke de abertura/fechamento/reabertura e controles em demonstração conferidos pela interface."
+    },
+    {
+      "at": "2026-10-13T16:37:48-03:00",
+      "feature": "F08",
+      "title": "Validação com os aparelhos",
+      "action": "pending",
+      "note": "Conexão, listagem e estado reais observados na interface configurada pelo usuário. Comandos físicos e validação dos modelos continuam pendentes; o agente acionou controles somente em demonstração."
+    },
+    {
+      "at": "2026-10-13T15:55:04-03:00",
+      "feature": "F10",
+      "title": "Popover e visual inspirado no TCLimate",
+      "action": "start",
+      "note": "Remover janela de prévia e redesenhar o painel pelo GIF fornecido, preservando os controles ThinQ existentes."
+    },
     {
       "at": "2026-10-13T15:42:04-03:00",
       "feature": "F08",

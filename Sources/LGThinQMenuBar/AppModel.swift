@@ -29,7 +29,7 @@ final class AppModel: ObservableObject {
     var canControl: Bool { isConnected && state != nil && !isBusy }
 
     func restoreSession() async {
-        if CommandLine.arguments.contains("--demo") || CommandLine.arguments.contains("--preview") {
+        if CommandLine.arguments.contains("--demo") {
             await startDemo()
             return
         }

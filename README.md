@@ -2,7 +2,7 @@
 
 Aplicativo nativo SwiftUI para controlar ar-condicionado LG ThinQ pela barra de menus.
 Inspirado na experiência do [TCLimate](https://github.com/umarz317/TCLimate), com cliente
-Swift original para a API oficial ThinQ Connect, sem executar Python.
+Swift original para a API oficial ThinQ Connect, sem executar Python. Versão 0.1.1.
 
 ## Executar
 
@@ -23,14 +23,24 @@ Conectar e atualizar fazem apenas leitura; comandos são enviados ao clicar nos 
 Para experimentar sem token e sem conexão com aparelhos reais:
 
 ```sh
-open build/LGThinQ.app --args --demo --preview
+open build/LGThinQ.app --args --demo
 ```
 
-`--demo` usa dois aparelhos fictícios; `--preview` abre uma janela com o mesmo painel
-para facilitar a avaliação. Ambos permanecem separados dos aparelhos reais.
-Se o app já estiver em execução, encerre-o antes de abrir com argumentos diferentes.
+`--demo` usa dois aparelhos fictícios; abra o painel pelo ícone da barra de menus. Para
+avaliação visual automatizada, `--show-panel` abre esse mesmo popover após a inicialização.
+`--ui-smoke-test` exige `--demo`, verifica abertura, fechamento e reabertura do popover e
+encerra o app; opcionalmente, `LGTHINQ_UI_PREVIEW_PATH=/caminho/arquivo.png` salva uma captura
+somente da view do painel. Exemplo: `open build/LGThinQ.app --args --demo --ui-smoke-test`.
+Não há janela de prévia separada. Encerre o app antes de iniciar com argumentos diferentes.
 
-## Recursos da versão inicial
+O painel é um popover nativo ancorado ao ícone de floco de neve e não pode ser destacado.
+[Veja a prévia com aparelhos fictícios](Docs/Images/menu-panel-demo.png).
+O visual compacto traz seletor horizontal de aparelhos, temperatura alvo e ambiente,
+controles de temperatura e cartões de modo/ventilação. Oscilação aparece quando suportada;
+os controles são determinados pelas capabilities de cada aparelho. Sleep e energia não são
+expostos sem suporte confirmado pela API.
+
+## Recursos da versão 0.1.1
 
 - Seleção de ar-condicionado, estado de energia e temperatura ambiente/alvo.
 - Ligar/desligar, ajustar temperatura, modo, ventilação e oscilação, quando o perfil permitir.
@@ -41,6 +51,8 @@ Se o app já estiver em execução, encerre-o antes de abrir com argumentos dife
   quando todos os painéis estão fechados.
 - PAT no Chaves, Client ID persistente e opção de abrir ao iniciar sessão.
 - Demonstração offline, sem chamadas LG.
+- Ilustração original do ar-condicionado em SwiftUI, com animação de fluxo de ar que respeita
+  a preferência de acessibilidade para reduzir movimento.
 
 ## Acompanhar e retomar
 
@@ -80,9 +92,11 @@ Progress               Painel local e histórico das etapas
 
 O protocolo segue o [SDK oficial pythinqconnect](https://github.com/thinq-connect/pythinqconnect).
 Veja [Docs/API-RESEARCH.md](Docs/API-RESEARCH.md) para fontes e limitações. Os testes offline
-validam o protocolo modelado; a validação com os modelos reais do usuário ainda é necessária.
-Energia, MQTT e funções extras ficam para depois dessa validação. Dados ausentes não são
-apresentados como zero, e o modo de demonstração é identificado na interface.
+validam o protocolo modelado. Na sessão atual, foi observada leitura de estado de aparelho
+real pela ThinQ Connect; comandos físicos ainda aguardam validação do usuário. Energia, MQTT
+e funções extras ficam para depois dessa validação. Dados ausentes não são apresentados como
+zero, e o modo de demonstração é identificado na interface. Nenhum PAT, identificador real
+de aparelho ou dado real de aparelho é armazenado na documentação do projeto.
 
 O build padrão usa assinatura ad hoc para teste local, sem notarização. Para manter uma
 identidade estável no Chaves e preparar distribuição com certificado:
