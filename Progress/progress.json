@@ -1,0 +1,141 @@
+{
+  "project": "LGThinQ para macOS",
+  "updatedAt": "2026-10-13T12:02:05-03:00",
+  "goal": "Controlar os aparelhos LG pela barra de menus, com SwiftUI e a API oficial ThinQ Connect.",
+  "features": [
+    {
+      "id": "F00",
+      "title": "Repositório e coordenação",
+      "description": "Git local e política de subagentes econômicos.",
+      "status": "done",
+      "note": "Commit inicial d5f302e; Sol coordena e Luna executa tarefas delimitadas."
+    },
+    {
+      "id": "F01",
+      "title": "Painel e continuidade",
+      "description": "Progresso visual, registro de decisões e guia de retomada.",
+      "status": "done",
+      "note": "Painel HTML, histórico e guia de retomada criados; atualização por transição de funcionalidade.",
+      "updatedAt": "2026-10-13T12:00:17-03:00"
+    },
+    {
+      "id": "F02",
+      "title": "Pesquisa e contrato da API",
+      "description": "Confirmar autenticação, endpoints, perfis e payloads no SDK oficial.",
+      "status": "done",
+      "note": "Protocolo confirmado no SDK oficial; BR usa AIC. route é para MQTT, não para seleção REST. Pesquisa e limitações documentadas.",
+      "updatedAt": "2026-10-13T12:02:05-03:00"
+    },
+    {
+      "id": "F03",
+      "title": "Cliente Swift ThinQ",
+      "description": "Roteamento regional, lista, perfil, estado e erros da API.",
+      "status": "active",
+      "note": "Luna implementa cliente, perfis, comandos e testes offline em ThinQCore.",
+      "updatedAt": "2026-10-13T12:02:05-03:00"
+    },
+    {
+      "id": "F04",
+      "title": "Interface na barra de menus",
+      "description": "Conexão por PAT, seleção de aparelho, estado e demonstração.",
+      "status": "active",
+      "note": "Sol integra SwiftUI, fluxo de conexão, seleção, demonstração e estado de comandos.",
+      "updatedAt": "2026-10-13T12:02:05-03:00"
+    },
+    {
+      "id": "F05",
+      "title": "Credenciais e preferências",
+      "description": "Chaves do macOS, Client ID persistente e início de sessão opcional.",
+      "status": "active",
+      "note": "Luna implementa Chaves do macOS, Client ID persistente e Login Items.",
+      "updatedAt": "2026-10-13T12:02:05-03:00"
+    },
+    {
+      "id": "F06",
+      "title": "Controles e confirmação",
+      "description": "Ligar/desligar, temperatura, modo, ventilação e direção conforme o perfil.",
+      "status": "todo",
+      "note": ""
+    },
+    {
+      "id": "F07",
+      "title": "Testes e aplicativo local",
+      "description": "Testes offline, compilação, empacotamento e verificação visual.",
+      "status": "todo",
+      "note": ""
+    },
+    {
+      "id": "F08",
+      "title": "Validação com os aparelhos",
+      "description": "Confirmar conexão e comandos com seu PAT e modelos reais.",
+      "status": "pending",
+      "note": "Token será informado pelo usuário dentro do app; validação física ainda necessária."
+    },
+    {
+      "id": "F09",
+      "title": "Evoluções após o MVP",
+      "description": "Energia, eventos MQTT e controles adicionais disponíveis nos modelos.",
+      "status": "todo",
+      "note": "Planejado para após a validação básica; depende das capacidades da API."
+    }
+  ],
+  "events": [
+    {
+      "at": "2026-10-13T12:02:05-03:00",
+      "feature": "F05",
+      "title": "Credenciais e preferências",
+      "action": "start",
+      "note": "Luna implementa Chaves do macOS, Client ID persistente e Login Items."
+    },
+    {
+      "at": "2026-10-13T12:02:05-03:00",
+      "feature": "F04",
+      "title": "Interface na barra de menus",
+      "action": "start",
+      "note": "Sol integra SwiftUI, fluxo de conexão, seleção, demonstração e estado de comandos."
+    },
+    {
+      "at": "2026-10-13T12:02:05-03:00",
+      "feature": "F03",
+      "title": "Cliente Swift ThinQ",
+      "action": "start",
+      "note": "Luna implementa cliente, perfis, comandos e testes offline em ThinQCore."
+    },
+    {
+      "at": "2026-10-13T12:02:05-03:00",
+      "feature": "F02",
+      "title": "Pesquisa e contrato da API",
+      "action": "done",
+      "note": "Protocolo confirmado no SDK oficial; BR usa AIC. route é para MQTT, não para seleção REST. Pesquisa e limitações documentadas."
+    },
+    {
+      "at": "2026-10-13T12:00:17-03:00",
+      "feature": "F01",
+      "title": "Painel e continuidade",
+      "action": "done",
+      "note": "Painel HTML, histórico e guia de retomada criados; atualização por transição de funcionalidade."
+    },
+    {
+      "at": "2026-10-13T11:58:00-03:00",
+      "feature": "F00",
+      "title": "Repositório e coordenação",
+      "action": "done",
+      "note": "Git criado antes da implementação. Conta Brasil e autenticação por PAT confirmadas pelo usuário."
+    }
+  ],
+  "resume": "Leia Docs/CONTINUITY.md, Docs/DECISIONS.md e este painel. Confira git status e o último commit antes de continuar.",
+  "references": [
+    {
+      "label": "TCLimate",
+      "url": "https://github.com/umarz317/TCLimate"
+    },
+    {
+      "label": "SDK oficial Python",
+      "url": "https://github.com/thinq-connect/pythinqconnect"
+    },
+    {
+      "label": "API ThinQ Connect",
+      "url": "https://smartsolution.developer.lge.com/en/apiManage/thinq_connect"
+    }
+  ]
+}

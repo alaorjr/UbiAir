@@ -1,0 +1,42 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>LGThinQ — acompanhamento</title>
+  <style>
+    :root { color-scheme: light dark; --bg:light-dark(#f5f6f8,#12151a); --surface:light-dark(#fff,#1b2028); --fg:light-dark(#18212d,#e8edf4); --muted:light-dark(#596778,#a0aec0); --line:light-dark(#dee4ed,#303947); --accent:light-dark(#145bc4,#7bb3ff); --ok:light-dark(#13734c,#74dba7); }
+    *{box-sizing:border-box} body{margin:0;background:var(--bg);color:var(--fg);font:15px/1.5 -apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif} main{max-width:1100px;margin:auto;padding:40px 24px} header{display:flex;align-items:flex-start;justify-content:space-between;gap:24px;flex-wrap:wrap} .eyebrow{font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:var(--accent);font-weight:600} h1{font-size:32px;letter-spacing:-.03em;margin:8px 0} h2{font-size:18px;margin:28px 0 12px} p{margin:8px 0;color:var(--muted)} .stamp{font-size:13px} .summary{display:flex;gap:32px;margin:28px 0 14px;flex-wrap:wrap} .summary strong{font-size:26px;display:block} .summary span{color:var(--muted);font-size:13px} progress{width:100%;height:8px;accent-color:var(--accent)} .board{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:18px} .lane{min-width:0} .lane-title{font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);padding:12px 0;border-bottom:1px solid var(--line)} article{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:18px;margin:12px 0} article h3{font-size:16px;margin:8px 0} article p{font-size:13px} .tag{font-size:11px;display:inline-block;color:var(--muted);border:1px solid var(--line);border-radius:5px;padding:2px 6px} .done .tag{color:var(--ok)} .active .tag{color:var(--accent)} .note{margin-top:12px;padding-top:12px;border-top:1px solid var(--line)} .log{padding:0;list-style:none} .log li{display:grid;grid-template-columns:132px 1fr;gap:12px;border-bottom:1px solid var(--line);padding:14px 0;font-size:13px}.log time{color:var(--muted)} .log p{margin:3px 0} footer{margin-top:30px;border-top:1px solid var(--line);padding-top:18px;font-size:13px} a{color:var(--accent)} .links{display:flex;gap:18px;flex-wrap:wrap} .empty{font-size:13px;padding:12px 0} @media(max-width:800px){.board{grid-template-columns:1fr}main{padding:24px 16px}h1{font-size:26px}.log li{grid-template-columns:1fr;gap:4px}}
+  </style>
+</head>
+<body>
+<main>
+  <header><div><div class="eyebrow">Desenvolvimento local · Swift + macOS</div><h1 id="title">LGThinQ para macOS</h1><p id="goal"></p></div><div class="stamp"><div id="updated"></div><p id="live">Atualizações ao iniciar e concluir cada etapa</p></div></header>
+  <div class="summary" id="summary" aria-live="polite"></div><progress id="progress" max="10" value="0" aria-label="Funcionalidades concluídas"></progress>
+  <section class="board" aria-label="Etapas do projeto"><div class="lane"><div class="lane-title">Em andamento</div><div id="active"></div></div><div class="lane"><div class="lane-title">Concluído</div><div id="done"></div></div><div class="lane"><div class="lane-title">A fazer e validar</div><div id="todo"></div></div></section>
+  <h2>Registro de avanços</h2><ul id="events" class="log"></ul>
+  <footer><strong>Retomada entre sessões</strong><p id="resume"></p><div class="links"><a href="../Docs/CONTINUITY.md">Guia de continuidade</a><a href="../Docs/DECISIONS.md">Decisões</a><a href="../README.md">Como executar</a></div><h2>Referências</h2><div class="links" id="references"></div></footer>
+</main>
+<script>
+  const initial = /*PROGRESS_DATA*/;
+  const labels = {done:'Concluído',active:'Em andamento',todo:'Planejado',pending:'A validar',blocked:'Bloqueado'};
+  const actions = {done:'Concluído',start:'Iniciado',pending:'Aguardando validação',blocked:'Bloqueado'};
+  let last = '';
+  const date = value => new Date(value).toLocaleString('pt-BR',{timeZone:'America/Sao_Paulo',dateStyle:'short',timeStyle:'short'});
+  function node(tag,text,className){const n=document.createElement(tag);n.textContent=text;if(className)n.className=className;return n}
+  function render(data){
+    const key=JSON.stringify(data);if(key===last)return;last=key;
+    document.getElementById('title').textContent=data.project;document.getElementById('goal').textContent=data.goal;document.getElementById('updated').textContent='Atualizado: '+date(data.updatedAt);document.getElementById('resume').textContent=data.resume;
+    const done=data.features.filter(f=>f.status==='done').length, active=data.features.filter(f=>f.status==='active').length;
+    const summary=document.getElementById('summary');summary.replaceChildren();for(const [value,label] of [[done,'concluídas'],[active,'em andamento'],[data.features.length-done-active,'a fazer ou validar']]){const box=node('div','');box.append(node('strong',value),node('span',label));summary.append(box)}
+    const progress=document.getElementById('progress');progress.max=data.features.length;progress.value=done;
+    for(const id of ['active','done','todo'])document.getElementById(id).replaceChildren();
+    for(const f of data.features){const card=node('article','',f.status);card.append(node('span',f.id+' · '+labels[f.status],'tag'),node('h3',f.title),node('p',f.description));if(f.note)card.append(node('p',f.note,'note'));document.getElementById(['active','done'].includes(f.status)?f.status:'todo').append(card)}
+    for(const id of ['active','done','todo']){const lane=document.getElementById(id);if(!lane.children.length)lane.append(node('p','Nenhuma etapa nesta coluna.','empty'))}
+    const events=document.getElementById('events');events.replaceChildren();for(const e of data.events.slice(0,24)){const item=node('li',''),text=node('div','');text.append(node('strong',actions[e.action]+' · '+e.title),node('p',e.note));item.append(node('time',date(e.at)),text);events.append(item)}
+    const refs=document.getElementById('references');refs.replaceChildren();for(const ref of data.references){const a=node('a',ref.label);a.href=ref.url;a.target='_blank';a.rel='noreferrer';refs.append(a)}
+  }
+  render(initial);
+  if(location.protocol==='http:'||location.protocol==='https:'){setInterval(async()=>{try{const response=await fetch('progress.json',{cache:'no-store'});if(response.ok)render(await response.json())}catch{}},3000);document.getElementById('live').textContent='Acompanhamento automático · atualização a cada 3 s'}else{setTimeout(()=>location.reload(),15000)}
+</script>
+</body></html>
