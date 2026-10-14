@@ -39,10 +39,11 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSPopoverDelegate {
         installMainMenu()
         let controller = NSHostingController(rootView: MenuPanel(model: model))
         controller.sizingOptions = []
-        controller.preferredContentSize = NSSize(width: 360, height: 650)
-        controller.view.frame = NSRect(x: 0, y: 0, width: 360, height: 650)
+        let panelSize = NSSize(width: PanelLayout.width, height: PanelLayout.height)
+        controller.preferredContentSize = panelSize
+        controller.view.frame = NSRect(origin: .zero, size: panelSize)
         popover.contentViewController = controller
-        popover.contentSize = NSSize(width: 360, height: 650)
+        popover.contentSize = panelSize
         popover.behavior = .transient
         popover.animates = true
         popover.delegate = self

@@ -1,6 +1,6 @@
 {
   "project": "UbiAir para macOS",
-  "updatedAt": "2026-10-14T09:36:34-03:00",
+  "updatedAt": "2026-10-14T09:47:30-03:00",
   "goal": "Controlar os aparelhos LG pela barra de menus, com SwiftUI e a API oficial ThinQ Connect.",
   "features": [
     {
@@ -120,9 +120,31 @@
       "status": "done",
       "note": "Verde ligado, vermelho desligado e cinza desconhecido, independente da seleção. Cache por ID com guardas de sessão/lote, cancelamento e sem consultas duplicadas. 19 testes totais passaram, incluindo 6 de energia; seleção e cores conferidas na demonstração.",
       "updatedAt": "2026-10-14T09:36:34-03:00"
+    },
+    {
+      "id": "F15",
+      "title": "Painel mais alto sem barra de rolagem",
+      "description": "Acomodar confirmação de comandos e direção do ar no painel.",
+      "status": "done",
+      "note": "Popover 360×740 (antes 360×650), área central até 650 e indicadores ocultos. Build release, assinatura e smoke passaram; confirmação após comando e duas oscilações expandidas conferidas na demonstração, tudo visível sem precisar rolar.",
+      "updatedAt": "2026-10-14T09:47:30-03:00"
     }
   ],
   "events": [
+    {
+      "at": "2026-10-14T09:47:30-03:00",
+      "feature": "F15",
+      "title": "Painel mais alto sem barra de rolagem",
+      "action": "done",
+      "note": "Popover 360×740 (antes 360×650), área central até 650 e indicadores ocultos. Build release, assinatura e smoke passaram; confirmação após comando e duas oscilações expandidas conferidas na demonstração, tudo visível sem precisar rolar."
+    },
+    {
+      "at": "2026-10-14T09:44:18-03:00",
+      "feature": "F15",
+      "title": "Painel mais alto sem barra de rolagem",
+      "action": "start",
+      "note": "Aumentar a altura do popover e do conteúdo para caber confirmação e controles expandidos; conferir em demonstração sem dados reais."
+    },
     {
       "at": "2026-10-14T09:36:34-03:00",
       "feature": "F14",

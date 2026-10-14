@@ -2,6 +2,12 @@ import AppKit
 import SwiftUI
 import ThinQCore
 
+enum PanelLayout {
+    static let width: CGFloat = 360
+    static let height: CGFloat = 740
+    static let contentHeight: CGFloat = 650
+}
+
 struct MenuPanel: View {
     @ObservedObject var model: AppModel
     @ObservedObject var preferences: AppPreferences
@@ -22,18 +28,18 @@ struct MenuPanel: View {
         VStack(spacing: 0) {
             header.padding(.horizontal, 16).padding(.vertical, 12)
             Divider()
-            ScrollView {
+            ScrollView(showsIndicators: false) {
                 VStack(spacing: 12) {
                     if model.isConnected { connectedPanel } else { connectionPanel }
                     if let error = model.errorMessage { errorBanner(error) }
                 }
                 .padding(14)
             }
-            .frame(maxHeight: 570)
+            .frame(maxHeight: PanelLayout.contentHeight)
             Divider()
             footer.padding(.horizontal, 16).padding(.vertical, 10)
         }
-        .frame(width: 360)
+        .frame(width: PanelLayout.width)
         .background(.regularMaterial)
         .background(PanelVisibilityReader { visible in model.panelVisibilityChanged(id: panelID, visible: visible) })
         .onAppear { country = preferences.countryCode; preferences.refreshLaunchAtLogin() }
@@ -323,7 +329,7 @@ struct MenuPanel: View {
         HStack {
             Text(model.isDemo ? "Demonstração · aparelhos fictícios" : "UbiAir · ThinQ Connect").font(.caption2).foregroundStyle(.secondary)
             Spacer()
-            Text("0.1.3").font(.caption2).foregroundStyle(.secondary)
+            Text("0.1.4").font(.caption2).foregroundStyle(.secondary)
         }
     }
 

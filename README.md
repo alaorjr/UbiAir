@@ -2,7 +2,7 @@
 
 UbiAir é um aplicativo nativo SwiftUI para controlar ar-condicionado LG pela barra de menus.
 Inspirado na experiência do [TCLimate](https://github.com/umarz317/TCLimate), usa cliente
-Swift original para o serviço LG ThinQ Connect, sem executar Python. Versão 0.1.3 (build 4).
+Swift original para o serviço LG ThinQ Connect, sem executar Python. Versão 0.1.4 (build 5).
 
 ## Executar
 
@@ -45,9 +45,10 @@ controles de temperatura e cartões de modo/ventilação. Oscilação aparece qu
 os controles são determinados pelas capabilities de cada aparelho. Sleep e energia não são
 expostos sem suporte confirmado pela API.
 
-## Recursos da versão 0.1.3
+## Recursos da versão 0.1.4
 
 - Seleção de ar-condicionado, estado de energia e temperatura ambiente/alvo.
+- Painel ampliado para caber confirmação de comandos e direção do ar expandida, sem barra de rolagem.
 - Círculos de energia independentes da seleção: verde ligado, vermelho desligado e cinza
   quando o estado está desconhecido ou a leitura falhou. O destaque do botão indica a seleção.
 - Ligar/desligar, ajustar temperatura, modo, ventilação e oscilação, quando o perfil permitir.
