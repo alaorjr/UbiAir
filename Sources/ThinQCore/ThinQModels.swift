@@ -206,6 +206,10 @@ public enum ThinQCommand: Sendable, Equatable {
     }
 }
 
+public enum ThinQFailureKind: Sendable, Equatable {
+    case authentication, permission, offline, rateLimited, connection, timeout, service, request, unknown
+}
+
 public enum ThinQError: Error, Sendable, LocalizedError, Equatable {
     case invalidToken
     case invalidClientID
@@ -215,24 +219,71 @@ public enum ThinQError: Error, Sendable, LocalizedError, Equatable {
     case api(code: String, message: String)
     case httpStatus(Int)
     case transport(String)
+    case timeout
+    case noInternet
+
+    public var kind: ThinQFailureKind {
+        switch self {
+        case .invalidToken: return .authentication
+        case .invalidClientID, .unsupportedCountry, .invalidResponse, .unsupportedCommand: return .request
+        case .timeout: return .timeout
+        case .noInternet: return .connection
+        case .transport: return .connection
+        case .httpStatus(let status): return Self.kind(forHTTPStatus: status)
+        case .api(let code, _): return Self.kind(forAPICode: code)
+        }
+    }
+
+    private static func kind(forHTTPStatus status: Int) -> ThinQFailureKind {
+        switch status {
+        case 401: return .authentication
+        case 403: return .permission
+        case 429: return .rateLimited
+        case 500...599: return .service
+        default: return .request
+        }
+    }
+
+    private static func kind(forAPICode code: String) -> ThinQFailureKind {
+        switch code {
+        case "1103", "1218": return .authentication
+        case "1308": return .permission
+        case "1222": return .offline
+        case "1306": return .rateLimited
+        case "2000", "2209", "2210": return .service
+        case "2207", "2301", "2302", "2303", "2304", "2305": return .request
+        default: return .unknown
+        }
+    }
 
     public var errorDescription: String? {
         switch self {
         case .invalidToken: return "Informe um Personal Access Token válido da LG ThinQ."
         case .invalidClientID: return "Informe um identificador estável para este cliente ThinQ."
         case .unsupportedCountry(let code): return "O país “\(code)” não é compatível com a API LG ThinQ Connect."
-        case .invalidResponse: return "A resposta da LG ThinQ não está em um formato reconhecido."
+        case .invalidResponse: return "A resposta da LG ThinQ está em um formato inválido. Tente novamente."
         case .unsupportedCommand(let command): return "O aparelho não oferece suporte ao comando “\(command)”."
-        case .api(let code, let message):
+        case .api(let code, _):
             switch code {
             case "1103", "1218": return "O Personal Access Token da LG ThinQ é inválido ou expirou. Conecte sua conta novamente."
-            case "1222": return "O aparelho está desconectado da LG ThinQ no momento."
+            case "1222": return "A LG informa que o aparelho não está conectado ao ThinQ. Confira o aparelho no app LG ThinQ."
             case "1306": return "O limite de solicitações da LG ThinQ foi atingido. Aguarde antes de tentar novamente."
-            case "1308": return "Esta conta não tem permissão para controlar o aparelho."
-            default: return "A LG ThinQ recusou a solicitação (\(code)): \(message)"
+            case "1308": return "Esta conta não tem permissão para controlar o aparelho. Confira seu acesso no app LG ThinQ."
+            case "2000", "2209", "2210": return "A LG ThinQ está temporariamente indisponível. Tente novamente mais tarde."
+            case "2207", "2301", "2302", "2303", "2304", "2305": return "A LG ThinQ não aceitou este comando. Confira as opções do aparelho."
+            default: return "A LG ThinQ não conseguiu concluir a solicitação. Tente novamente."
             }
-        case .httpStatus(let status): return "A LG ThinQ retornou um erro HTTP (\(status))."
-        case .transport(_): return "Não foi possível conectar à LG ThinQ. Verifique a conexão e tente novamente."
+        case .httpStatus(let status):
+            switch status {
+            case 401: return "A sessão da LG ThinQ expirou. Conecte sua conta novamente."
+            case 403: return "Sua conta não tem permissão para esta ação."
+            case 429: return "Muitas solicitações à LG ThinQ. Aguarde antes de tentar novamente."
+            case 500...599: return "A LG ThinQ está temporariamente indisponível. Tente novamente mais tarde."
+            default: return "A LG ThinQ não aceitou a solicitação. Tente novamente."
+            }
+        case .transport(_): return "Não foi possível conectar à LG ThinQ. Verifique sua conexão."
+        case .timeout: return "A conexão com a LG ThinQ demorou demais. Tente novamente."
+        case .noInternet: return "Sem conexão com a internet. Verifique sua rede e tente novamente."
         }
     }
 }

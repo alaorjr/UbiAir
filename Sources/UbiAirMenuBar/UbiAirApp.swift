@@ -69,8 +69,14 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSPopoverDelegate {
         }
 
         Task {
-            if (isStableSmokeTest || isDismissalTest), !CommandLine.arguments.contains("--demo") {
+            let args = CommandLine.arguments
+            if (isStableSmokeTest || isDismissalTest || args.contains("--demo-error")), !args.contains("--demo") {
                 reportFailure("O teste visual exige --demo.")
+            }
+            if let index = args.firstIndex(of: "--demo-error") {
+                guard args.indices.contains(index + 1), DemoProblemScenario(rawValue: args[index + 1]) != nil else {
+                    reportFailure("Cenário de demonstração inválido.")
+                }
             }
             await model.restoreSession()
             // Local review opens the same anchored popover used by a menu-bar click.
@@ -81,6 +87,11 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSPopoverDelegate {
 
     private func verifyPopover() async {
         guard model.isDemo else { reportFailure("O teste visual exige --demo.") }
+        guard Bundle.main.bundleIdentifier == AppIdentity.bundleIdentifier,
+              Bundle.main.object(forInfoDictionaryKey: "CFBundleShortVersionString") as? String == AppIdentity.version,
+              Bundle.main.object(forInfoDictionaryKey: "CFBundleVersion") as? String == AppIdentity.build else {
+            reportFailure("A identidade ou versão do bundle não corresponde ao aplicativo.")
+        }
         guard await model.waitForPowerRefresh().value else { reportFailure("A leitura dos aparelhos fictícios não concluiu.") }
         // Keep the snapshot stable while the test runner owns desktop focus.
         // Ordinary use keeps the transient behavior configured above.
@@ -98,6 +109,8 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSPopoverDelegate {
         let previewPath = ProcessInfo.processInfo.environment["UBIAIR_UI_PREVIEW_PATH"]
         if let path = previewPath, let view = popover.contentViewController?.view {
             view.layoutSubtreeIfNeeded()
+            view.needsDisplay = true
+            view.displayIfNeeded()
             guard let bitmap = view.bitmapImageRepForCachingDisplay(in: view.bounds) else { reportFailure("Não foi possível renderizar a prévia.") }
             view.cacheDisplay(in: view.bounds, to: bitmap)
             guard let data = bitmap.representation(using: .png, properties: [:]) else { reportFailure("Não foi possível criar a imagem PNG.") }

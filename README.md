@@ -2,7 +2,7 @@
 
 UbiAir é um aplicativo nativo SwiftUI para controlar ar-condicionado LG pela barra de menus.
 Inspirado na experiência do [TCLimate](https://github.com/umarz317/TCLimate), usa cliente
-Swift original para o serviço LG ThinQ Connect, sem executar Python. Versão 0.1.5 (build 6).
+Swift original para o serviço LG ThinQ Connect, sem executar Python. Versão 0.1.6 (build 7).
 
 ## Executar
 
@@ -34,6 +34,10 @@ avaliação visual automatizada, `--show-panel` abre esse mesmo popover após a 
 `--ui-smoke-test` exige `--demo`, verifica abertura, fechamento e reabertura do popover e
 encerra o app; opcionalmente, `UBIAIR_UI_PREVIEW_PATH=/caminho/arquivo.png` salva uma captura
 somente da view do painel. Exemplo: `open build/UbiAir.app --args --demo --ui-smoke-test`.
+Cenários locais de erro também exigem `--demo`, por exemplo:
+`open build/UbiAir.app --args --demo --demo-error offline --show-panel`.
+Valores: `offline`, `internet`, `timeout`, `authentication`, `limit`, `service`, `empty`.
+Esses cenários usam dados fictícios, não leem PAT e não chamam a LG.
 Não há janela de prévia separada. Encerre o app antes de iniciar com argumentos diferentes.
 
 O painel é um popover nativo ancorado ao ícone de floco de neve e não pode ser destacado.
@@ -44,9 +48,13 @@ controles de temperatura e cartões de modo/ventilação. Oscilação aparece qu
 os controles são determinados pelas capabilities de cada aparelho. Sleep e energia não são
 expostos sem suporte confirmado pela API.
 
-## Recursos da versão 0.1.5
+## Recursos da versão 0.1.6
 
 - Seleção de ar-condicionado, estado de energia e temperatura ambiente/alvo.
+- Mensagens e recuperação para aparelho offline, internet/timeout, PAT inválido, permissões
+  e indisponibilidade da LG; contas sem ar-condicionados mostram o suporte do UbiAir.
+- Controles bloqueados após falha de leitura/verificação até atualizar o estado; comandos
+  nunca são reenviados automaticamente. PAT inválido e limite pausam atualização automática.
 - Painel ampliado para caber confirmação de comandos e direção do ar expandida, sem barra de rolagem.
 - Círculos de energia independentes da seleção: verde ligado, vermelho desligado e cinza
   quando o estado está desconhecido ou a leitura falhou. O destaque do botão indica a seleção.
@@ -90,11 +98,27 @@ O repositório Git é local, branch `main`; não existe remoto configurado.
 Sources/ThinQCore        Cliente REST, JSON flexível, capacidades, comandos e demonstração
 Sources/UbiAirMenuBar    SwiftUI, coordenação de sessão, Chaves, preferências e Login Items
 Tests/ThinQCoreTests    Testes offline com transporte simulado
-Tests/UbiAirTests       Preferências e indicadores de energia em serviços/domínios isolados
+Tests/UbiAirTests       Preferências, indicadores e recuperação de falhas com serviços fictícios
 Scripts                Empacotamento e atualização do progresso
 Docs                   Pesquisa, decisões e continuidade
 Progress               Painel local e histórico das etapas
 ```
+
+## Quando algo falhar
+
+Offline significa que a LG informou que o aparelho não está conectado ao ThinQ. Uma falha
+de internet ou timeout aparece como problema de conexão, sem marcar o aparelho como
+desligado. O círculo fica cinza quando não há leitura confiável; seu texto acessível e
+a dica do seletor explicam a falha. O cartão do aparelho oferece atualização manual.
+
+PAT inválido oferece “Conectar novamente” para informar um novo token. Essa ação preserva
+o registro do Chaves; “Desconectar e remover token” continua sendo a ação de remoção.
+Ao atingir o limite de chamadas, o app pausa leituras automáticas e orienta aguardar antes
+de tentar novamente. A API não fornece aqui um prazo de espera confirmado.
+
+Após falha no envio ou na confirmação de um comando, atualize o estado antes de repetir.
+O aplicativo não anuncia sucesso nem reenvia a ação automaticamente. Respostas técnicas
+da API não são exibidas nas mensagens ao usuário.
 
 ## Compatibilidade e distribuição
 

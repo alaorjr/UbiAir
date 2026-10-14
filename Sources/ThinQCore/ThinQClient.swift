@@ -235,6 +235,10 @@ public actor ThinQClient: ThinQService {
             throw CancellationError()
         } catch let error as URLError where error.code == .cancelled {
             throw CancellationError()
+        } catch let error as URLError where error.code == .timedOut {
+            throw ThinQError.timeout
+        } catch let error as URLError where error.code == .notConnectedToInternet {
+            throw ThinQError.noInternet
         } catch {
             // Avoid returning the underlying URL error text, which may contain request details.
             throw ThinQError.transport(String(describing: type(of: error)))
@@ -244,6 +248,9 @@ public actor ThinQClient: ThinQService {
         do {
             root = try JSONDecoder().decode(JSONValue.self, from: data)
         } catch {
+            if !(200..<300).contains(http.statusCode) {
+                throw ThinQError.httpStatus(http.statusCode)
+            }
             throw ThinQError.invalidResponse
         }
 
@@ -251,7 +258,9 @@ public actor ThinQClient: ThinQService {
             if let error = root["error"] {
                 let code = error["code"]?.scalarString ?? "HTTP_\(http.statusCode)"
                 let message = error["message"]?.stringValue ?? "A solicitação não foi aceita."
-                throw ThinQError.api(code: code, message: message)
+                if Self.isKnownAPICode(code) {
+                    throw ThinQError.api(code: code, message: message)
+                }
             }
             throw ThinQError.httpStatus(http.statusCode)
         }
@@ -267,6 +276,10 @@ public actor ThinQClient: ThinQService {
         if aic.contains(country) { return "aic" }
         if eic.contains(country) { return "eic" }
         return nil
+    }
+
+    private static func isKnownAPICode(_ code: String) -> Bool {
+        ["1103", "1218", "1222", "1306", "1308", "2000", "2207", "2209", "2210", "2301", "2302", "2303", "2304", "2305"].contains(code)
     }
 
     private static func pathComponent(_ value: String) -> String {

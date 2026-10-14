@@ -15,7 +15,8 @@ final class AppModel: ObservableObject {
     @Published private(set) var isRefreshing = false
     @Published private(set) var isSending = false
     @Published private(set) var commandMessage: String?
-    @Published var errorMessage: String?
+    @Published var problem: AppProblem?
+    @Published private(set) var deviceProblems: [String: AppProblem] = [:]
 
     let preferences: AppPreferences
     private let credentials = CredentialStore()
@@ -37,11 +38,21 @@ final class AppModel: ObservableObject {
     var selectedDevice: ThinQDevice? { devices.first { $0.id == selectedID } }
     func powerState(for id: String) -> Bool? { powerStates[id] }
     var isBusy: Bool { isConnecting || isRefreshing || isSending }
-    var canControl: Bool { isConnected && state != nil && !isBusy }
+    var canControl: Bool { isConnected && state != nil && !isBusy && problem?.blocksControls != true }
+    var requiresReconnect: Bool { problem?.requiresReconnect == true }
+    var automaticRefreshPaused: Bool { requiresReconnect || problem?.kind == .rateLimited }
+    var selectedProblem: AppProblem? { selectedID.flatMap { deviceProblems[$0] } }
+    func deviceProblem(for id: String) -> AppProblem? { deviceProblems[id] }
 
     func restoreSession() async {
         if CommandLine.arguments.contains("--demo") {
-            await startDemo()
+            let args = CommandLine.arguments
+            if let index = args.firstIndex(of: "--demo-error"), args.indices.contains(index + 1),
+               let scenario = DemoProblemScenario(rawValue: args[index + 1]) {
+                await startDemo(service: DemoProblemService(scenario))
+            } else {
+                await startDemo()
+            }
             return
         }
         do {
@@ -49,7 +60,7 @@ final class AppModel: ObservableObject {
                 await connect(token: token, country: preferences.countryCode, remember: false, restoring: true)
             }
         } catch {
-            errorMessage = "Não foi possível ler o token no Chaves. \(error.localizedDescription)"
+            problem = AppProblem(title: "Não foi possível acessar o Chaves", message: "Informe seu PAT para conectar. Confira a autorização do UbiAir no Chaves do macOS.")
         }
     }
 
@@ -57,13 +68,13 @@ final class AppModel: ObservableObject {
         guard !isBusy else { return }
         let cleanedToken = token.trimmingCharacters(in: .whitespacesAndNewlines)
         guard !cleanedToken.isEmpty else {
-            errorMessage = "Informe seu token pessoal ThinQ."
+            problem = AppProblem(ThinQError.invalidToken)
             return
         }
         resetSession()
         let revision = sessionRevision
         isConnecting = true
-        errorMessage = nil
+        problem = nil
         do {
             let countryCode = country.trimmingCharacters(in: .whitespacesAndNewlines).uppercased()
             let client = try ThinQClient(token: cleanedToken, countryCode: countryCode, clientID: preferences.clientID)
@@ -77,24 +88,24 @@ final class AppModel: ObservableObject {
             isConnecting = false
             if remember {
                 do { try credentials.saveToken(cleanedToken) }
-                catch { errorMessage = "Conectado, mas o token não foi salvo no Chaves. \(error.localizedDescription)" }
+                catch { problem = AppProblem(title: "PAT não salvo", message: "A conexão funciona nesta sessão. Confira a autorização do Chaves antes de salvar o PAT novamente.") }
             } else if !restoring {
                 do { try credentials.deleteToken() }
-                catch { errorMessage = "Conectado, mas o token anteriormente salvo não foi removido do Chaves. \(error.localizedDescription)" }
+                catch { problem = AppProblem(title: "PAT anterior não removido", message: "A conexão funciona, mas o PAT anterior continua salvo no Chaves. Confira a autorização do UbiAir no macOS.") }
             }
             if let first = devices.first { await selectDevice(first.id, refreshOtherDevices: false) }
             schedulePowerRefresh()
         } catch {
             guard revision == sessionRevision else { return }
             isConnecting = false
-            errorMessage = error.localizedDescription
+            if !(error is CancellationError) { problem = AppProblem(error) }
         }
     }
 
     func startDemo(service demo: any ThinQService = DemoThinQService()) async {
         guard !isBusy else { return }
         resetSession()
-        errorMessage = nil
+        problem = nil
         service = demo
         isDemo = true
         isConnected = true
@@ -103,21 +114,27 @@ final class AppModel: ObservableObject {
             powerReadsAllowed = true
             if let first = devices.first { await selectDevice(first.id, refreshOtherDevices: false) }
             schedulePowerRefresh()
-        } catch { errorMessage = error.localizedDescription }
+        } catch { if !(error is CancellationError) { problem = AppProblem(error) } }
     }
 
     func disconnect() {
         guard !isSending else {
-            errorMessage = "Aguarde a verificação do comando antes de desconectar."
+            problem = AppProblem(title: "Comando em andamento", message: "Aguarde a verificação do comando antes de desconectar.")
             return
         }
         let wasDemo = isDemo
         resetSession()
-        errorMessage = nil
+        problem = nil
         if !wasDemo {
             do { try credentials.deleteToken() }
-            catch { errorMessage = "Sessão encerrada, mas não foi possível remover o token do Chaves. \(error.localizedDescription)" }
+            catch { problem = AppProblem(title: "PAT não removido", message: "A sessão foi encerrada, mas o PAT continua salvo no Chaves. Confira a autorização do UbiAir no macOS.") }
         }
+    }
+
+    /// Returns to the PAT form without deleting a saved credential.
+    func showConnectionForm() {
+        guard !isSending else { return }
+        resetSession()
     }
 
     private func resetSession() {
@@ -128,6 +145,8 @@ final class AppModel: ObservableObject {
         powerReadsAllowed = false
         powerRevisions.removeAll()
         powerStates.removeAll()
+        deviceProblems.removeAll()
+        problem = nil
         sessionRevision = UUID()
         selectionRevision = UUID()
         service = nil
@@ -144,7 +163,7 @@ final class AppModel: ObservableObject {
     }
 
     func selectDevice(_ id: String, refreshOtherDevices: Bool = true) async {
-        guard !isSending, let service, devices.contains(where: { $0.id == id }) else { return }
+        guard !isSending, !requiresReconnect, let service, devices.contains(where: { $0.id == id }) else { return }
         selectionRevision = UUID()
         let selection = selectionRevision, session = sessionRevision
         selectedID = id
@@ -154,20 +173,21 @@ final class AppModel: ObservableObject {
         let powerRevision = UUID()
         powerRevisions[id] = powerRevision
         commandMessage = nil
-        var attemptedStateRead = false
         do {
             let profile = try await service.capabilities(for: id)
-            attemptedStateRead = true
             let snapshot = try await service.state(for: id)
             guard selection == selectionRevision, session == sessionRevision else { return }
             capabilities = profile
             state = snapshot
-            if powerRevisions[id] == powerRevision { setPowerState(snapshot.isOn, for: id) }
+            if powerRevisions[id] == powerRevision {
+                setPowerState(snapshot.isOn, for: id)
+                deviceProblems.removeValue(forKey: id)
+                if problem?.kind == .rateLimited { problem = nil }
+            }
         } catch {
             guard selection == selectionRevision, session == sessionRevision else { return }
-            errorMessage = error.localizedDescription
-            if attemptedStateRead, !(error is CancellationError), powerRevisions[id] == powerRevision {
-                powerStates.removeValue(forKey: id)
+            if !(error is CancellationError), powerRevisions[id] == powerRevision {
+                recordDeviceFailure(error, for: id)
             }
         }
         guard selection == selectionRevision, session == sessionRevision else { return }
@@ -176,7 +196,7 @@ final class AppModel: ObservableObject {
     }
 
     func refresh() async {
-        guard !isBusy, let service, let id = selectedID else { return }
+        guard !isBusy, !requiresReconnect, let service, let id = selectedID else { return }
         if capabilities == nil {
             await selectDevice(id, refreshOtherDevices: false)
             schedulePowerRefresh()
@@ -192,13 +212,12 @@ final class AppModel: ObservableObject {
             guard powerRevisions[id] == powerRevision else { return }
             state = snapshot
             setPowerState(snapshot.isOn, for: id)
-            errorMessage = nil
+            deviceProblems.removeValue(forKey: id)
+            if problem?.kind == .rateLimited { problem = nil }
         } catch {
             guard selection == selectionRevision, session == sessionRevision else { return }
             if !(error is CancellationError) {
-                state = nil
-                powerStates.removeValue(forKey: id)
-                errorMessage = error.localizedDescription
+                recordDeviceFailure(error, for: id)
             }
         }
         guard selection == selectionRevision, session == sessionRevision else { return }
@@ -207,7 +226,7 @@ final class AppModel: ObservableObject {
     }
 
     func reloadDevices() async {
-        guard !isBusy, let service else { return }
+        guard !isBusy, !requiresReconnect, let service else { return }
         let revision = sessionRevision
         isRefreshing = true
         do {
@@ -218,6 +237,8 @@ final class AppModel: ObservableObject {
             let retained = Set(discovered.map(\.id))
             powerStates = powerStates.filter { retained.contains($0.key) }
             powerRevisions = powerRevisions.filter { retained.contains($0.key) }
+            deviceProblems = deviceProblems.filter { retained.contains($0.key) }
+            problem = nil
             isRefreshing = false
             if let preferred { await selectDevice(preferred.id, refreshOtherDevices: false) }
             else { selectedID = nil; state = nil; capabilities = nil }
@@ -225,7 +246,7 @@ final class AppModel: ObservableObject {
         } catch {
             guard revision == sessionRevision else { return }
             isRefreshing = false
-            errorMessage = error.localizedDescription
+            if !(error is CancellationError) { problem = AppProblem(error) }
         }
     }
 
@@ -233,11 +254,13 @@ final class AppModel: ObservableObject {
         guard canControl, let service, let id = selectedID, let capabilities else { return }
         let session = sessionRevision, selection = selectionRevision
         isSending = true
-        errorMessage = nil
+        problem = nil
         commandMessage = isDemo ? "Aplicando na demonstração…" : "Enviando comando…"
+        var accepted = false
         do {
             try await service.send(command, to: id, capabilities: capabilities)
             guard session == sessionRevision, selection == selectionRevision else { return }
+            accepted = true
             commandMessage = "Aguardando confirmação…"
             var confirmed = false
             for attempt in 0..<4 {
@@ -250,16 +273,27 @@ final class AppModel: ObservableObject {
                 guard powerRevisions[id] == powerRevision else { continue }
                 state = snapshot
                 setPowerState(snapshot.isOn, for: id)
+                deviceProblems.removeValue(forKey: id)
                 if command.isConfirmed(by: snapshot) { confirmed = true; break }
             }
             guard session == sessionRevision, selection == selectionRevision else { return }
             commandMessage = confirmed ? (isDemo ? "Atualizado na demonstração" : "Confirmado pela nuvem LG") : nil
-            if !confirmed { errorMessage = "O comando foi enviado, mas ainda não foi confirmado pela nuvem. Atualize o estado antes de tentar novamente." }
+            if !confirmed {
+                state = nil
+                powerStates.removeValue(forKey: id)
+                deviceProblems[id] = AppProblem(title: "Comando ainda não confirmado", message: "O comando foi enviado. Atualize o estado antes de tentar novamente.")
+            }
         } catch {
             guard session == sessionRevision, selection == selectionRevision else { return }
-            if !(error is CancellationError) { powerStates.removeValue(forKey: id) }
             commandMessage = nil
-            errorMessage = error is CancellationError ? "Verificação cancelada. Atualize o estado para conferir o aparelho." : error.localizedDescription
+            if error is CancellationError {
+                state = nil
+                powerStates.removeValue(forKey: id)
+                deviceProblems[id] = AppProblem(title: "Verificação interrompida", message: "Atualize o estado para conferir o aparelho antes de repetir o comando.")
+            } else {
+                let kind = (error as? ThinQError)?.kind ?? .unknown
+                recordDeviceFailure(error, for: id, commandUncertain: accepted || [.connection, .timeout, .service, .unknown].contains(kind))
+            }
         }
         guard session == sessionRevision, selection == selectionRevision else { return }
         isSending = false
@@ -268,13 +302,13 @@ final class AppModel: ObservableObject {
     /// Reads each connected non-selected appliance once, serially. Unknown or
     /// failed reads clear the cache so the UI can show an unknown status.
     func refreshDevicePowerStates() async {
-        guard isConnected, powerReadsAllowed, let service, powerBatchID == nil else { return }
+        guard isConnected, !automaticRefreshPaused, powerReadsAllowed, let service, powerBatchID == nil else { return }
         let batchID = UUID()
         powerBatchID = batchID
         defer { if powerBatchID == batchID { powerBatchID = nil } }
         let session = sessionRevision
         for device in devices where device.id != selectedID {
-            guard session == sessionRevision, !Task.isCancelled else { return }
+            guard session == sessionRevision, !Task.isCancelled, !automaticRefreshPaused else { return }
             guard devices.contains(where: { $0.id == device.id }) else { continue }
             let revision = UUID()
             powerRevisions[device.id] = revision
@@ -283,13 +317,22 @@ final class AppModel: ObservableObject {
                 guard session == sessionRevision, batchID == powerBatchID, !Task.isCancelled else { return }
                 guard powerRevisions[device.id] == revision else { continue }
                 setPowerState(snapshot.isOn, for: device.id)
+                deviceProblems.removeValue(forKey: device.id)
             } catch {
                 guard session == sessionRevision, batchID == powerBatchID, !Task.isCancelled else { return }
                 if !(error is CancellationError), powerRevisions[device.id] == revision {
-                    powerStates.removeValue(forKey: device.id)
+                    recordDeviceFailure(error, for: device.id)
                 }
             }
         }
+    }
+
+    private func recordDeviceFailure(_ error: Error, for id: String, commandUncertain: Bool = false) {
+        let failure = AppProblem(error, commandUncertain: commandUncertain)
+        deviceProblems[id] = failure
+        powerStates.removeValue(forKey: id)
+        if id == selectedID { state = nil }
+        if failure.requiresReconnect || failure.kind == .rateLimited { problem = failure }
     }
 
     private func setPowerState(_ value: Bool?, for id: String) {
@@ -345,11 +388,11 @@ final class AppModel: ObservableObject {
         } else if pollingTask == nil {
             powerReadsAllowed = true
             pollingTask = Task { [weak self] in
-                await self?.refresh()
+                if self?.automaticRefreshPaused == false { await self?.refresh() }
                 while !Task.isCancelled {
                     do { try await Task.sleep(for: .seconds(30)) } catch { break }
                     guard !Task.isCancelled else { break }
-                    await self?.refresh()
+                    if self?.automaticRefreshPaused == false { await self?.refresh() }
                 }
             }
         }

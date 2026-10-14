@@ -1,6 +1,6 @@
 {
   "project": "UbiAir para macOS",
-  "updatedAt": "2026-10-14T13:21:07-03:00",
+  "updatedAt": "2026-10-14T13:42:35-03:00",
   "goal": "Controlar os aparelhos LG pela barra de menus, com SwiftUI e a API oficial ThinQ Connect.",
   "features": [
     {
@@ -136,9 +136,31 @@
       "status": "done",
       "note": "UbiAir 0.1.5 (build 6), Bundle Identifier e serviço Chaves ai.ubiquu.UbiAir. Identificador pessoal retirado, artefatos antigos eliminados e documentação alinhada. Recompilação limpa, 19 testes offline, assinatura, metadados e smoke em demonstração passaram. PAT deve ser informado novamente na interface; histórico Git preservado.",
       "updatedAt": "2026-10-14T13:15:51-03:00"
+    },
+    {
+      "id": "F17",
+      "title": "Erros e recuperação amigáveis",
+      "description": "Aparelhos offline, falhas de rede/API, PAT inválido e ausência de aparelhos compatíveis.",
+      "status": "done",
+      "note": "UbiAir 0.1.6 (build 7): mensagens e recuperação para offline, rede/timeout, PAT, permissões, quota/API e conta sem ar-condicionados. Bloqueio após falha, pausa por autenticação/quota, sem reenviar comandos. 32 testes offline, release, assinatura e smoke em cenários fictícios passaram; identidade carregada conferida. Inspeção pela ferramenta nativa teve cache/timeout, documentado em VALIDATION.md.",
+      "updatedAt": "2026-10-14T13:42:35-03:00"
     }
   ],
   "events": [
+    {
+      "at": "2026-10-14T13:42:35-03:00",
+      "feature": "F17",
+      "title": "Erros e recuperação amigáveis",
+      "action": "done",
+      "note": "UbiAir 0.1.6 (build 7): mensagens e recuperação para offline, rede/timeout, PAT, permissões, quota/API e conta sem ar-condicionados. Bloqueio após falha, pausa por autenticação/quota, sem reenviar comandos. 32 testes offline, release, assinatura e smoke em cenários fictícios passaram; identidade carregada conferida. Inspeção pela ferramenta nativa teve cache/timeout, documentado em VALIDATION.md."
+    },
+    {
+      "at": "2026-10-14T13:22:34-03:00",
+      "feature": "F17",
+      "title": "Erros e recuperação amigáveis",
+      "action": "start",
+      "note": "Classificar erros sem expor respostas técnicas, distinguir offline de falhas de leitura, oferecer recuperação manual e explicar suporte apenas a ar-condicionado."
+    },
     {
       "at": "2026-10-14T13:21:07-03:00",
       "feature": "F08",

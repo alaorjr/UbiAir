@@ -65,6 +65,62 @@ final class ThinQClientTests: XCTestCase {
         }
     }
 
+    func testAPIErrorKindsAndMessagesNeverExposeServerText() {
+        let cases: [(String, ThinQFailureKind)] = [
+            ("1103", .authentication), ("1218", .authentication), ("1222", .offline),
+            ("1306", .rateLimited), ("1308", .permission), ("2000", .service),
+            ("2209", .service), ("2210", .service), ("2207", .request),
+            ("2301", .request), ("2302", .request), ("2303", .request),
+            ("2304", .request), ("2305", .request), ("secret-code", .unknown)
+        ]
+        for (code, kind) in cases {
+            let error = ThinQError.api(code: code, message: "private raw API text and PAT example-token")
+            XCTAssertEqual(error.kind, kind, "code \(code)")
+            XCTAssertFalse(error.localizedDescription.contains("private raw"))
+            XCTAssertFalse(error.localizedDescription.contains("example-token"))
+            XCTAssertFalse(error.localizedDescription.contains(code), "code \(code)")
+        }
+    }
+
+    func testHTTPStatusKindsAndNonJSONFailures() async throws {
+        let cases: [(Int, ThinQFailureKind)] = [(401, .authentication), (403, .permission), (429, .rateLimited), (503, .service)]
+        for (status, kind) in cases {
+            let session = makeSession { _ in (status, Data("<html>raw server content</html>".utf8)) }
+            let client = try ThinQClient(token: "pat", countryCode: "BR", clientID: "stable", session: session)
+            do {
+                _ = try await client.devices()
+                XCTFail("Esperava HTTP \(status)")
+            } catch let error as ThinQError {
+                XCTAssertEqual(error, .httpStatus(status))
+                XCTAssertEqual(error.kind, kind)
+                XCTAssertFalse(error.localizedDescription.contains("raw server content"))
+            }
+        }
+    }
+
+    func testURLFailureKindsAndCancellation() async throws {
+        for (urlError, expected, expectedKind) in [
+            (URLError(.timedOut), ThinQError.timeout, ThinQFailureKind.timeout),
+            (URLError(.notConnectedToInternet), ThinQError.noInternet, ThinQFailureKind.connection)
+        ] {
+            let client = try ThinQClient(token: "pat", countryCode: "BR", clientID: "stable", session: makeFailingSession(urlError))
+            do {
+                _ = try await client.devices()
+                XCTFail("Esperava falha de transporte")
+            } catch let error as ThinQError {
+                XCTAssertEqual(error, expected)
+                XCTAssertEqual(error.kind, expectedKind)
+            }
+        }
+        let cancelled = try ThinQClient(token: "pat", countryCode: "BR", clientID: "stable", session: makeFailingSession(URLError(.cancelled)))
+        do {
+            _ = try await cancelled.devices()
+            XCTFail("Esperava cancelamento")
+        } catch is CancellationError {
+            // Cancelamento deve continuar distinto de falha de conexão.
+        }
+    }
+
     func testCapabilitiesHonorWritableModesAndTemperatureUnitArray() async throws {
         let session = makeSession { _ in
             (200, jsonData("""
@@ -294,6 +350,25 @@ final class ThinQClientTests: XCTestCase {
         return URLSession(configuration: configuration)
     }
 
+    private func makeFailingSession(_ error: Error) -> URLSession {
+        FailureURLProtocol.install(error)
+        let configuration = URLSessionConfiguration.ephemeral
+        configuration.protocolClasses = [FailureURLProtocol.self]
+        return URLSession(configuration: configuration)
+    }
+
+}
+
+private final class FailureURLProtocol: URLProtocol, @unchecked Sendable {
+    nonisolated(unsafe) private static var failure: Error?
+
+    static func install(_ error: Error) { failure = error }
+    override class func canInit(with request: URLRequest) -> Bool { true }
+    override class func canonicalRequest(for request: URLRequest) -> URLRequest { request }
+    override func startLoading() {
+        client?.urlProtocol(self, didFailWithError: Self.failure ?? URLError(.unknown))
+    }
+    override func stopLoading() {}
 }
 
 private func jsonData(_ text: String) -> Data {

@@ -30,8 +30,8 @@ struct MenuPanel: View {
             Divider()
             ScrollView(showsIndicators: false) {
                 VStack(spacing: 12) {
+                    if let problem = model.problem, model.state != nil || model.selectedProblem == nil { problemBanner(problem) }
                     if model.isConnected { connectedPanel } else { connectionPanel }
-                    if let error = model.errorMessage { errorBanner(error) }
                 }
                 .padding(14)
             }
@@ -56,7 +56,7 @@ struct MenuPanel: View {
             Spacer()
             if model.isConnected {
                 Button { Task { await model.reloadDevices() } } label: { Image(systemName: "arrow.clockwise") }
-                    .buttonStyle(.plain).disabled(model.isBusy).accessibilityLabel("Atualizar aparelhos")
+                    .buttonStyle(.plain).disabled(model.isBusy || model.requiresReconnect).accessibilityLabel("Atualizar aparelhos")
             }
             Menu {
                 Toggle("Abrir ao iniciar sessão", isOn: Binding(get: { preferences.launchAtLogin }, set: { preferences.setLaunchAtLogin($0) }))
@@ -64,6 +64,7 @@ struct MenuPanel: View {
                 Divider()
                 Button("Portal ThinQ", systemImage: "arrow.up.right.square") { openPortal() }
                 if model.isConnected {
+                    Button("Conectar com outro PAT", systemImage: "key") { model.showConnectionForm() }.disabled(model.isSending)
                     Button(model.isDemo ? "Sair da demonstração" : "Desconectar e remover token", systemImage: "rectangle.portrait.and.arrow.right") { model.disconnect() }
                         .disabled(model.isSending)
                 }
@@ -77,9 +78,17 @@ struct MenuPanel: View {
     private var connectedPanel: some View {
         VStack(spacing: 10) {
             if model.devices.isEmpty {
-                ContentUnavailableView("Nenhum ar-condicionado", systemImage: "air.conditioner.horizontal", description: Text("Cadastre aparelhos no app LG ThinQ e confira as permissões do token."))
-                    .padding(.vertical, 10)
-                Button("Atualizar aparelhos") { Task { await model.reloadDevices() } }.disabled(model.isBusy)
+                VStack(spacing: 12) {
+                    Image(systemName: "air.conditioner.horizontal").font(.largeTitle).foregroundStyle(.secondary)
+                    Text("Nenhum ar-condicionado").font(.callout.weight(.semibold))
+                    Text("O UbiAir controla apenas ar-condicionados. Outros aparelhos da sua conta não aparecem aqui.")
+                        .font(.caption).foregroundStyle(.secondary)
+                    Text("Confira o cadastro no app LG ThinQ e as permissões do PAT no portal.")
+                        .font(.caption).foregroundStyle(.secondary)
+                    Button("Atualizar aparelhos") { Task { await model.reloadDevices() } }.disabled(model.isBusy || model.requiresReconnect)
+                }
+                .multilineTextAlignment(.center).frame(maxWidth: .infinity).padding(20)
+                .background(Color.primary.opacity(0.035), in: RoundedRectangle(cornerRadius: 17))
             } else {
                 if model.devices.count > 1 {
                     ScrollView(.horizontal, showsIndicators: false) {
@@ -97,10 +106,11 @@ struct MenuPanel: View {
                                 .buttonStyle(.plain)
                                 .accessibilityAddTraits(model.selectedID == device.id ? .isSelected : [])
                                 .accessibilityValue(powerDescription(for: device.id))
+                                .help(model.deviceProblem(for: device.id)?.message ?? powerDescription(for: device.id))
                             }
                         }
                     }
-                    .disabled(model.isSending || model.isRefreshing)
+                    .disabled(model.isSending || model.isRefreshing || model.requiresReconnect)
                 }
                 if let device = model.selectedDevice {
                     HStack(spacing: 8) {
@@ -110,7 +120,7 @@ struct MenuPanel: View {
                         }
                         Spacer()
                         if model.isRefreshing { ProgressView().controlSize(.small) }
-                        else { Button { Task { await model.refresh() } } label: { Image(systemName: "arrow.clockwise") }.buttonStyle(.plain).disabled(model.isBusy).accessibilityLabel("Atualizar estado") }
+                        else { Button { Task { await model.refresh() } } label: { Image(systemName: "arrow.clockwise") }.buttonStyle(.plain).disabled(model.isBusy || model.requiresReconnect).accessibilityLabel("Atualizar estado") }
                     }
                     .padding(.horizontal, 3)
                 }
@@ -119,13 +129,35 @@ struct MenuPanel: View {
                 } else if model.isRefreshing {
                     HStack { Spacer(); ProgressView("Lendo aparelho…"); Spacer() }.padding(.vertical, 30)
                 } else {
-                    VStack(spacing: 8) {
-                        Image(systemName: "questionmark.circle").font(.title2).foregroundStyle(.secondary)
-                        Text("Estado indisponível").font(.callout.weight(.medium))
-                        Button("Tentar novamente") { if let id = model.selectedID { Task { await model.selectDevice(id) } } }.disabled(model.isBusy)
-                    }.frame(maxWidth: .infinity).padding(.vertical, 22)
+                    unavailablePanel(model.selectedProblem ?? AppProblem(title: "Estado indisponível", message: "Atualize para consultar o aparelho novamente."))
                 }
             }
+        }
+    }
+
+    private func unavailablePanel(_ problem: AppProblem) -> some View {
+        VStack(spacing: 10) {
+            Image(systemName: problem.kind == .offline ? "wifi.slash" : "exclamationmark.circle")
+                .font(.title2).foregroundStyle(.orange)
+            Text(problem.title).font(.callout.weight(.semibold))
+            Text(problem.message).font(.caption).foregroundStyle(.secondary).multilineTextAlignment(.center)
+            recoveryButton(problem)
+        }
+        .frame(maxWidth: .infinity).padding(20)
+        .background(Color.primary.opacity(0.035), in: RoundedRectangle(cornerRadius: 17))
+    }
+
+    @ViewBuilder private func recoveryButton(_ problem: AppProblem) -> some View {
+        if model.requiresReconnect || problem.requiresReconnect {
+            Button("Conectar novamente") { model.showConnectionForm() }.disabled(model.isBusy)
+        } else if model.isConnected {
+            Button(problem.kind == .rateLimited ? "Tentar novamente após aguardar" : "Atualizar estado") {
+                Task {
+                    if model.problem == problem && model.selectedProblem != problem { await model.reloadDevices() }
+                    else if model.selectedID != nil { await model.refresh() }
+                    else { await model.reloadDevices() }
+                }
+            }.disabled(model.isBusy)
         }
     }
 
@@ -256,6 +288,7 @@ struct MenuPanel: View {
     private var connectionPanel: some View {
         VStack(alignment: .leading, spacing: 13) {
             Text("Conecte seus aparelhos").font(.title3.weight(.semibold))
+            Text("Compatível com ar-condicionados LG ThinQ.").font(.caption).foregroundStyle(.secondary)
             Text("Entre no portal com sua conta LG ThinQ. Se ainda não tiver uma conta, crie-a no app LG ThinQ. Depois, crie seu Personal Access Token (PAT) no portal e cole-o abaixo.")
                 .font(.callout).foregroundStyle(.secondary)
             VStack(alignment: .leading, spacing: 6) {
@@ -316,13 +349,22 @@ struct MenuPanel: View {
         return names[value] ?? value.replacingOccurrences(of: "_", with: " ").capitalized
     }
 
-    private func errorBanner(_ message: String) -> some View {
-        HStack(alignment: .top, spacing: 8) {
-            Image(systemName: "exclamationmark.circle").foregroundStyle(.orange)
-            Text(message).font(.caption).textSelection(.enabled)
-            Spacer(minLength: 0)
-            Button { model.errorMessage = nil } label: { Image(systemName: "xmark") }.buttonStyle(.borderless).accessibilityLabel("Dispensar mensagem")
-        }.padding(12).background(.quaternary, in: RoundedRectangle(cornerRadius: 10)).accessibilityElement(children: .combine)
+    private func problemBanner(_ problem: AppProblem) -> some View {
+        VStack(alignment: .leading, spacing: 7) {
+            HStack(alignment: .top, spacing: 8) {
+                Image(systemName: "exclamationmark.circle").foregroundStyle(.orange)
+                VStack(alignment: .leading, spacing: 3) {
+                    Text(problem.title).font(.caption.weight(.semibold))
+                    Text(problem.message).font(.caption).textSelection(.enabled)
+                }
+                Spacer(minLength: 0)
+                if !problem.blocksControls {
+                    Button { model.problem = nil } label: { Image(systemName: "xmark") }
+                        .buttonStyle(.borderless).accessibilityLabel("Dispensar mensagem")
+                }
+            }
+            if problem.blocksControls { recoveryButton(problem) }
+        }.padding(12).background(.quaternary, in: RoundedRectangle(cornerRadius: 10))
     }
 
     private var footer: some View {
@@ -344,6 +386,7 @@ struct MenuPanel: View {
         }
     }
     private func powerDescription(for id: String) -> String {
+        if let problem = model.deviceProblem(for: id) { return problem.title }
         switch model.powerState(for: id) {
         case true: return "Ligado"
         case false: return "Desligado"
