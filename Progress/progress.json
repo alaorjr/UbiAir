@@ -1,6 +1,6 @@
 {
   "project": "UbiAir para macOS",
-  "updatedAt": "2026-10-14T13:15:51-03:00",
+  "updatedAt": "2026-10-14T13:21:07-03:00",
   "goal": "Controlar os aparelhos LG pela barra de menus, com SwiftUI e a API oficial ThinQ Connect.",
   "features": [
     {
@@ -55,7 +55,7 @@
       "title": "Controles e confirmação",
       "description": "Ligar/desligar, temperatura, modo, ventilação e direção conforme o perfil.",
       "status": "done",
-      "note": "Controles de temperatura, modo, ventilação, oscilação e energia testados na demonstração; confirmação e bloqueios implementados. Hardware real pendente em F08.",
+      "note": "Controles de temperatura, modo, ventilação, oscilação e energia testados na demonstração; confirmação e bloqueios implementados. Validação real concluída pelo usuário em três aparelhos (F08).",
       "updatedAt": "2026-10-13T15:42:04-03:00"
     },
     {
@@ -70,9 +70,9 @@
       "id": "F08",
       "title": "Validação com os aparelhos",
       "description": "Confirmar conexão e comandos com seu PAT e modelos reais.",
-      "status": "pending",
-      "note": "Conexão, listagem e estado reais observados na interface configurada pelo usuário. Comandos físicos e validação dos modelos continuam pendentes; o agente acionou controles somente em demonstração.",
-      "updatedAt": "2026-10-13T16:37:48-03:00"
+      "status": "done",
+      "note": "O usuário confirmou teste manual em três aparelhos reais e relatou que tudo funcionou, após o marco de identidade F16. Validação básica concluída; nenhum PAT ou dado real de aparelho registrado.",
+      "updatedAt": "2026-10-14T13:21:07-03:00"
     },
     {
       "id": "F09",
@@ -139,6 +139,13 @@
     }
   ],
   "events": [
+    {
+      "at": "2026-10-14T13:21:07-03:00",
+      "feature": "F08",
+      "title": "Validação com os aparelhos",
+      "action": "done",
+      "note": "O usuário confirmou teste manual em três aparelhos reais e relatou que tudo funcionou, após o marco de identidade F16. Validação básica concluída; nenhum PAT ou dado real de aparelho registrado."
+    },
     {
       "at": "2026-10-14T13:15:51-03:00",
       "feature": "F16",

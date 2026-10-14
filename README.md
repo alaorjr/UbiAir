@@ -111,9 +111,9 @@ após instalar UbiAir no local definitivo.
 
 O protocolo segue o [SDK oficial pythinqconnect](https://github.com/thinq-connect/pythinqconnect).
 Veja [Docs/API-RESEARCH.md](Docs/API-RESEARCH.md) para fontes e limitações. Os testes offline
-validam o protocolo modelado. Na sessão atual, foi observada leitura de estado de aparelho
-real pela ThinQ Connect; comandos físicos ainda aguardam validação do usuário. Energia, MQTT
-e funções extras ficam para depois dessa validação. Dados ausentes não são apresentados como
+validam o protocolo modelado. O usuário também confirmou testes em três aparelhos reais,
+com tudo funcionando; a validação básica F08 está concluída. Energia, MQTT e funções
+extras permanecem como evoluções futuras. Dados ausentes não são apresentados como
 zero, e o modo de demonstração é identificado na interface. Nenhum PAT, identificador real
 de aparelho ou dado real de aparelho é armazenado na documentação do projeto.
 
