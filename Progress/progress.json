@@ -1,6 +1,6 @@
 {
   "project": "UbiAir para macOS",
-  "updatedAt": "2026-10-14T08:40:16-03:00",
+  "updatedAt": "2026-10-14T09:36:34-03:00",
   "goal": "Controlar os aparelhos LG pela barra de menus, com SwiftUI e a API oficial ThinQ Connect.",
   "features": [
     {
@@ -96,9 +96,75 @@
       "status": "done",
       "note": "UbiAir 0.1.2 (build 3), Bundle Identifier e serviço Chaves ai.ubiquu. País/Client ID legados migrados quando ausentes; PAT será informado novamente pelo usuário. 13 testes offline, release, assinatura e smoke do popover passaram; nome e metadados conferidos, app normal iniciado.",
       "updatedAt": "2026-10-14T08:40:16-03:00"
+    },
+    {
+      "id": "F12",
+      "title": "Portal de criação do PAT",
+      "description": "Link correto e orientação para entrar/criar conta e gerar o PAT.",
+      "status": "done",
+      "note": "Os dois acessos usam connect-pat.lgthinq.com/login. Formulário orienta conta LG ThinQ, criação pelo app se necessária, geração do PAT no portal e inserção no UbiAir. URL e página conferidas; release compilado.",
+      "updatedAt": "2026-10-14T09:36:33-03:00"
+    },
+    {
+      "id": "F13",
+      "title": "Fechamento ao clicar fora",
+      "description": "Restaurar fechamento do popover após usar o menu da engrenagem.",
+      "status": "done",
+      "note": "Monitores de clique e perda de ativação fecham o painel após menus. Teste interativo em demonstração confirmou engrenagem → retorno ao painel → clique fora → fechamento; smoke e release passaram.",
+      "updatedAt": "2026-10-14T09:36:33-03:00"
+    },
+    {
+      "id": "F14",
+      "title": "Indicadores de energia dos aparelhos",
+      "description": "Verde para ligado, vermelho para desligado e seleção independente.",
+      "status": "done",
+      "note": "Verde ligado, vermelho desligado e cinza desconhecido, independente da seleção. Cache por ID com guardas de sessão/lote, cancelamento e sem consultas duplicadas. 19 testes totais passaram, incluindo 6 de energia; seleção e cores conferidas na demonstração.",
+      "updatedAt": "2026-10-14T09:36:34-03:00"
     }
   ],
   "events": [
+    {
+      "at": "2026-10-14T09:36:34-03:00",
+      "feature": "F14",
+      "title": "Indicadores de energia dos aparelhos",
+      "action": "done",
+      "note": "Verde ligado, vermelho desligado e cinza desconhecido, independente da seleção. Cache por ID com guardas de sessão/lote, cancelamento e sem consultas duplicadas. 19 testes totais passaram, incluindo 6 de energia; seleção e cores conferidas na demonstração."
+    },
+    {
+      "at": "2026-10-14T09:36:33-03:00",
+      "feature": "F13",
+      "title": "Fechamento ao clicar fora",
+      "action": "done",
+      "note": "Monitores de clique e perda de ativação fecham o painel após menus. Teste interativo em demonstração confirmou engrenagem → retorno ao painel → clique fora → fechamento; smoke e release passaram."
+    },
+    {
+      "at": "2026-10-14T09:36:33-03:00",
+      "feature": "F12",
+      "title": "Portal de criação do PAT",
+      "action": "done",
+      "note": "Os dois acessos usam connect-pat.lgthinq.com/login. Formulário orienta conta LG ThinQ, criação pelo app se necessária, geração do PAT no portal e inserção no UbiAir. URL e página conferidas; release compilado."
+    },
+    {
+      "at": "2026-10-14T09:01:42-03:00",
+      "feature": "F14",
+      "title": "Indicadores de energia dos aparelhos",
+      "action": "start",
+      "note": "Manter estado de energia dos aparelhos para mostrar cores independentes da seleção, com estado desconhecido neutro."
+    },
+    {
+      "at": "2026-10-14T09:01:42-03:00",
+      "feature": "F13",
+      "title": "Fechamento ao clicar fora",
+      "action": "start",
+      "note": "Investigar perda de fechamento automático após menu da engrenagem e implementar fechamento robusto fora do painel."
+    },
+    {
+      "at": "2026-10-14T09:01:42-03:00",
+      "feature": "F12",
+      "title": "Portal de criação do PAT",
+      "action": "start",
+      "note": "Atualizar os dois acessos ao portal PAT e orientar login/criação de conta e geração do token."
+    },
     {
       "at": "2026-10-14T08:40:16-03:00",
       "feature": "F11",

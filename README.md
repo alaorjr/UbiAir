@@ -2,7 +2,7 @@
 
 UbiAir é um aplicativo nativo SwiftUI para controlar ar-condicionado LG pela barra de menus.
 Inspirado na experiência do [TCLimate](https://github.com/umarz317/TCLimate), usa cliente
-Swift original para o serviço LG ThinQ Connect, sem executar Python. Versão 0.1.2 (build 3).
+Swift original para o serviço LG ThinQ Connect, sem executar Python. Versão 0.1.3 (build 4).
 
 ## Executar
 
@@ -15,8 +15,11 @@ open build/UbiAir.app
 ```
 
 O ícone de floco de neve aparece na barra de menus. Abra o painel, informe seu
-Personal Access Token do portal LG e o país da conta (Brasil: `BR`). O token pode
-ser salvo no Chaves do macOS. “Desconectar e remover token” remove a credencial salva.
+Personal Access Token (PAT) e o país da conta (Brasil: `BR`). Para obter o PAT, abra o
+[portal LG](https://connect-pat.lgthinq.com/login), entre com sua conta LG ThinQ,
+crie um PAT e cole-o no campo do UbiAir. Se ainda não tiver conta, o portal orienta criar
+uma pelo app LG ThinQ. O token pode ser salvo no Chaves do macOS.
+“Desconectar e remover token” remove a credencial salva.
 Os aparelhos precisam estar previamente cadastrados na sua conta do app LG ThinQ.
 Conectar e atualizar fazem apenas leitura; comandos são enviados ao clicar nos controles.
 
@@ -35,15 +38,18 @@ somente da view do painel. Exemplo: `open build/UbiAir.app --args --demo --ui-sm
 Não há janela de prévia separada. Encerre o app antes de iniciar com argumentos diferentes.
 
 O painel é um popover nativo ancorado ao ícone de floco de neve e não pode ser destacado.
+Ele fecha ao clicar fora ou mudar de aplicação, inclusive após usar o menu da engrenagem.
 [Veja a prévia com aparelhos fictícios](Docs/Images/menu-panel-demo.png).
 O visual compacto traz seletor horizontal de aparelhos, temperatura alvo e ambiente,
 controles de temperatura e cartões de modo/ventilação. Oscilação aparece quando suportada;
 os controles são determinados pelas capabilities de cada aparelho. Sleep e energia não são
 expostos sem suporte confirmado pela API.
 
-## Recursos da versão 0.1.2
+## Recursos da versão 0.1.3
 
 - Seleção de ar-condicionado, estado de energia e temperatura ambiente/alvo.
+- Círculos de energia independentes da seleção: verde ligado, vermelho desligado e cinza
+  quando o estado está desconhecido ou a leitura falhou. O destaque do botão indica a seleção.
 - Ligar/desligar, ajustar temperatura, modo, ventilação e oscilação, quando o perfil permitir.
 - Respeito aos enums, intervalos, passos e valores excluídos do perfil do aparelho.
 - Verificação do comando por leitura posterior do estado da nuvem; o sucesso do POST sozinho
@@ -84,7 +90,7 @@ O repositório Git é local, branch `main`; não existe remoto configurado.
 Sources/ThinQCore        Cliente REST, JSON flexível, capacidades, comandos e demonstração
 Sources/UbiAirMenuBar    SwiftUI, coordenação de sessão, Chaves, preferências e Login Items
 Tests/ThinQCoreTests    Testes offline com transporte simulado
-Tests/UbiAirTests       Migração de preferências em domínios isolados
+Tests/UbiAirTests       Preferências e indicadores de energia em serviços/domínios isolados
 Scripts                Empacotamento e atualização do progresso
 Docs                   Pesquisa, decisões e continuidade
 Progress               Painel local e histórico das etapas

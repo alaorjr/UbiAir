@@ -81,7 +81,7 @@ struct MenuPanel: View {
                             ForEach(model.devices) { device in
                                 Button { Task { await model.selectDevice(device.id) } } label: {
                                     HStack(spacing: 6) {
-                                        Circle().fill(model.selectedID == device.id ? Color.green : Color.secondary.opacity(0.45)).frame(width: 6, height: 6)
+                                        Circle().fill(powerColor(for: device.id)).frame(width: 6, height: 6)
                                         Text(device.name).lineLimit(1)
                                     }
                                     .font(.caption.weight(model.selectedID == device.id ? .semibold : .regular))
@@ -90,6 +90,7 @@ struct MenuPanel: View {
                                 }
                                 .buttonStyle(.plain)
                                 .accessibilityAddTraits(model.selectedID == device.id ? .isSelected : [])
+                                .accessibilityValue(powerDescription(for: device.id))
                             }
                         }
                     }
@@ -249,7 +250,7 @@ struct MenuPanel: View {
     private var connectionPanel: some View {
         VStack(alignment: .leading, spacing: 13) {
             Text("Conecte seus aparelhos").font(.title3.weight(.semibold))
-            Text("Use o token pessoal da sua conta LG ThinQ para encontrar os ar-condicionados já cadastrados.")
+            Text("Entre no portal com sua conta LG ThinQ. Se ainda não tiver uma conta, crie-a no app LG ThinQ. Depois, crie seu Personal Access Token (PAT) no portal e cole-o abaixo.")
                 .font(.callout).foregroundStyle(.secondary)
             VStack(alignment: .leading, spacing: 6) {
                 Text("Token pessoal ThinQ").font(.caption.weight(.medium))
@@ -322,12 +323,26 @@ struct MenuPanel: View {
         HStack {
             Text(model.isDemo ? "Demonstração · aparelhos fictícios" : "UbiAir · ThinQ Connect").font(.caption2).foregroundStyle(.secondary)
             Spacer()
-            Text("0.1.2").font(.caption2).foregroundStyle(.secondary)
+            Text("0.1.3").font(.caption2).foregroundStyle(.secondary)
         }
     }
 
     private func connect() {
         Task { await model.connect(token: token, country: country, remember: rememberToken); if model.isConnected { token = "" } }
     }
-    private func openPortal() { if let url = URL(string: "https://smartsolution.developer.lge.com") { NSWorkspace.shared.open(url) } }
+    private func powerColor(for id: String) -> Color {
+        switch model.powerState(for: id) {
+        case true: return .green
+        case false: return .red
+        case nil: return .secondary.opacity(0.45)
+        }
+    }
+    private func powerDescription(for id: String) -> String {
+        switch model.powerState(for: id) {
+        case true: return "Ligado"
+        case false: return "Desligado"
+        case nil: return "Energia desconhecida"
+        }
+    }
+    private func openPortal() { if let url = URL(string: "https://connect-pat.lgthinq.com/login") { NSWorkspace.shared.open(url) } }
 }

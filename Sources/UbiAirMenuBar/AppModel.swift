@@ -8,6 +8,7 @@ final class AppModel: ObservableObject {
     @Published private(set) var selectedID: String?
     @Published private(set) var capabilities: ACCapabilities?
     @Published private(set) var state: ACState?
+    @Published private(set) var powerStates: [String: Bool] = [:]
     @Published private(set) var isConnected = false
     @Published private(set) var isDemo = false
     @Published private(set) var isConnecting = false
@@ -16,15 +17,25 @@ final class AppModel: ObservableObject {
     @Published private(set) var commandMessage: String?
     @Published var errorMessage: String?
 
-    let preferences = AppPreferences()
+    let preferences: AppPreferences
     private let credentials = CredentialStore()
     private var service: (any ThinQService)?
     private var sessionRevision = UUID()
     private var selectionRevision = UUID()
     private var visiblePanels: Set<UUID> = []
     private var pollingTask: Task<Void, Never>?
+    private var powerRefreshTask: Task<Void, Never>?
+    private var powerRevisions: [String: UUID] = [:]
+    private var powerBatchID: UUID?
+    private var powerRefreshTaskID: UUID?
+    private var powerReadsAllowed = false
+
+    init(preferences: AppPreferences? = nil) {
+        self.preferences = preferences ?? AppPreferences()
+    }
 
     var selectedDevice: ThinQDevice? { devices.first { $0.id == selectedID } }
+    func powerState(for id: String) -> Bool? { powerStates[id] }
     var isBusy: Bool { isConnecting || isRefreshing || isSending }
     var canControl: Bool { isConnected && state != nil && !isBusy }
 
@@ -60,6 +71,7 @@ final class AppModel: ObservableObject {
             guard revision == sessionRevision else { return }
             service = client
             devices = discovered
+            powerReadsAllowed = true
             preferences.countryCode = countryCode
             isConnected = true
             isConnecting = false
@@ -70,7 +82,8 @@ final class AppModel: ObservableObject {
                 do { try credentials.deleteToken() }
                 catch { errorMessage = "Conectado, mas o token anteriormente salvo não foi removido do Chaves. \(error.localizedDescription)" }
             }
-            if let first = devices.first { await selectDevice(first.id) }
+            if let first = devices.first { await selectDevice(first.id, refreshOtherDevices: false) }
+            schedulePowerRefresh()
         } catch {
             guard revision == sessionRevision else { return }
             isConnecting = false
@@ -78,17 +91,18 @@ final class AppModel: ObservableObject {
         }
     }
 
-    func startDemo() async {
+    func startDemo(service demo: any ThinQService = DemoThinQService()) async {
         guard !isBusy else { return }
         resetSession()
         errorMessage = nil
-        let demo = DemoThinQService()
         service = demo
         isDemo = true
         isConnected = true
         do {
             devices = try await demo.devices()
-            if let first = devices.first { await selectDevice(first.id) }
+            powerReadsAllowed = true
+            if let first = devices.first { await selectDevice(first.id, refreshOtherDevices: false) }
+            schedulePowerRefresh()
         } catch { errorMessage = error.localizedDescription }
     }
 
@@ -107,6 +121,13 @@ final class AppModel: ObservableObject {
     }
 
     private func resetSession() {
+        powerRefreshTask?.cancel()
+        powerRefreshTask = nil
+        powerRefreshTaskID = nil
+        powerBatchID = nil
+        powerReadsAllowed = false
+        powerRevisions.removeAll()
+        powerStates.removeAll()
         sessionRevision = UUID()
         selectionRevision = UUID()
         service = nil
@@ -122,7 +143,7 @@ final class AppModel: ObservableObject {
         commandMessage = nil
     }
 
-    func selectDevice(_ id: String) async {
+    func selectDevice(_ id: String, refreshOtherDevices: Bool = true) async {
         guard !isSending, let service, devices.contains(where: { $0.id == id }) else { return }
         selectionRevision = UUID()
         let selection = selectionRevision, session = sessionRevision
@@ -130,40 +151,59 @@ final class AppModel: ObservableObject {
         state = nil
         capabilities = nil
         isRefreshing = true
+        let powerRevision = UUID()
+        powerRevisions[id] = powerRevision
         commandMessage = nil
+        var attemptedStateRead = false
         do {
             let profile = try await service.capabilities(for: id)
+            attemptedStateRead = true
             let snapshot = try await service.state(for: id)
             guard selection == selectionRevision, session == sessionRevision else { return }
             capabilities = profile
             state = snapshot
+            if powerRevisions[id] == powerRevision { setPowerState(snapshot.isOn, for: id) }
         } catch {
             guard selection == selectionRevision, session == sessionRevision else { return }
             errorMessage = error.localizedDescription
+            if attemptedStateRead, !(error is CancellationError), powerRevisions[id] == powerRevision {
+                powerStates.removeValue(forKey: id)
+            }
         }
         guard selection == selectionRevision, session == sessionRevision else { return }
         isRefreshing = false
+        if refreshOtherDevices { scheduleOtherPowerReads() }
     }
 
     func refresh() async {
         guard !isBusy, let service, let id = selectedID else { return }
-        if capabilities == nil { await selectDevice(id); return }
+        if capabilities == nil {
+            await selectDevice(id, refreshOtherDevices: false)
+            schedulePowerRefresh()
+            return
+        }
         let selection = selectionRevision, session = sessionRevision
         isRefreshing = true
         do {
+            let powerRevision = UUID()
+            powerRevisions[id] = powerRevision
             let snapshot = try await service.state(for: id)
             guard selection == selectionRevision, session == sessionRevision else { return }
+            guard powerRevisions[id] == powerRevision else { return }
             state = snapshot
+            setPowerState(snapshot.isOn, for: id)
             errorMessage = nil
         } catch {
             guard selection == selectionRevision, session == sessionRevision else { return }
             if !(error is CancellationError) {
                 state = nil
+                powerStates.removeValue(forKey: id)
                 errorMessage = error.localizedDescription
             }
         }
         guard selection == selectionRevision, session == sessionRevision else { return }
         isRefreshing = false
+        schedulePowerRefresh()
     }
 
     func reloadDevices() async {
@@ -175,9 +215,13 @@ final class AppModel: ObservableObject {
             guard revision == sessionRevision else { return }
             let preferred = discovered.first { $0.id == selectedID } ?? discovered.first
             devices = discovered
+            let retained = Set(discovered.map(\.id))
+            powerStates = powerStates.filter { retained.contains($0.key) }
+            powerRevisions = powerRevisions.filter { retained.contains($0.key) }
             isRefreshing = false
-            if let preferred { await selectDevice(preferred.id) }
+            if let preferred { await selectDevice(preferred.id, refreshOtherDevices: false) }
             else { selectedID = nil; state = nil; capabilities = nil }
+            schedulePowerRefresh()
         } catch {
             guard revision == sessionRevision else { return }
             isRefreshing = false
@@ -199,9 +243,13 @@ final class AppModel: ObservableObject {
             for attempt in 0..<4 {
                 if attempt > 0 { try await Task.sleep(for: .seconds(2)) }
                 try Task.checkCancellation()
+                let powerRevision = UUID()
+                powerRevisions[id] = powerRevision
                 let snapshot = try await service.state(for: id)
                 guard session == sessionRevision, selection == selectionRevision else { return }
+                guard powerRevisions[id] == powerRevision else { continue }
                 state = snapshot
+                setPowerState(snapshot.isOn, for: id)
                 if command.isConfirmed(by: snapshot) { confirmed = true; break }
             }
             guard session == sessionRevision, selection == selectionRevision else { return }
@@ -209,6 +257,7 @@ final class AppModel: ObservableObject {
             if !confirmed { errorMessage = "O comando foi enviado, mas ainda não foi confirmado pela nuvem. Atualize o estado antes de tentar novamente." }
         } catch {
             guard session == sessionRevision, selection == selectionRevision else { return }
+            if !(error is CancellationError) { powerStates.removeValue(forKey: id) }
             commandMessage = nil
             errorMessage = error is CancellationError ? "Verificação cancelada. Atualize o estado para conferir o aparelho." : error.localizedDescription
         }
@@ -216,12 +265,85 @@ final class AppModel: ObservableObject {
         isSending = false
     }
 
+    /// Reads each connected non-selected appliance once, serially. Unknown or
+    /// failed reads clear the cache so the UI can show an unknown status.
+    func refreshDevicePowerStates() async {
+        guard isConnected, powerReadsAllowed, let service, powerBatchID == nil else { return }
+        let batchID = UUID()
+        powerBatchID = batchID
+        defer { if powerBatchID == batchID { powerBatchID = nil } }
+        let session = sessionRevision
+        for device in devices where device.id != selectedID {
+            guard session == sessionRevision, !Task.isCancelled else { return }
+            guard devices.contains(where: { $0.id == device.id }) else { continue }
+            let revision = UUID()
+            powerRevisions[device.id] = revision
+            do {
+                let snapshot = try await service.state(for: device.id)
+                guard session == sessionRevision, batchID == powerBatchID, !Task.isCancelled else { return }
+                guard powerRevisions[device.id] == revision else { continue }
+                setPowerState(snapshot.isOn, for: device.id)
+            } catch {
+                guard session == sessionRevision, batchID == powerBatchID, !Task.isCancelled else { return }
+                if !(error is CancellationError), powerRevisions[device.id] == revision {
+                    powerStates.removeValue(forKey: device.id)
+                }
+            }
+        }
+    }
+
+    private func setPowerState(_ value: Bool?, for id: String) {
+        if let value { powerStates[id] = value }
+        else { powerStates.removeValue(forKey: id) }
+    }
+
+    private func scheduleOtherPowerReads() {
+        guard powerReadsAllowed, powerRefreshTaskID == nil, !visiblePanels.isEmpty else { return }
+        schedulePowerRefresh()
+    }
+
+    /// Capture the current batch before yielding, so a caller can await even a
+    /// batch that is invalidated by a later session change.
+    func waitForPowerRefresh(timeout: Duration = .seconds(5)) -> Task<Bool, Never> {
+        let task = powerRefreshTask
+        return Task {
+            guard let task else { return true }
+            return await withCheckedContinuation { continuation in
+                let waiter = PowerRefreshWaiter(continuation)
+                Task {
+                    await task.value
+                    await waiter.finish(true)
+                }
+                Task {
+                    try? await Task.sleep(for: timeout)
+                    await waiter.finish(false)
+                }
+            }
+        }
+    }
+
+    private func schedulePowerRefresh() {
+        guard powerReadsAllowed, powerRefreshTaskID == nil else { return }
+        let taskID = UUID()
+        powerRefreshTaskID = taskID
+        powerRefreshTask = Task { [weak self] in
+            await self?.refreshDevicePowerStates()
+            if self?.powerRefreshTaskID == taskID { self?.powerRefreshTaskID = nil; self?.powerRefreshTask = nil }
+        }
+    }
+
     func panelVisibilityChanged(id: UUID, visible: Bool) {
         if visible { visiblePanels.insert(id) } else { visiblePanels.remove(id) }
         if visiblePanels.isEmpty {
             pollingTask?.cancel()
             pollingTask = nil
+            powerReadsAllowed = false
+            powerRefreshTask?.cancel()
+            powerRefreshTask = nil
+            powerRefreshTaskID = nil
+            powerBatchID = nil
         } else if pollingTask == nil {
+            powerReadsAllowed = true
             pollingTask = Task { [weak self] in
                 await self?.refresh()
                 while !Task.isCancelled {
@@ -231,5 +353,19 @@ final class AppModel: ObservableObject {
                 }
             }
         }
+    }
+}
+
+private actor PowerRefreshWaiter {
+    private var continuation: CheckedContinuation<Bool, Never>?
+
+    init(_ continuation: CheckedContinuation<Bool, Never>) {
+        self.continuation = continuation
+    }
+
+    func finish(_ result: Bool) {
+        guard let continuation else { return }
+        self.continuation = nil
+        continuation.resume(returning: result)
     }
 }

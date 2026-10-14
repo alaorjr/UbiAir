@@ -21,12 +21,14 @@ final class AppPreferences: ObservableObject {
     @Published private(set) var requiresApproval = false
     @Published var loginMessage: String?
 
-    init(defaults: UserDefaults = .standard) {
+    init(defaults: UserDefaults = .standard, legacyDomain: String? = PreferencesMigration.legacyDomain) {
         self.defaults = defaults
-        PreferencesMigration.copyLegacyValues(
-            from: defaults.persistentDomain(forName: PreferencesMigration.legacyDomain),
-            to: defaults
-        )
+        if let legacyDomain {
+            PreferencesMigration.copyLegacyValues(
+                from: defaults.persistentDomain(forName: legacyDomain),
+                to: defaults
+            )
+        }
 
         let savedCountry = defaults.string(forKey: Key.countryCode)
         self.countryCode = savedCountry.flatMap { $0.isEmpty ? nil : $0 } ?? "BR"

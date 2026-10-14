@@ -23,6 +23,12 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSPopoverDelegate {
     private let model = AppModel()
     private let popover = NSPopover()
     private var statusItem: NSStatusItem?
+    private var localMouseMonitor: Any?
+    private var globalMouseMonitor: Any?
+    private var isStableSmokeTest: Bool { CommandLine.arguments.contains("--ui-smoke-test") }
+    private var isDismissalTest: Bool { CommandLine.arguments.contains("--ui-dismissal-test") }
+    private var menuTrackingObserver: NSObjectProtocol?
+    private var menuWasClosed = false
 
     func applicationDidFinishLaunching(_ notification: Notification) {
         prepareInterface()
@@ -40,6 +46,14 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSPopoverDelegate {
         popover.behavior = .transient
         popover.animates = true
         popover.delegate = self
+        if isDismissalTest {
+            menuTrackingObserver = NotificationCenter.default.addObserver(forName: NSMenu.didEndTrackingNotification, object: nil, queue: .main) { [weak self] _ in
+                MainActor.assumeIsolated {
+                    self?.menuWasClosed = true
+                    FileHandle.standardError.write(Data("UI dismissal: menu fechado; aguardando clique fora.\n".utf8))
+                }
+            }
+        }
 
         let item = NSStatusBar.system.statusItem(withLength: NSStatusItem.squareLength)
         statusItem = item
@@ -54,18 +68,19 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSPopoverDelegate {
         }
 
         Task {
-            if CommandLine.arguments.contains("--ui-smoke-test"), !CommandLine.arguments.contains("--demo") {
+            if (isStableSmokeTest || isDismissalTest), !CommandLine.arguments.contains("--demo") {
                 reportFailure("O teste visual exige --demo.")
             }
             await model.restoreSession()
             // Local review opens the same anchored popover used by a menu-bar click.
             if CommandLine.arguments.contains("--ui-smoke-test") { await verifyPopover() }
-            else if CommandLine.arguments.contains("--show-panel") { await showWhenReady() }
+            else if isDismissalTest || CommandLine.arguments.contains("--show-panel") { await showWhenReady() }
         }
     }
 
     private func verifyPopover() async {
         guard model.isDemo else { reportFailure("O teste visual exige --demo.") }
+        guard await model.waitForPowerRefresh().value else { reportFailure("A leitura dos aparelhos fictícios não concluiu.") }
         // Keep the snapshot stable while the test runner owns desktop focus.
         // Ordinary use keeps the transient behavior configured above.
         popover.behavior = .applicationDefined
@@ -130,6 +145,54 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSPopoverDelegate {
     }
 
     func popoverShouldDetach(_ popover: NSPopover) -> Bool { false }
+
+    func popoverDidShow(_ notification: Notification) {
+        guard !isStableSmokeTest else { return }
+        stopDismissalMonitors()
+        let clicks: NSEvent.EventTypeMask = [.leftMouseDown, .rightMouseDown, .otherMouseDown]
+        // AppKit delivers event-monitor callbacks on the main thread. Keep these
+        // independent of NSPopover's transient tracking, which NSMenu can interrupt.
+        localMouseMonitor = NSEvent.addLocalMonitorForEvents(matching: clicks) { [weak self] event in
+            MainActor.assumeIsolated {
+                guard let self, self.popover.isShown else { return }
+                let panelWindow = self.popover.contentViewController?.view.window
+                let window = event.window
+                let belongsToPanel = window != nil && (window === panelWindow || window?.parent === panelWindow)
+                let isStatusButton = window != nil && window === self.statusItem?.button?.window
+                let isMenu = window?.level == .popUpMenu
+                if !belongsToPanel && !isStatusButton && !isMenu { self.popover.performClose(nil) }
+            }
+            return event
+        }
+        globalMouseMonitor = NSEvent.addGlobalMonitorForEvents(matching: clicks) { [weak self] _ in
+            MainActor.assumeIsolated { self?.popover.performClose(nil) }
+        }
+    }
+
+    func popoverDidClose(_ notification: Notification) {
+        stopDismissalMonitors()
+        if isDismissalTest, menuWasClosed {
+            FileHandle.standardError.write(Data("UI dismissal passou: painel fechou após usar o menu e clicar fora.\n".utf8))
+            NSApplication.shared.terminate(nil)
+        }
+    }
+
+    func applicationDidResignActive(_ notification: Notification) {
+        if !isStableSmokeTest { popover.performClose(nil) }
+    }
+
+    func applicationWillTerminate(_ notification: Notification) {
+        stopDismissalMonitors()
+        if let menuTrackingObserver { NotificationCenter.default.removeObserver(menuTrackingObserver) }
+    }
+
+    private func stopDismissalMonitors() {
+        if let localMouseMonitor { NSEvent.removeMonitor(localMouseMonitor) }
+        if let globalMouseMonitor { NSEvent.removeMonitor(globalMouseMonitor) }
+        localMouseMonitor = nil
+        globalMouseMonitor = nil
+    }
+
     func applicationShouldTerminateAfterLastWindowClosed(_ sender: NSApplication) -> Bool { false }
 
     private func installMainMenu() {
