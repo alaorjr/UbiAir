@@ -124,10 +124,10 @@ final class AppModelPowerTests: XCTestCase {
     }
 
     private func makeModel() -> AppModel {
-        let suite = "ai.ubiquu.power-tests.\(UUID().uuidString)"
+        let suite = "\(AppIdentity.bundleIdentifier).power-tests.\(UUID().uuidString)"
         let defaults = UserDefaults(suiteName: suite)!
         defer { defaults.removePersistentDomain(forName: suite) }
-        return AppModel(preferences: AppPreferences(defaults: defaults, legacyDomain: nil))
+        return AppModel(preferences: AppPreferences(defaults: defaults, previousDomain: nil))
     }
 
     private func awaitPowerRefresh(_ model: AppModel) async -> Bool {

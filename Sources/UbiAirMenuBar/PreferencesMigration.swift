@@ -1,15 +1,15 @@
 import Foundation
 
-/// Imports only the two supported preferences from the original app, without
-/// overwriting a UbiAir choice or copying credentials and unrelated defaults.
+/// Imports only supported preferences from the previous UbiAir domain, without
+/// overwriting current choices or copying credentials and unrelated defaults.
 enum PreferencesMigration {
-    static let legacyDomain = "br.com.alaorjr.LGThinQ"
+    static let previousPreferencesDomain = AppIdentity.previousPreferencesDomain
 
-    static func copyLegacyValues(from legacy: [String: Any]?, to defaults: UserDefaults) {
-        guard let legacy else { return }
+    static func copyPreviousValues(from previous: [String: Any]?, to defaults: UserDefaults) {
+        guard let previous else { return }
 
         if defaults.object(forKey: "countryCode") == nil,
-           let rawCountry = legacy["countryCode"] as? String {
+           let rawCountry = previous["countryCode"] as? String {
             let country = rawCountry.trimmingCharacters(in: .whitespacesAndNewlines).uppercased()
             if country.utf8.count == 2, country.utf8.allSatisfy({ (65...90).contains($0) }) {
                 defaults.set(country, forKey: "countryCode")
@@ -17,7 +17,7 @@ enum PreferencesMigration {
         }
 
         if defaults.object(forKey: "clientID") == nil,
-           let clientID = legacy["clientID"] as? String,
+           let clientID = previous["clientID"] as? String,
            UUID(uuidString: clientID) != nil {
             defaults.set(clientID, forKey: "clientID")
         }

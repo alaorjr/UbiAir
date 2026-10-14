@@ -1,6 +1,6 @@
 {
   "project": "UbiAir para macOS",
-  "updatedAt": "2026-10-14T09:47:30-03:00",
+  "updatedAt": "2026-10-14T13:15:51-03:00",
   "goal": "Controlar os aparelhos LG pela barra de menus, com SwiftUI e a API oficial ThinQ Connect.",
   "features": [
     {
@@ -92,9 +92,9 @@
     {
       "id": "F11",
       "title": "Identidade UbiAir",
-      "description": "Nome UbiAir, identidade ai.ubiquu e migração das preferências.",
+      "description": "Nome UbiAir e migração das preferências; identidade revisada em F16.",
       "status": "done",
-      "note": "UbiAir 0.1.2 (build 3), Bundle Identifier e serviço Chaves ai.ubiquu. País/Client ID legados migrados quando ausentes; PAT será informado novamente pelo usuário. 13 testes offline, release, assinatura e smoke do popover passaram; nome e metadados conferidos, app normal iniciado.",
+      "note": "UbiAir 0.1.2 (build 3), Bundle Identifier e serviço Chaves transitórios, revisados em F16. País/Client ID legados migrados quando ausentes; PAT será informado novamente pelo usuário. 13 testes offline, release, assinatura e smoke do popover passaram; nome e metadados conferidos, app normal iniciado.",
       "updatedAt": "2026-10-14T08:40:16-03:00"
     },
     {
@@ -128,9 +128,31 @@
       "status": "done",
       "note": "Popover 360×740 (antes 360×650), área central até 650 e indicadores ocultos. Build release, assinatura e smoke passaram; confirmação após comando e duas oscilações expandidas conferidas na demonstração, tudo visível sem precisar rolar.",
       "updatedAt": "2026-10-14T09:47:30-03:00"
+    },
+    {
+      "id": "F16",
+      "title": "Identidade final ai.ubiquu.UbiAir",
+      "description": "Eliminar o identificador pessoal e alinhar código, testes, bundle e documentação.",
+      "status": "done",
+      "note": "UbiAir 0.1.5 (build 6), Bundle Identifier e serviço Chaves ai.ubiquu.UbiAir. Identificador pessoal retirado, artefatos antigos eliminados e documentação alinhada. Recompilação limpa, 19 testes offline, assinatura, metadados e smoke em demonstração passaram. PAT deve ser informado novamente na interface; histórico Git preservado.",
+      "updatedAt": "2026-10-14T13:15:51-03:00"
     }
   ],
   "events": [
+    {
+      "at": "2026-10-14T13:15:51-03:00",
+      "feature": "F16",
+      "title": "Identidade final ai.ubiquu.UbiAir",
+      "action": "done",
+      "note": "UbiAir 0.1.5 (build 6), Bundle Identifier e serviço Chaves ai.ubiquu.UbiAir. Identificador pessoal retirado, artefatos antigos eliminados e documentação alinhada. Recompilação limpa, 19 testes offline, assinatura, metadados e smoke em demonstração passaram. PAT deve ser informado novamente na interface; histórico Git preservado."
+    },
+    {
+      "at": "2026-10-14T11:21:47-03:00",
+      "feature": "F16",
+      "title": "Identidade final ai.ubiquu.UbiAir",
+      "action": "start",
+      "note": "Adotar exatamente ai.ubiquu.UbiAir, eliminar identificador pessoal e referências obsoletas do checkout e revisar artefatos gerados."
+    },
     {
       "at": "2026-10-14T09:47:30-03:00",
       "feature": "F15",
@@ -192,14 +214,14 @@
       "feature": "F11",
       "title": "Identidade UbiAir",
       "action": "done",
-      "note": "UbiAir 0.1.2 (build 3), Bundle Identifier e serviço Chaves ai.ubiquu. País/Client ID legados migrados quando ausentes; PAT será informado novamente pelo usuário. 13 testes offline, release, assinatura e smoke do popover passaram; nome e metadados conferidos, app normal iniciado."
+      "note": "UbiAir 0.1.2 (build 3), Bundle Identifier e serviço Chaves transitórios, revisados em F16. País/Client ID legados migrados quando ausentes; PAT será informado novamente pelo usuário. 13 testes offline, release, assinatura e smoke do popover passaram; nome e metadados conferidos, app normal iniciado."
     },
     {
       "at": "2026-10-14T08:29:00-03:00",
       "feature": "F11",
       "title": "Identidade UbiAir",
       "action": "start",
-      "note": "Renomear o aplicativo para UbiAir com Bundle Identifier ai.ubiquu; adaptar build, interface e documentação, preservando configuração anterior."
+      "note": "Renomear o aplicativo para UbiAir com identificador transitório (revisado em F16); adaptar build, interface e documentação, preservando configuração anterior."
     },
     {
       "at": "2026-10-13T16:37:49-03:00",

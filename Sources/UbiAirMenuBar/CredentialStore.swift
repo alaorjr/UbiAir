@@ -3,7 +3,7 @@ import Security
 
 @MainActor
 final class CredentialStore {
-    private let service = "ai.ubiquu"
+    private let service = AppIdentity.bundleIdentifier
     private let account = "personal-access-token"
 
     func loadToken() throws -> String? {

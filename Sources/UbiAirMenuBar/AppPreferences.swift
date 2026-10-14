@@ -21,11 +21,11 @@ final class AppPreferences: ObservableObject {
     @Published private(set) var requiresApproval = false
     @Published var loginMessage: String?
 
-    init(defaults: UserDefaults = .standard, legacyDomain: String? = PreferencesMigration.legacyDomain) {
+    init(defaults: UserDefaults = .standard, previousDomain: String? = PreferencesMigration.previousPreferencesDomain) {
         self.defaults = defaults
-        if let legacyDomain {
-            PreferencesMigration.copyLegacyValues(
-                from: defaults.persistentDomain(forName: legacyDomain),
+        if let previousDomain {
+            PreferencesMigration.copyPreviousValues(
+                from: defaults.persistentDomain(forName: previousDomain),
                 to: defaults
             )
         }

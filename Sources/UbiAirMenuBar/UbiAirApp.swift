@@ -96,7 +96,6 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSPopoverDelegate {
             reportFailure("O painel não está visível junto ao ícone.")
         }
         let previewPath = ProcessInfo.processInfo.environment["UBIAIR_UI_PREVIEW_PATH"]
-            ?? ProcessInfo.processInfo.environment["LGTHINQ_UI_PREVIEW_PATH"]
         if let path = previewPath, let view = popover.contentViewController?.view {
             view.layoutSubtreeIfNeeded()
             guard let bitmap = view.bitmapImageRepForCachingDisplay(in: view.bounds) else { reportFailure("Não foi possível renderizar a prévia.") }

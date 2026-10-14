@@ -2,7 +2,7 @@
 
 UbiAir é um aplicativo nativo SwiftUI para controlar ar-condicionado LG pela barra de menus.
 Inspirado na experiência do [TCLimate](https://github.com/umarz317/TCLimate), usa cliente
-Swift original para o serviço LG ThinQ Connect, sem executar Python. Versão 0.1.4 (build 5).
+Swift original para o serviço LG ThinQ Connect, sem executar Python. Versão 0.1.5 (build 6).
 
 ## Executar
 
@@ -34,7 +34,6 @@ avaliação visual automatizada, `--show-panel` abre esse mesmo popover após a 
 `--ui-smoke-test` exige `--demo`, verifica abertura, fechamento e reabertura do popover e
 encerra o app; opcionalmente, `UBIAIR_UI_PREVIEW_PATH=/caminho/arquivo.png` salva uma captura
 somente da view do painel. Exemplo: `open build/UbiAir.app --args --demo --ui-smoke-test`.
-`LGTHINQ_UI_PREVIEW_PATH` segue aceito como nome legado se a variável UbiAir não estiver definida.
 Não há janela de prévia separada. Encerre o app antes de iniciar com argumentos diferentes.
 
 O painel é um popover nativo ancorado ao ícone de floco de neve e não pode ser destacado.
@@ -45,7 +44,7 @@ controles de temperatura e cartões de modo/ventilação. Oscilação aparece qu
 os controles são determinados pelas capabilities de cada aparelho. Sleep e energia não são
 expostos sem suporte confirmado pela API.
 
-## Recursos da versão 0.1.4
+## Recursos da versão 0.1.5
 
 - Seleção de ar-condicionado, estado de energia e temperatura ambiente/alvo.
 - Painel ampliado para caber confirmação de comandos e direção do ar expandida, sem barra de rolagem.
@@ -99,10 +98,12 @@ Progress               Painel local e histórico das etapas
 
 ## Compatibilidade e distribuição
 
-O nome do aplicativo é **UbiAir** e seu Bundle Identifier é **`ai.ubiquu`**.
-Na primeira abertura, país e Client ID válidos da versão anterior são importados quando
-esses campos ainda não existem na configuração nova. Escolhas feitas no UbiAir têm prioridade.
-O serviço do Chaves também usa `ai.ubiquu`. A credencial da versão anterior não é importada;
+O nome do aplicativo é **UbiAir** e seu Bundle Identifier é **`ai.ubiquu.UbiAir`**.
+Na primeira abertura, país e Client ID válidos da versão anterior do UbiAir são importados
+quando esses campos ainda não existem na configuração nova. Escolhas atuais têm prioridade.
+O domínio anterior é consultado apenas para essas preferências; o identificador pessoal
+da versão inicial foi retirado do código.
+O serviço do Chaves também usa `ai.ubiquu.UbiAir`. A credencial da versão anterior não é importada;
 informe e salve novamente seu PAT na interface do UbiAir. O registro antigo fica no Chaves,
 mas não é consultado por este aplicativo. A nova assinatura pode exigir autorização do Chaves
 pelo usuário. Login Items não é ativado automaticamente pela migração; confira essa opção
@@ -122,9 +123,6 @@ identidade estável no Chaves e preparar distribuição com certificado:
 ```sh
 UBIAIR_CODESIGN_IDENTITY='Nome do certificado' bash Scripts/build-app.sh
 ```
-
-`LGTHINQ_CODESIGN_IDENTITY` continua aceito como variável legada quando
-`UBIAIR_CODESIGN_IDENTITY` não estiver definida.
 
 Alterar a identidade/assinatura de builds pode impedir o acesso ao token salvo anteriormente.
 Para início automático, mova o aplicativo para seu local definitivo em Aplicativos antes de

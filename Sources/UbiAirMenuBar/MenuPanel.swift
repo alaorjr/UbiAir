@@ -329,7 +329,7 @@ struct MenuPanel: View {
         HStack {
             Text(model.isDemo ? "Demonstração · aparelhos fictícios" : "UbiAir · ThinQ Connect").font(.caption2).foregroundStyle(.secondary)
             Spacer()
-            Text("0.1.4").font(.caption2).foregroundStyle(.secondary)
+            Text(AppIdentity.version).font(.caption2).foregroundStyle(.secondary)
         }
     }
 
