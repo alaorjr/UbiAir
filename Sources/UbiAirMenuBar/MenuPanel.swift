@@ -44,7 +44,7 @@ struct MenuPanel: View {
         HStack(spacing: 9) {
             Image(systemName: "snowflake").font(.system(size: 17, weight: .semibold)).foregroundStyle(.blue)
             VStack(alignment: .leading, spacing: 1) {
-                Text("LGThinQ").font(.system(size: 14, weight: .semibold))
+                Text("UbiAir").font(.system(size: 14, weight: .semibold))
                 Text("Controle de ar-condicionado").font(.caption2).foregroundStyle(.secondary)
             }
             Spacer()
@@ -62,7 +62,7 @@ struct MenuPanel: View {
                         .disabled(model.isSending)
                 }
                 Divider()
-                Button("Encerrar LGThinQ", systemImage: "power") { NSApplication.shared.terminate(nil) }
+                Button("Encerrar UbiAir", systemImage: "power") { NSApplication.shared.terminate(nil) }
             } label: { Image(systemName: "gearshape").font(.system(size: 16)) }
                 .menuStyle(.borderlessButton).fixedSize().accessibilityLabel("Opções")
         }
@@ -320,9 +320,9 @@ struct MenuPanel: View {
 
     private var footer: some View {
         HStack {
-            Text(model.isDemo ? "Demonstração · aparelhos fictícios" : "LG ThinQ Connect").font(.caption2).foregroundStyle(.secondary)
+            Text(model.isDemo ? "Demonstração · aparelhos fictícios" : "UbiAir · ThinQ Connect").font(.caption2).foregroundStyle(.secondary)
             Spacer()
-            Text("0.1.1").font(.caption2).foregroundStyle(.secondary)
+            Text("0.1.2").font(.caption2).foregroundStyle(.secondary)
         }
     }
 

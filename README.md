@@ -1,8 +1,8 @@
-# LGThinQ para macOS
+# UbiAir para macOS
 
-Aplicativo nativo SwiftUI para controlar ar-condicionado LG ThinQ pela barra de menus.
-Inspirado na experiência do [TCLimate](https://github.com/umarz317/TCLimate), com cliente
-Swift original para a API oficial ThinQ Connect, sem executar Python. Versão 0.1.1.
+UbiAir é um aplicativo nativo SwiftUI para controlar ar-condicionado LG pela barra de menus.
+Inspirado na experiência do [TCLimate](https://github.com/umarz317/TCLimate), usa cliente
+Swift original para o serviço LG ThinQ Connect, sem executar Python. Versão 0.1.2 (build 3).
 
 ## Executar
 
@@ -11,7 +11,7 @@ Requisitos: macOS 14 ou posterior, Xcode/Command Line Tools com Swift 6 ou poste
 ```sh
 swift test
 bash Scripts/build-app.sh
-open build/LGThinQ.app
+open build/UbiAir.app
 ```
 
 O ícone de floco de neve aparece na barra de menus. Abra o painel, informe seu
@@ -23,14 +23,15 @@ Conectar e atualizar fazem apenas leitura; comandos são enviados ao clicar nos 
 Para experimentar sem token e sem conexão com aparelhos reais:
 
 ```sh
-open build/LGThinQ.app --args --demo
+open build/UbiAir.app --args --demo
 ```
 
 `--demo` usa dois aparelhos fictícios; abra o painel pelo ícone da barra de menus. Para
 avaliação visual automatizada, `--show-panel` abre esse mesmo popover após a inicialização.
 `--ui-smoke-test` exige `--demo`, verifica abertura, fechamento e reabertura do popover e
-encerra o app; opcionalmente, `LGTHINQ_UI_PREVIEW_PATH=/caminho/arquivo.png` salva uma captura
-somente da view do painel. Exemplo: `open build/LGThinQ.app --args --demo --ui-smoke-test`.
+encerra o app; opcionalmente, `UBIAIR_UI_PREVIEW_PATH=/caminho/arquivo.png` salva uma captura
+somente da view do painel. Exemplo: `open build/UbiAir.app --args --demo --ui-smoke-test`.
+`LGTHINQ_UI_PREVIEW_PATH` segue aceito como nome legado se a variável UbiAir não estiver definida.
 Não há janela de prévia separada. Encerre o app antes de iniciar com argumentos diferentes.
 
 O painel é um popover nativo ancorado ao ícone de floco de neve e não pode ser destacado.
@@ -40,7 +41,7 @@ controles de temperatura e cartões de modo/ventilação. Oscilação aparece qu
 os controles são determinados pelas capabilities de cada aparelho. Sleep e energia não são
 expostos sem suporte confirmado pela API.
 
-## Recursos da versão 0.1.1
+## Recursos da versão 0.1.2
 
 - Seleção de ar-condicionado, estado de energia e temperatura ambiente/alvo.
 - Ligar/desligar, ajustar temperatura, modo, ventilação e oscilação, quando o perfil permitir.
@@ -81,14 +82,24 @@ O repositório Git é local, branch `main`; não existe remoto configurado.
 
 ```text
 Sources/ThinQCore        Cliente REST, JSON flexível, capacidades, comandos e demonstração
-Sources/LGThinQMenuBar   SwiftUI, coordenação de sessão, Chaves, preferências e Login Items
+Sources/UbiAirMenuBar    SwiftUI, coordenação de sessão, Chaves, preferências e Login Items
 Tests/ThinQCoreTests    Testes offline com transporte simulado
+Tests/UbiAirTests       Migração de preferências em domínios isolados
 Scripts                Empacotamento e atualização do progresso
 Docs                   Pesquisa, decisões e continuidade
 Progress               Painel local e histórico das etapas
 ```
 
 ## Compatibilidade e distribuição
+
+O nome do aplicativo é **UbiAir** e seu Bundle Identifier é **`ai.ubiquu`**.
+Na primeira abertura, país e Client ID válidos da versão anterior são importados quando
+esses campos ainda não existem na configuração nova. Escolhas feitas no UbiAir têm prioridade.
+O serviço do Chaves também usa `ai.ubiquu`. A credencial da versão anterior não é importada;
+informe e salve novamente seu PAT na interface do UbiAir. O registro antigo fica no Chaves,
+mas não é consultado por este aplicativo. A nova assinatura pode exigir autorização do Chaves
+pelo usuário. Login Items não é ativado automaticamente pela migração; confira essa opção
+após instalar UbiAir no local definitivo.
 
 O protocolo segue o [SDK oficial pythinqconnect](https://github.com/thinq-connect/pythinqconnect).
 Veja [Docs/API-RESEARCH.md](Docs/API-RESEARCH.md) para fontes e limitações. Os testes offline
@@ -102,11 +113,14 @@ O build padrão usa assinatura ad hoc para teste local, sem notarização. Para 
 identidade estável no Chaves e preparar distribuição com certificado:
 
 ```sh
-LGTHINQ_CODESIGN_IDENTITY='Nome do certificado' bash Scripts/build-app.sh
+UBIAIR_CODESIGN_IDENTITY='Nome do certificado' bash Scripts/build-app.sh
 ```
+
+`LGTHINQ_CODESIGN_IDENTITY` continua aceito como variável legada quando
+`UBIAIR_CODESIGN_IDENTITY` não estiver definida.
 
 Alterar a identidade/assinatura de builds pode impedir o acesso ao token salvo anteriormente.
 Para início automático, mova o aplicativo para seu local definitivo em Aplicativos antes de
 habilitar a opção. Assinatura Developer ID e notarização são etapas posteriores de distribuição.
 
-LGThinQ é um projeto independente, sem vínculo ou endosso da LG Electronics.
+UbiAir é um projeto independente, sem vínculo ou endosso da LG Electronics.

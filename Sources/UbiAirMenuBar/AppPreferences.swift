@@ -23,6 +23,10 @@ final class AppPreferences: ObservableObject {
 
     init(defaults: UserDefaults = .standard) {
         self.defaults = defaults
+        PreferencesMigration.copyLegacyValues(
+            from: defaults.persistentDomain(forName: PreferencesMigration.legacyDomain),
+            to: defaults
+        )
 
         let savedCountry = defaults.string(forKey: Key.countryCode)
         self.countryCode = savedCountry.flatMap { $0.isEmpty ? nil : $0 } ?? "BR"
@@ -49,7 +53,7 @@ final class AppPreferences: ObservableObject {
             }
             refreshLaunchAtLogin()
             if requiresApproval {
-                loginMessage = "O macOS precisa da sua aprovação. Ative o LGThinQ em Ajustes do Sistema > Geral > Itens de Início de Sessão."
+                loginMessage = "O macOS precisa da sua aprovação. Ative o UbiAir em Ajustes do Sistema > Geral > Itens de Início de Sessão."
             }
         } catch {
             refreshLaunchAtLogin()
@@ -63,13 +67,13 @@ final class AppPreferences: ObservableObject {
         requiresApproval = status == .requiresApproval
 
         if requiresApproval, loginMessage == nil {
-            loginMessage = "O macOS precisa da sua aprovação. Ative o LGThinQ em Ajustes do Sistema > Geral > Itens de Início de Sessão."
+            loginMessage = "O macOS precisa da sua aprovação. Ative o UbiAir em Ajustes do Sistema > Geral > Itens de Início de Sessão."
         } else if !requiresApproval, loginMessage?.hasPrefix("O macOS precisa da sua aprovação") == true {
             loginMessage = nil
         }
 
         if status == .notFound {
-            loginMessage = "O macOS não encontrou este app no caminho atual. Mova LGThinQ.app para Aplicativos e tente novamente."
+            loginMessage = "O macOS não encontrou este app no caminho atual. Mova UbiAir.app para Aplicativos e tente novamente."
         }
     }
 }

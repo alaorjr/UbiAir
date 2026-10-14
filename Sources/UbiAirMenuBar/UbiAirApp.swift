@@ -4,7 +4,7 @@ import SwiftUI
 
 @main
 @MainActor
-enum LGThinQApp {
+enum UbiAirApp {
     static func main() {
         let application = NSApplication.shared
         let delegate = AppDelegate()
@@ -44,11 +44,11 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSPopoverDelegate {
         let item = NSStatusBar.system.statusItem(withLength: NSStatusItem.squareLength)
         statusItem = item
         if let button = item.button {
-            let image = NSImage(systemSymbolName: "snowflake", accessibilityDescription: "LGThinQ")
+            let image = NSImage(systemSymbolName: "snowflake", accessibilityDescription: "UbiAir")
             image?.isTemplate = true
             button.image = image
-            button.toolTip = "LGThinQ"
-            button.setAccessibilityLabel("LGThinQ")
+            button.toolTip = "UbiAir"
+            button.setAccessibilityLabel("UbiAir")
             button.target = self
             button.action = #selector(togglePopover(_:))
         }
@@ -79,7 +79,9 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSPopoverDelegate {
         guard statusItem?.button?.window?.isVisible == true, window.isVisible else {
             reportFailure("O painel não está visível junto ao ícone.")
         }
-        if let path = ProcessInfo.processInfo.environment["LGTHINQ_UI_PREVIEW_PATH"], let view = popover.contentViewController?.view {
+        let previewPath = ProcessInfo.processInfo.environment["UBIAIR_UI_PREVIEW_PATH"]
+            ?? ProcessInfo.processInfo.environment["LGTHINQ_UI_PREVIEW_PATH"]
+        if let path = previewPath, let view = popover.contentViewController?.view {
             view.layoutSubtreeIfNeeded()
             guard let bitmap = view.bitmapImageRepForCachingDisplay(in: view.bounds) else { reportFailure("Não foi possível renderizar a prévia.") }
             view.cacheDisplay(in: view.bounds, to: bitmap)
@@ -91,7 +93,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSPopoverDelegate {
         guard !popover.isShown else { reportFailure("O popover não fechou.") }
         togglePopover(nil)
         guard popover.isShown else { reportFailure("O popover não reabriu.") }
-        FileHandle.standardError.write(Data("UI smoke passou: painel ancorado, sem barra de título, fechamento e reabertura.\n".utf8))
+        FileHandle.standardError.write(Data("UbiAir UI smoke passou: painel ancorado, sem barra de título, fechamento e reabertura.\n".utf8))
         NSApplication.shared.terminate(nil)
     }
 
@@ -123,7 +125,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSPopoverDelegate {
         guard let button = statusItem?.button else { return }
         NSApplication.shared.activate(ignoringOtherApps: true)
         popover.show(relativeTo: button.bounds, of: button, preferredEdge: .minY)
-        popover.contentViewController?.view.window?.title = "LGThinQ"
+        popover.contentViewController?.view.window?.title = "UbiAir"
         popover.contentViewController?.view.window?.makeKey()
     }
 
@@ -132,8 +134,8 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSPopoverDelegate {
 
     private func installMainMenu() {
         let menu = NSMenu()
-        let applicationMenu = NSMenu(title: "LGThinQ")
-        applicationMenu.addItem(withTitle: "Encerrar LGThinQ", action: #selector(NSApplication.terminate(_:)), keyEquivalent: "q")
+        let applicationMenu = NSMenu(title: "UbiAir")
+        applicationMenu.addItem(withTitle: "Encerrar UbiAir", action: #selector(NSApplication.terminate(_:)), keyEquivalent: "q")
         let applicationItem = NSMenuItem()
         applicationItem.submenu = applicationMenu
         menu.addItem(applicationItem)
