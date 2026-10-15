@@ -1,6 +1,6 @@
 {
   "project": "UbiAir para macOS",
-  "updatedAt": "2026-10-14T22:40:35-03:00",
+  "updatedAt": "2026-10-15T07:55:41-03:00",
   "goal": "Controlar os aparelhos LG pela barra de menus, com SwiftUI e a API oficial ThinQ Connect.",
   "features": [
     {
@@ -200,9 +200,31 @@
       "status": "done",
       "note": "UbiAir 0.1.10/build 11: retirado step visual para restaurar trilho contínuo sem marcas. Prévia, temperaturas permitidas e envio ao soltar preservados. Builds SPM/Xcode universal, assinatura/verificador e smoke do popover passaram; sem comando real.",
       "updatedAt": "2026-10-14T22:40:35-03:00"
+    },
+    {
+      "id": "F25",
+      "title": "Exploração do ícone para a loja",
+      "description": "Três propostas visuais de ícone para comparação e escolha do usuário.",
+      "status": "done",
+      "note": "Três propostas PNG geradas com image_gen, inspecionadas visualmente e salvas com prompts em Docs/Design/AppIcon-2026-10-15. Escolha/refinamento pelo usuário é a próxima etapa; catálogo e versão do app preservados.",
+      "updatedAt": "2026-10-15T07:55:41-03:00"
     }
   ],
   "events": [
+    {
+      "at": "2026-10-15T07:55:41-03:00",
+      "feature": "F25",
+      "title": "Exploração do ícone para a loja",
+      "action": "done",
+      "note": "Três propostas PNG geradas com image_gen, inspecionadas visualmente e salvas com prompts em Docs/Design/AppIcon-2026-10-15. Escolha/refinamento pelo usuário é a próxima etapa; catálogo e versão do app preservados."
+    },
+    {
+      "at": "2026-10-15T07:53:28-03:00",
+      "feature": "F25",
+      "title": "Exploração do ícone para a loja",
+      "action": "start",
+      "note": "Gerar três propostas originais de ícone UbiAir: monograma de vento, aparelho estilizado e floco refinado; preservar o ícone atual."
+    },
     {
       "at": "2026-10-14T22:40:35-03:00",
       "feature": "F24",
