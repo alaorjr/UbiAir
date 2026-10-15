@@ -1,6 +1,6 @@
 {
   "project": "UbiAir para macOS",
-  "updatedAt": "2026-10-14T22:35:23-03:00",
+  "updatedAt": "2026-10-14T22:40:35-03:00",
   "goal": "Controlar os aparelhos LG pela barra de menus, com SwiftUI e a API oficial ThinQ Connect.",
   "features": [
     {
@@ -189,12 +189,41 @@
       "id": "F23",
       "title": "Feedback ao arrastar a temperatura",
       "description": "Exibir a temperatura escolhida durante o arraste do slider, antes do envio.",
-      "status": "pending",
-      "note": "UbiAir 0.1.9/build 10: temperatura principal acompanha o arraste em destaque e mostra Solte para ajustar. Passos/exceções/unidade respeitados; comando ao soltar e prévia cancelada ao trocar aparelho/ocultar painel. 37 testes, builds SPM/Xcode universal, assinatura, verificador e smoke passaram. Confirmação manual da UX aguarda usuário; nenhum comando real enviado.",
-      "updatedAt": "2026-10-14T22:35:23-03:00"
+      "status": "done",
+      "note": "Usuário aprovou a funcionalidade de prévia da temperatura durante o arraste. Pediu somente retirar as marcações visuais do slider; ajuste em F24.",
+      "updatedAt": "2026-10-14T22:39:41-03:00"
+    },
+    {
+      "id": "F24",
+      "title": "Slider sem marcações",
+      "description": "Restaurar trilho contínuo e limpo, mantendo a prévia da temperatura.",
+      "status": "done",
+      "note": "UbiAir 0.1.10/build 11: retirado step visual para restaurar trilho contínuo sem marcas. Prévia, temperaturas permitidas e envio ao soltar preservados. Builds SPM/Xcode universal, assinatura/verificador e smoke do popover passaram; sem comando real.",
+      "updatedAt": "2026-10-14T22:40:35-03:00"
     }
   ],
   "events": [
+    {
+      "at": "2026-10-14T22:40:35-03:00",
+      "feature": "F24",
+      "title": "Slider sem marcações",
+      "action": "done",
+      "note": "UbiAir 0.1.10/build 11: retirado step visual para restaurar trilho contínuo sem marcas. Prévia, temperaturas permitidas e envio ao soltar preservados. Builds SPM/Xcode universal, assinatura/verificador e smoke do popover passaram; sem comando real."
+    },
+    {
+      "at": "2026-10-14T22:39:41-03:00",
+      "feature": "F24",
+      "title": "Slider sem marcações",
+      "action": "start",
+      "note": "Remover o step visual do Slider; preservar arredondamento para temperaturas permitidas, prévia e envio ao soltar."
+    },
+    {
+      "at": "2026-10-14T22:39:41-03:00",
+      "feature": "F23",
+      "title": "Feedback ao arrastar a temperatura",
+      "action": "done",
+      "note": "Usuário aprovou a funcionalidade de prévia da temperatura durante o arraste. Pediu somente retirar as marcações visuais do slider; ajuste em F24."
+    },
     {
       "at": "2026-10-14T22:35:23-03:00",
       "feature": "F23",

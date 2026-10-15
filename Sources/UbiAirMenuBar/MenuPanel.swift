@@ -262,7 +262,7 @@ struct MenuPanel: View {
                     .accessibilityLabel("Diminuir temperatura")
                 if allowed.count > 1, let current = state.targetTemperature {
                     let displayedIndex = min(max(Int((isEditingTemperature ? sliderValue : sliderValueFor(current, allowed: allowed)).rounded()), 0), allowed.count - 1)
-                    Slider(value: Binding(get: { isEditingTemperature ? sliderValue : sliderValueFor(current, allowed: allowed) }, set: { sliderValue = $0 }), in: 0...Double(allowed.count - 1), step: 1, onEditingChanged: { editing in
+                    Slider(value: Binding(get: { isEditingTemperature ? sliderValue : sliderValueFor(current, allowed: allowed) }, set: { sliderValue = $0 }), in: 0...Double(allowed.count - 1), onEditingChanged: { editing in
                         if editing {
                             sliderValue = sliderValueFor(current, allowed: allowed)
                             isEditingTemperature = true
