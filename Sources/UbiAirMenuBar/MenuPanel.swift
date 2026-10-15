@@ -237,9 +237,14 @@ struct MenuPanel: View {
         if let range, range.step > 0 {
             let allowed = allowedTemperatures(range)
             HStack(spacing: 8) {
-                Button { changeTemperature(-range.step, state: state, range: range) } label: { Image(systemName: "minus").frame(width: 29, height: 29) }
-                    .buttonStyle(.plain).background(Color.primary.opacity(0.06), in: Circle())
-                    .disabled(!model.canControl || state.isOn != true || nextTemperature(-range.step, state: state, range: range) == nil)
+                Button { changeTemperature(-range.step, state: state, range: range) } label: {
+                    Image(systemName: "minus")
+                        .frame(width: 29, height: 29)
+                        .background(Color.primary.opacity(0.06), in: Circle())
+                        .contentShape(Rectangle())
+                }
+                    .buttonStyle(.plain)
+                    .disabled(!model.canControl || state.isOn != true || Self.nextTemperature(-range.step, state: state, range: range) == nil)
                     .accessibilityLabel("Diminuir temperatura")
                 if allowed.count > 1, let current = state.targetTemperature {
                     Slider(value: Binding(get: { isEditingTemperature ? sliderValue : sliderValueFor(current, allowed: allowed) }, set: { sliderValue = $0 }), in: 0...Double(allowed.count - 1), onEditingChanged: { editing in
@@ -258,9 +263,14 @@ struct MenuPanel: View {
                         .font(.caption2).foregroundStyle(.secondary)
                     Spacer(minLength: 2)
                 }
-                Button { changeTemperature(range.step, state: state, range: range) } label: { Image(systemName: "plus").frame(width: 29, height: 29) }
-                    .buttonStyle(.plain).background(Color.primary.opacity(0.06), in: Circle())
-                    .disabled(!model.canControl || state.isOn != true || nextTemperature(range.step, state: state, range: range) == nil)
+                Button { changeTemperature(range.step, state: state, range: range) } label: {
+                    Image(systemName: "plus")
+                        .frame(width: 29, height: 29)
+                        .background(Color.primary.opacity(0.06), in: Circle())
+                        .contentShape(Rectangle())
+                }
+                    .buttonStyle(.plain)
+                    .disabled(!model.canControl || state.isOn != true || Self.nextTemperature(range.step, state: state, range: range) == nil)
                     .accessibilityLabel("Aumentar temperatura")
             }
             .padding(.top, 1)
@@ -320,12 +330,13 @@ struct MenuPanel: View {
         Double(allowed.enumerated().min(by: { abs($0.element - value) < abs($1.element - value) })?.offset ?? 0)
     }
 
-    private func changeTemperature(_ delta: Double, state: ACState, range: TemperatureCapability) {
-        guard let desired = nextTemperature(delta, state: state, range: range) else { return }
-        Task { await model.send(.temperature(desired)) }
+    @discardableResult
+    func changeTemperature(_ delta: Double, state: ACState, range: TemperatureCapability) -> Task<Void, Never>? {
+        guard let desired = Self.nextTemperature(delta, state: state, range: range) else { return nil }
+        return Task { await model.send(.temperature(desired)) }
     }
 
-    private func nextTemperature(_ delta: Double, state: ACState, range: TemperatureCapability) -> Double? {
+    static func nextTemperature(_ delta: Double, state: ACState, range: TemperatureCapability) -> Double? {
         guard let current = state.targetTemperature, range.step > 0 else { return nil }
         let position = (current - range.minimum) / range.step
         let direction: Double = delta > 0 ? 1 : -1

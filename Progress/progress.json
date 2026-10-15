@@ -1,6 +1,6 @@
 {
   "project": "UbiAir para macOS",
-  "updatedAt": "2026-10-14T22:14:55-03:00",
+  "updatedAt": "2026-10-14T22:29:37-03:00",
   "goal": "Controlar os aparelhos LG pela barra de menus, com SwiftUI e a API oficial ThinQ Connect.",
   "features": [
     {
@@ -176,9 +176,31 @@
       "status": "pending",
       "note": "O usuário já validou a versão anterior em três aparelhos (F08). Novo sandbox passou em demo, Chaves fictício e HTTPS público; falta validar aparelhos reais, PAT após reabrir/instalar, fechamento após menus e Login Items com assinatura escolhida.",
       "updatedAt": "2026-10-14T22:14:55-03:00"
+    },
+    {
+      "id": "F22",
+      "title": "Botão de diminuir temperatura",
+      "description": "Investigar clique ativo sem resposta e validar redução, limites e exceções.",
+      "status": "pending",
+      "note": "UbiAir 0.1.8/build 9: labels de menos/mais com área clicável integral; cálculo e handler 23 → 22 → 21 → 22 confirmados com serviços fictícios. 37 testes, builds SPM/Xcode, assinatura, verificador sandbox e smoke passaram. Usuário relatou ausência de envio/erro; hipótese de hit testing, clique e efeito real aguardam confirmação. Comentário local de prévia preservado.",
+      "updatedAt": "2026-10-14T22:29:37-03:00"
     }
   ],
   "events": [
+    {
+      "at": "2026-10-14T22:29:37-03:00",
+      "feature": "F22",
+      "title": "Botão de diminuir temperatura",
+      "action": "pending",
+      "note": "UbiAir 0.1.8/build 9: labels de menos/mais com área clicável integral; cálculo e handler 23 → 22 → 21 → 22 confirmados com serviços fictícios. 37 testes, builds SPM/Xcode, assinatura, verificador sandbox e smoke passaram. Usuário relatou ausência de envio/erro; hipótese de hit testing, clique e efeito real aguardam confirmação. Comentário local de prévia preservado."
+    },
+    {
+      "at": "2026-10-14T22:25:09-03:00",
+      "feature": "F22",
+      "title": "Botão de diminuir temperatura",
+      "action": "start",
+      "note": "Usuário relata botão menos ativo sem resposta; verificar cálculo, envio e região clicável, preservar comentário local de prévia e validar apenas em demonstração."
+    },
     {
       "at": "2026-10-14T22:14:55-03:00",
       "feature": "F21",
