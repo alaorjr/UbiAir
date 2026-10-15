@@ -6,7 +6,7 @@ Swift original para o serviço LG ThinQ Connect, sem executar Python. Versão 0.
 
 ## Preparação para a Mac App Store
 
-Há um target macOS em `UbiAir.xcodeproj`, com sandbox, rede de saída, ícone provisório,
+Há um target macOS em `UbiAir.xcodeproj`, com sandbox, rede de saída, ícone Ar em casa,
 manifesto e build universal. A preparação e os itens que dependem da conta Apple ativa
 estão em [Docs/APP-STORE.md](Docs/APP-STORE.md).
 

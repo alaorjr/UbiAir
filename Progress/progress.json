@@ -1,6 +1,6 @@
 {
   "project": "UbiAir para macOS",
-  "updatedAt": "2026-10-15T07:55:41-03:00",
+  "updatedAt": "2026-10-15T08:08:44-03:00",
   "goal": "Controlar os aparelhos LG pela barra de menus, com SwiftUI e a API oficial ThinQ Connect.",
   "features": [
     {
@@ -208,9 +208,31 @@
       "status": "done",
       "note": "Três propostas PNG geradas com image_gen, inspecionadas visualmente e salvas com prompts em Docs/Design/AppIcon-2026-10-15. Escolha/refinamento pelo usuário é a próxima etapa; catálogo e versão do app preservados.",
       "updatedAt": "2026-10-15T07:55:41-03:00"
+    },
+    {
+      "id": "F26",
+      "title": "Ícone final Ar em casa no Xcode",
+      "description": "Finalizar a opção 2, gerar o catálogo macOS completo e validar no build Xcode.",
+      "status": "done",
+      "note": "Opção 2 aplicada: matriz 1024 RGBA sRGB e dez PNGs AppIcon, contorno Swift autorizado. Debug Xcode passou após alinhar arquitetura ativa; Release universal/verificador, catálogo compilado, ICNS legado e assinatura passaram. Procedimento em Docs/Design/AppIcon-2026-10-15/PRODUCTION.md.",
+      "updatedAt": "2026-10-15T08:08:44-03:00"
     }
   ],
   "events": [
+    {
+      "at": "2026-10-15T08:08:44-03:00",
+      "feature": "F26",
+      "title": "Ícone final Ar em casa no Xcode",
+      "action": "done",
+      "note": "Opção 2 aplicada: matriz 1024 RGBA sRGB e dez PNGs AppIcon, contorno Swift autorizado. Debug Xcode passou após alinhar arquitetura ativa; Release universal/verificador, catálogo compilado, ICNS legado e assinatura passaram. Procedimento em Docs/Design/AppIcon-2026-10-15/PRODUCTION.md."
+    },
+    {
+      "at": "2026-10-15T07:57:31-03:00",
+      "feature": "F26",
+      "title": "Ícone final Ar em casa no Xcode",
+      "action": "start",
+      "note": "Opção 2 escolhida: finalizar arte sem fundo externo, exportar dez PNGs macOS de 16 a 1024 px e configurar/validar AppIcon no Xcode."
+    },
     {
       "at": "2026-10-15T07:55:41-03:00",
       "feature": "F25",
