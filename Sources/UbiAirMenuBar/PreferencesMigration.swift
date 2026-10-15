@@ -3,7 +3,12 @@ import Foundation
 /// Imports only supported preferences from the previous UbiAir domain, without
 /// overwriting current choices or copying credentials and unrelated defaults.
 enum PreferencesMigration {
+    #if UBIAIR_SANDBOX
+    // The sandboxed app reads only its own preferences container.
+    static let previousPreferencesDomain: String? = nil
+    #else
     static let previousPreferencesDomain = AppIdentity.previousPreferencesDomain
+    #endif
 
     static func copyPreviousValues(from previous: [String: Any]?, to defaults: UserDefaults) {
         guard let previous else { return }

@@ -1,6 +1,6 @@
 {
   "project": "UbiAir para macOS",
-  "updatedAt": "2026-10-14T13:42:35-03:00",
+  "updatedAt": "2026-10-14T22:14:55-03:00",
   "goal": "Controlar os aparelhos LG pela barra de menus, com SwiftUI e a API oficial ThinQ Connect.",
   "features": [
     {
@@ -144,9 +144,83 @@
       "status": "done",
       "note": "UbiAir 0.1.6 (build 7): mensagens e recuperação para offline, rede/timeout, PAT, permissões, quota/API e conta sem ar-condicionados. Bloqueio após falha, pausa por autenticação/quota, sem reenviar comandos. 32 testes offline, release, assinatura e smoke em cenários fictícios passaram; identidade carregada conferida. Inspeção pela ferramenta nativa teve cache/timeout, documentado em VALIDATION.md.",
       "updatedAt": "2026-10-14T13:42:35-03:00"
+    },
+    {
+      "id": "F18",
+      "title": "Projeto Xcode e sandbox",
+      "description": "Target macOS, assinatura local e permissões mínimas para preparar a Mac App Store.",
+      "status": "done",
+      "note": "UbiAir 0.1.7/build 8: projeto e scheme Xcode, sandbox com somente saída de rede, Release universal e Debug sem conta ativa compilados. Assinatura, ícone e metadados verificados; storage fictício, HTTPS público e popover normal/offline passaram. 32 testes offline sem falhas. Validação real do novo build fica em F21.",
+      "updatedAt": "2026-10-14T22:14:55-03:00"
+    },
+    {
+      "id": "F19",
+      "title": "Recursos e privacidade para distribuição",
+      "description": "Ícone, metadados, manifesto e rascunhos de suporte/privacidade/revisão.",
+      "status": "done",
+      "note": "Recursos preparados: ícone original provisório reprodutível, catálogo macOS, Info.plist, manifesto para preferências próprias, avisos de terceiros e rascunhos de política/suporte/App Review. Plists/JSON/recursos compilados conferidos. Publicação e declarações finais de privacidade pendentes em F20.",
+      "updatedAt": "2026-10-14T22:14:55-03:00"
+    },
+    {
+      "id": "F20",
+      "title": "Assinatura e submissão à Mac App Store",
+      "description": "Conta ativa, certificados, TestFlight, cadastro comercial e revisão da Apple.",
+      "status": "pending",
+      "note": "Aguardar conta Apple Developer ativa, certificados/provisionamento, preço e cadastro fiscal/bancário; finalizar URLs públicas, privacidade, material e vídeo, TestFlight e revisão. Nada submetido ou publicado.",
+      "updatedAt": "2026-10-14T22:14:55-03:00"
+    },
+    {
+      "id": "F21",
+      "title": "Validação da versão sandboxed",
+      "description": "Aparelhos reais, Chaves após reabrir/instalar e Login Items com a assinatura escolhida.",
+      "status": "pending",
+      "note": "O usuário já validou a versão anterior em três aparelhos (F08). Novo sandbox passou em demo, Chaves fictício e HTTPS público; falta validar aparelhos reais, PAT após reabrir/instalar, fechamento após menus e Login Items com assinatura escolhida.",
+      "updatedAt": "2026-10-14T22:14:55-03:00"
     }
   ],
   "events": [
+    {
+      "at": "2026-10-14T22:14:55-03:00",
+      "feature": "F21",
+      "title": "Validação da versão sandboxed",
+      "action": "pending",
+      "note": "O usuário já validou a versão anterior em três aparelhos (F08). Novo sandbox passou em demo, Chaves fictício e HTTPS público; falta validar aparelhos reais, PAT após reabrir/instalar, fechamento após menus e Login Items com assinatura escolhida."
+    },
+    {
+      "at": "2026-10-14T22:14:55-03:00",
+      "feature": "F20",
+      "title": "Assinatura e submissão à Mac App Store",
+      "action": "pending",
+      "note": "Aguardar conta Apple Developer ativa, certificados/provisionamento, preço e cadastro fiscal/bancário; finalizar URLs públicas, privacidade, material e vídeo, TestFlight e revisão. Nada submetido ou publicado."
+    },
+    {
+      "at": "2026-10-14T22:14:55-03:00",
+      "feature": "F19",
+      "title": "Recursos e privacidade para distribuição",
+      "action": "done",
+      "note": "Recursos preparados: ícone original provisório reprodutível, catálogo macOS, Info.plist, manifesto para preferências próprias, avisos de terceiros e rascunhos de política/suporte/App Review. Plists/JSON/recursos compilados conferidos. Publicação e declarações finais de privacidade pendentes em F20."
+    },
+    {
+      "at": "2026-10-14T22:14:55-03:00",
+      "feature": "F18",
+      "title": "Projeto Xcode e sandbox",
+      "action": "done",
+      "note": "UbiAir 0.1.7/build 8: projeto e scheme Xcode, sandbox com somente saída de rede, Release universal e Debug sem conta ativa compilados. Assinatura, ícone e metadados verificados; storage fictício, HTTPS público e popover normal/offline passaram. 32 testes offline sem falhas. Validação real do novo build fica em F21."
+    },
+    {
+      "at": "2026-10-14T16:23:37-03:00",
+      "feature": "F19",
+      "title": "Recursos e privacidade para distribuição",
+      "action": "start",
+      "note": "Preparar ícone próprio provisório, metadados e manifesto; documentar privacidade e revisão sem publicar ou cadastrar serviços."
+    },
+    {
+      "at": "2026-10-14T16:23:37-03:00",
+      "feature": "F18",
+      "title": "Projeto Xcode e sandbox",
+      "action": "start",
+      "note": "Preparar target macOS no Xcode e sandbox com saída de rede; compilar localmente sem conta ativa ou certificados de distribuição."
+    },
     {
       "at": "2026-10-14T13:42:35-03:00",
       "feature": "F17",

@@ -2,7 +2,24 @@
 
 UbiAir é um aplicativo nativo SwiftUI para controlar ar-condicionado LG pela barra de menus.
 Inspirado na experiência do [TCLimate](https://github.com/umarz317/TCLimate), usa cliente
-Swift original para o serviço LG ThinQ Connect, sem executar Python. Versão 0.1.6 (build 7).
+Swift original para o serviço LG ThinQ Connect, sem executar Python. Versão 0.1.7 (build 8).
+
+## Preparação para a Mac App Store
+
+Há um target macOS em `UbiAir.xcodeproj`, com sandbox, rede de saída, ícone provisório,
+manifesto e build universal. A preparação e os itens que dependem da conta Apple ativa
+estão em [Docs/APP-STORE.md](Docs/APP-STORE.md).
+
+```sh
+bash Scripts/build-sandbox-app.sh
+python3 Scripts/verify-distribution.py
+open build/XcodeSandbox/Build/Products/Release/UbiAir.app
+```
+
+A assinatura desse script é ad hoc local, sem envio à loja. O sandbox usa seu próprio
+container de preferências; país/PAT podem precisar ser configurados novamente na primeira
+execução. Não executa a importação do domínio anterior. Chaves e início automático com a
+assinatura final ainda precisam ser validados. Política e material de loja são rascunhos.
 
 ## Executar
 
@@ -48,7 +65,7 @@ controles de temperatura e cartões de modo/ventilação. Oscilação aparece qu
 os controles são determinados pelas capabilities de cada aparelho. Sleep e energia não são
 expostos sem suporte confirmado pela API.
 
-## Recursos da versão 0.1.6
+## Recursos da versão 0.1.7
 
 - Seleção de ar-condicionado, estado de energia e temperatura ambiente/alvo.
 - Mensagens e recuperação para aparelho offline, internet/timeout, PAT inválido, permissões
@@ -123,7 +140,7 @@ da API não são exibidas nas mensagens ao usuário.
 ## Compatibilidade e distribuição
 
 O nome do aplicativo é **UbiAir** e seu Bundle Identifier é **`ai.ubiquu.UbiAir`**.
-Na primeira abertura, país e Client ID válidos da versão anterior do UbiAir são importados
+Na versão Swift Package de desenvolvimento, país e Client ID válidos da versão anterior do UbiAir são importados
 quando esses campos ainda não existem na configuração nova. Escolhas atuais têm prioridade.
 O domínio anterior é consultado apenas para essas preferências; o identificador pessoal
 da versão inicial foi retirado do código.

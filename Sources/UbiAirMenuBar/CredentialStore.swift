@@ -3,8 +3,12 @@ import Security
 
 @MainActor
 final class CredentialStore {
-    private let service = AppIdentity.bundleIdentifier
+    private let service: String
     private let account = "personal-access-token"
+
+    init(service: String = AppIdentity.bundleIdentifier) {
+        self.service = service
+    }
 
     func loadToken() throws -> String? {
         var query = baseQuery

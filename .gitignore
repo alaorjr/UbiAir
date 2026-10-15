@@ -14,3 +14,4 @@ xcuserdata/
 *.mobileprovision
 secrets/
 local-settings.json
+Config/Local.xcconfig

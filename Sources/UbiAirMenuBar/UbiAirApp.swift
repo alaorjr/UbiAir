@@ -70,13 +70,23 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSPopoverDelegate {
 
         Task {
             let args = CommandLine.arguments
-            if (isStableSmokeTest || isDismissalTest || args.contains("--demo-error")), !args.contains("--demo") {
+            if (isStableSmokeTest || isDismissalTest || args.contains("--demo-error") || args.contains("--storage-smoke-test") || args.contains("--network-smoke-test")), !args.contains("--demo") {
                 reportFailure("O teste visual exige --demo.")
             }
             if let index = args.firstIndex(of: "--demo-error") {
                 guard args.indices.contains(index + 1), DemoProblemScenario(rawValue: args[index + 1]) != nil else {
                     reportFailure("Cenário de demonstração inválido.")
                 }
+            }
+            if args.contains("--storage-smoke-test") {
+                guard verifyLocalStorage() else { reportFailure("Falha na verificação isolada das preferências ou do Chaves.") }
+                NSApplication.shared.terminate(nil)
+                return
+            }
+            if args.contains("--network-smoke-test") {
+                guard await verifyPublicConnection() else { reportFailure("Não foi possível verificar a saída HTTPS do sandbox.") }
+                NSApplication.shared.terminate(nil)
+                return
             }
             await model.restoreSession()
             // Local review opens the same anchored popover used by a menu-bar click.
@@ -128,6 +138,65 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSPopoverDelegate {
     private func reportFailure(_ message: String) -> Never {
         FileHandle.standardError.write(Data("UI smoke falhou: \(message)\n".utf8))
         exit(1)
+    }
+
+    private func verifyLocalStorage() -> Bool {
+        // Unique fixture namespaces; never consult or mutate the user's PAT.
+        let namespace = "\(AppIdentity.bundleIdentifier).storage-test.\(UUID().uuidString)"
+        guard let defaults = UserDefaults(suiteName: namespace) else {
+            return false
+        }
+        let store = CredentialStore(service: namespace)
+        defer {
+            defaults.removePersistentDomain(forName: namespace)
+            try? store.deleteToken()
+        }
+        do {
+            let first = AppPreferences(defaults: defaults, previousDomain: nil)
+            first.countryCode = "US"
+            let second = AppPreferences(defaults: defaults, previousDomain: nil)
+            guard first.clientID == second.clientID, second.countryCode == "US" else {
+                return false
+            }
+            #if UBIAIR_SANDBOX
+            guard PreferencesMigration.previousPreferencesDomain == nil else {
+                return false
+            }
+            #endif
+            try store.saveToken("fictional-storage-fixture")
+            guard try store.loadToken() == "fictional-storage-fixture" else {
+                return false
+            }
+            try store.saveToken("updated-fictional-fixture")
+            guard try store.loadToken() == "updated-fictional-fixture" else {
+                return false
+            }
+            try store.deleteToken()
+            guard try store.loadToken() == nil else {
+                return false
+            }
+            FileHandle.standardError.write(Data("UbiAir storage smoke passou: preferências e Chaves isolados, sem PAT real.\n".utf8))
+            return true
+        } catch {
+            FileHandle.standardError.write(Data("Storage smoke falhou: não foi possível validar o Chaves com esta assinatura.\n".utf8))
+            return false
+        }
+    }
+
+    private func verifyPublicConnection() async -> Bool {
+        // Public HTTPS page only: no PAT, cookies, account or device requests.
+        let configuration = URLSessionConfiguration.ephemeral
+        configuration.httpCookieStorage = nil
+        let session = URLSession(configuration: configuration)
+        defer { session.invalidateAndCancel() }
+        var request = URLRequest(url: URL(string: "https://connect-pat.lgthinq.com/login")!)
+        request.timeoutInterval = 15
+        do {
+            let (_, response) = try await session.data(for: request)
+            guard let http = response as? HTTPURLResponse, (200..<400).contains(http.statusCode) else { return false }
+            FileHandle.standardError.write(Data("UbiAir network smoke passou: HTTPS público, sem credenciais.\n".utf8))
+            return true
+        } catch { return false }
     }
 
     @objc private func togglePopover(_ sender: Any?) {
