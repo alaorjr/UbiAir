@@ -10,6 +10,13 @@ Há um target macOS em `UbiAir.xcodeproj`, com sandbox, rede de saída, ícone A
 manifesto e build universal. A preparação e os itens que dependem da conta Apple ativa
 estão em [Docs/APP-STORE.md](Docs/APP-STORE.md).
 
+Para compilar na interface Xcode, abra `UbiAir.xcodeproj`, esquema **UbiAir**,
+destino **My Mac**, e pressione `⌘B`. O bundle Debug sandboxed é atualizado em
+`build/XcodeSandbox/Build/Products/Debug/UbiAir.app`; `⌘R` também o executa.
+O esquema `UbiAirMenuBar` pertence ao pacote e não gera esse bundle.
+
+Para gerar o Release universal com assinatura local:
+
 ```sh
 bash Scripts/build-sandbox-app.sh
 python3 Scripts/verify-distribution.py

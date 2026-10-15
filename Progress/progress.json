@@ -1,6 +1,6 @@
 {
   "project": "UbiAir para macOS",
-  "updatedAt": "2026-10-15T08:08:44-03:00",
+  "updatedAt": "2026-10-15T08:23:37-03:00",
   "goal": "Controlar os aparelhos LG pela barra de menus, com SwiftUI e a API oficial ThinQ Connect.",
   "features": [
     {
@@ -216,9 +216,31 @@
       "status": "done",
       "note": "Opção 2 aplicada: matriz 1024 RGBA sRGB e dez PNGs AppIcon, contorno Swift autorizado. Debug Xcode passou após alinhar arquitetura ativa; Release universal/verificador, catálogo compilado, ICNS legado e assinatura passaram. Procedimento em Docs/Design/AppIcon-2026-10-15/PRODUCTION.md.",
       "updatedAt": "2026-10-15T08:08:44-03:00"
+    },
+    {
+      "id": "F27",
+      "title": "Caminho de build sandbox no Xcode",
+      "description": "Alinhar o build da interface Xcode com a pasta local XcodeSandbox e explicar Debug/Release.",
+      "status": "done",
+      "note": "CONFIGURATION_BUILD_DIR alinhado à pasta local por configuração. Projeto UbiAir aberto/esquema UbiAir selecionado; BuildProject atualizou Debug de 0.1.7/8 para 0.1.10/11. Assinatura/sandbox conferidos e Release universal/verificador passaram. Guia distingue pacote, Debug e Release.",
+      "updatedAt": "2026-10-15T08:23:37-03:00"
     }
   ],
   "events": [
+    {
+      "at": "2026-10-15T08:23:37-03:00",
+      "feature": "F27",
+      "title": "Caminho de build sandbox no Xcode",
+      "action": "done",
+      "note": "CONFIGURATION_BUILD_DIR alinhado à pasta local por configuração. Projeto UbiAir aberto/esquema UbiAir selecionado; BuildProject atualizou Debug de 0.1.7/8 para 0.1.10/11. Assinatura/sandbox conferidos e Release universal/verificador passaram. Guia distingue pacote, Debug e Release."
+    },
+    {
+      "at": "2026-10-15T08:17:29-03:00",
+      "feature": "F27",
+      "title": "Caminho de build sandbox no Xcode",
+      "action": "start",
+      "note": "Corrigir saída do build Xcode: Debug local estava na versão 0.1.7 enquanto Release do script está em 0.1.10; alinhar DerivedData ao build/XcodeSandbox e validar Cmd+B."
+    },
     {
       "at": "2026-10-15T08:08:44-03:00",
       "feature": "F26",
