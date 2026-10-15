@@ -1,6 +1,6 @@
 {
   "project": "UbiAir para macOS",
-  "updatedAt": "2026-10-14T22:29:37-03:00",
+  "updatedAt": "2026-10-14T22:35:23-03:00",
   "goal": "Controlar os aparelhos LG pela barra de menus, com SwiftUI e a API oficial ThinQ Connect.",
   "features": [
     {
@@ -181,12 +181,41 @@
       "id": "F22",
       "title": "Botão de diminuir temperatura",
       "description": "Investigar clique ativo sem resposta e validar redução, limites e exceções.",
+      "status": "done",
+      "note": "O usuário confirmou que o botão menos voltou a funcionar na versão 0.1.8. Área clicável integral validada manualmente; 37 testes offline e builds já passaram.",
+      "updatedAt": "2026-10-14T22:32:36-03:00"
+    },
+    {
+      "id": "F23",
+      "title": "Feedback ao arrastar a temperatura",
+      "description": "Exibir a temperatura escolhida durante o arraste do slider, antes do envio.",
       "status": "pending",
-      "note": "UbiAir 0.1.8/build 9: labels de menos/mais com área clicável integral; cálculo e handler 23 → 22 → 21 → 22 confirmados com serviços fictícios. 37 testes, builds SPM/Xcode, assinatura, verificador sandbox e smoke passaram. Usuário relatou ausência de envio/erro; hipótese de hit testing, clique e efeito real aguardam confirmação. Comentário local de prévia preservado.",
-      "updatedAt": "2026-10-14T22:29:37-03:00"
+      "note": "UbiAir 0.1.9/build 10: temperatura principal acompanha o arraste em destaque e mostra Solte para ajustar. Passos/exceções/unidade respeitados; comando ao soltar e prévia cancelada ao trocar aparelho/ocultar painel. 37 testes, builds SPM/Xcode universal, assinatura, verificador e smoke passaram. Confirmação manual da UX aguarda usuário; nenhum comando real enviado.",
+      "updatedAt": "2026-10-14T22:35:23-03:00"
     }
   ],
   "events": [
+    {
+      "at": "2026-10-14T22:35:23-03:00",
+      "feature": "F23",
+      "title": "Feedback ao arrastar a temperatura",
+      "action": "pending",
+      "note": "UbiAir 0.1.9/build 10: temperatura principal acompanha o arraste em destaque e mostra Solte para ajustar. Passos/exceções/unidade respeitados; comando ao soltar e prévia cancelada ao trocar aparelho/ocultar painel. 37 testes, builds SPM/Xcode universal, assinatura, verificador e smoke passaram. Confirmação manual da UX aguarda usuário; nenhum comando real enviado."
+    },
+    {
+      "at": "2026-10-14T22:32:36-03:00",
+      "feature": "F23",
+      "title": "Feedback ao arrastar a temperatura",
+      "action": "start",
+      "note": "Mostrar a temperatura de prévia ao arrastar, respeitar os valores permitidos e enviar somente ao soltar; preservar área clicável e comentário local."
+    },
+    {
+      "at": "2026-10-14T22:32:36-03:00",
+      "feature": "F22",
+      "title": "Botão de diminuir temperatura",
+      "action": "done",
+      "note": "O usuário confirmou que o botão menos voltou a funcionar na versão 0.1.8. Área clicável integral validada manualmente; 37 testes offline e builds já passaram."
+    },
     {
       "at": "2026-10-14T22:29:37-03:00",
       "feature": "F22",

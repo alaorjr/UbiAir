@@ -41,9 +41,18 @@ struct MenuPanel: View {
         }
         .frame(width: PanelLayout.width)
         .background(.regularMaterial)
-        .background(PanelVisibilityReader { visible in model.panelVisibilityChanged(id: panelID, visible: visible) })
+        .background(PanelVisibilityReader { visible in
+            if !visible { isEditingTemperature = false }
+            model.panelVisibilityChanged(id: panelID, visible: visible)
+        })
         .onAppear { country = preferences.countryCode; preferences.refreshLaunchAtLogin() }
-        .onDisappear { model.panelVisibilityChanged(id: panelID, visible: false) }
+        .onDisappear {
+            isEditingTemperature = false
+            model.panelVisibilityChanged(id: panelID, visible: false)
+        }
+        .onChange(of: model.selectedID) { _, _ in
+            isEditingTemperature = false
+        }
     }
 
     private var header: some View {
@@ -185,15 +194,20 @@ struct MenuPanel: View {
                 }
                 AirConditionerIllustration(isOn: enabled, target: temperature(state.targetTemperature, unit: state.temperatureUnit), reduceMotion: reduceMotion)
                     .frame(height: 112)
+                let preview = temperaturePreview(state, range: capabilities.temperature)
                 HStack(alignment: .firstTextBaseline, spacing: 6) {
-                    Text(temperature(state.targetTemperature, unit: state.temperatureUnit))
+                    Text(temperature(preview ?? state.targetTemperature, unit: state.temperatureUnit))
                         .font(.system(size: 40, weight: .light, design: .rounded)).monospacedDigit()
+                        .foregroundStyle(isEditingTemperature ? Color.accentColor : Color.primary)
                     Spacer()
                     Label(temperature(state.currentTemperature, unit: state.temperatureUnit), systemImage: "thermometer.medium")
                         .font(.caption).foregroundStyle(.secondary)
                 }
                 temperatureControl(state, range: capabilities.temperature)
-                if let message = model.commandMessage {
+                if isEditingTemperature {
+                    Text("Solte para ajustar").font(.caption)
+                        .foregroundStyle(.secondary).frame(maxWidth: .infinity, alignment: .leading)
+                } else if let message = model.commandMessage {
                     HStack(spacing: 6) { if model.isSending { ProgressView().controlSize(.mini) } else { Image(systemName: "checkmark.circle") }; Text(message).font(.caption) }
                         .foregroundStyle(.secondary).frame(maxWidth: .infinity, alignment: .leading)
                 }
@@ -247,16 +261,24 @@ struct MenuPanel: View {
                     .disabled(!model.canControl || state.isOn != true || Self.nextTemperature(-range.step, state: state, range: range) == nil)
                     .accessibilityLabel("Diminuir temperatura")
                 if allowed.count > 1, let current = state.targetTemperature {
-                    Slider(value: Binding(get: { isEditingTemperature ? sliderValue : sliderValueFor(current, allowed: allowed) }, set: { sliderValue = $0 }), in: 0...Double(allowed.count - 1), onEditingChanged: { editing in
-                        isEditingTemperature = editing
-                        guard !editing, model.canControl, state.isOn == true else { return }
+                    let displayedIndex = min(max(Int((isEditingTemperature ? sliderValue : sliderValueFor(current, allowed: allowed)).rounded()), 0), allowed.count - 1)
+                    Slider(value: Binding(get: { isEditingTemperature ? sliderValue : sliderValueFor(current, allowed: allowed) }, set: { sliderValue = $0 }), in: 0...Double(allowed.count - 1), step: 1, onEditingChanged: { editing in
+                        if editing {
+                            sliderValue = sliderValueFor(current, allowed: allowed)
+                            isEditingTemperature = true
+                            return
+                        }
+                        guard isEditingTemperature else { return }
                         let index = min(max(Int(sliderValue.rounded()), 0), allowed.count - 1)
+                        isEditingTemperature = false
+                        guard model.canControl, state.isOn == true else { return }
                         if abs(allowed[index] - current) > 0.000_001 { Task { await model.send(.temperature(allowed[index])) } }
                     })
                     .onAppear { sliderValue = sliderValueFor(current, allowed: allowed) }
                     .onChange(of: current) { _, value in if !isEditingTemperature { sliderValue = sliderValueFor(value, allowed: allowed) } }
                     .disabled(!model.canControl || state.isOn != true)
                     .accessibilityLabel("Temperatura desejada")
+                    .accessibilityValue(temperature(allowed[displayedIndex], unit: state.temperatureUnit))
                 } else {
                     Spacer(minLength: 2)
                     Text("\(range.minimum.formatted(.number.precision(.fractionLength(0...1))))° — \(range.maximum.formatted(.number.precision(.fractionLength(0...1))))°")
@@ -328,6 +350,14 @@ struct MenuPanel: View {
 
     private func sliderValueFor(_ value: Double, allowed: [Double]) -> Double {
         Double(allowed.enumerated().min(by: { abs($0.element - value) < abs($1.element - value) })?.offset ?? 0)
+    }
+
+    private func temperaturePreview(_ state: ACState, range: TemperatureCapability?) -> Double? {
+        guard isEditingTemperature, let range, state.targetTemperature != nil else { return nil }
+        let allowed = allowedTemperatures(range)
+        guard !allowed.isEmpty else { return nil }
+        let index = min(max(Int(sliderValue.rounded()), 0), allowed.count - 1)
+        return allowed[index]
     }
 
     @discardableResult
