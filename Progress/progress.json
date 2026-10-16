@@ -1,6 +1,6 @@
 {
   "project": "UbiAir para macOS",
-  "updatedAt": "2026-10-16T11:47:31-03:00",
+  "updatedAt": "2026-10-16T11:57:51-03:00",
   "goal": "Controlar os aparelhos LG pela barra de menus, com SwiftUI e a API oficial ThinQ Connect.",
   "features": [
     {
@@ -238,8 +238,8 @@
       "title": "Termos LG PAT e documentação para App Review",
       "description": "Investigar termos oficiais do ThinQ Connect/PAT e preparar evidências, pedido LG e notas para revisão.",
       "status": "done",
-      "note": "Pedido LG atualizado com origem pessoal confirmada (controlar próprios aparelhos pelo Mac) e ausência de envio ao desenvolvedor: PAT, IDs, estados, comandos, histórico e telemetria. Destinos de rede do código conferidos; preservados compra única US$ 0,99, Brasil/expansão internacional e pedido de permissão PAT. Diff check; sem mensagem externa, mudança de produto ou autorização recebida. Nome/contato ainda faltam; F20/F21 pendentes.",
-      "updatedAt": "2026-10-16T11:47:31-03:00"
+      "note": "Comparação Home Assistant incluída: guia confirma ThinQ Connect/PAT individual e LG cita HA como API consumidor. Email pede mesmo enquadramento para UbiAir, incluindo compra única US$ 0,99; reconhecida semelhança sem presumir licença comercial ou Business API obrigatória. Fontes/documentação e diff check; nada enviado. F20/F21 seguem pendentes.",
+      "updatedAt": "2026-10-16T11:57:51-03:00"
     },
     {
       "id": "F30",
@@ -251,6 +251,20 @@
     }
   ],
   "events": [
+    {
+      "at": "2026-10-16T11:57:51-03:00",
+      "feature": "F29",
+      "title": "Termos LG PAT e documentação para App Review",
+      "action": "done",
+      "note": "Comparação Home Assistant incluída: guia confirma ThinQ Connect/PAT individual e LG cita HA como API consumidor. Email pede mesmo enquadramento para UbiAir, incluindo compra única US$ 0,99; reconhecida semelhança sem presumir licença comercial ou Business API obrigatória. Fontes/documentação e diff check; nada enviado. F20/F21 seguem pendentes."
+    },
+    {
+      "at": "2026-10-16T11:57:51-03:00",
+      "feature": "F29",
+      "title": "Termos LG PAT e documentação para App Review",
+      "action": "start",
+      "note": "Comparar UbiAir com integração oficial Home Assistant indicada pelo usuário e comunicado LG; incluir precedente consumidor/PAT sem presumir transferência de autorização comercial."
+    },
     {
       "at": "2026-10-16T11:47:31-03:00",
       "feature": "F29",
