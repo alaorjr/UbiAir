@@ -1,6 +1,6 @@
 {
   "project": "UbiAir para macOS",
-  "updatedAt": "2026-10-15T08:23:37-03:00",
+  "updatedAt": "2026-10-16T10:12:49-03:00",
   "goal": "Controlar os aparelhos LG pela barra de menus, com SwiftUI e a API oficial ThinQ Connect.",
   "features": [
     {
@@ -166,8 +166,8 @@
       "title": "Assinatura e submissão à Mac App Store",
       "description": "Conta ativa, certificados, TestFlight, cadastro comercial e revisão da Apple.",
       "status": "pending",
-      "note": "Aguardar conta Apple Developer ativa, certificados/provisionamento, preço e cadastro fiscal/bancário; finalizar URLs públicas, privacidade, material e vídeo, TestFlight e revisão. Nada submetido ou publicado.",
-      "updatedAt": "2026-10-14T22:14:55-03:00"
+      "note": "Auditoria 16/10/2026: Team já configurado no Release local, mas conta/contratos não consultados. Artefato atual falhou em codesign (CSSMERR_TP_NOT_TRUSTED) e extração avisou entitlements inválidos; investigar assinatura/Archive e validar upload. Faltam URLs e links in-app de privacidade/suporte, declaração de dados, termos LG, vídeo/acesso App Review e material/cadastro. TestFlight recomendado; nenhuma submissão comprovada.",
+      "updatedAt": "2026-10-16T10:12:49-03:00"
     },
     {
       "id": "F21",
@@ -224,9 +224,38 @@
       "status": "done",
       "note": "CONFIGURATION_BUILD_DIR alinhado à pasta local por configuração. Projeto UbiAir aberto/esquema UbiAir selecionado; BuildProject atualizou Debug de 0.1.7/8 para 0.1.10/11. Assinatura/sandbox conferidos e Release universal/verificador passaram. Guia distingue pacote, Debug e Release.",
       "updatedAt": "2026-10-15T08:23:37-03:00"
+    },
+    {
+      "id": "F28",
+      "title": "Auditoria de requisitos da Mac App Store",
+      "description": "Comparar código, artefato e preparação com os requisitos oficiais da Apple.",
+      "status": "done",
+      "note": "Auditoria concluída em Docs/APP-STORE-AUDIT.md com fontes oficiais Apple, revisão estática independente e verificação do artefato atual. Faltam assinatura/Archive válido, privacidade/suporte in-app e públicos, dados da loja, material/vídeo/acesso, termos LG e F21. Verificador falhou em assinatura; sem código alterado, rebuild, PAT ou comandos reais. F20/F21 pendentes.",
+      "updatedAt": "2026-10-16T10:12:49-03:00"
     }
   ],
   "events": [
+    {
+      "at": "2026-10-16T10:12:49-03:00",
+      "feature": "F28",
+      "title": "Auditoria de requisitos da Mac App Store",
+      "action": "done",
+      "note": "Auditoria concluída em Docs/APP-STORE-AUDIT.md com fontes oficiais Apple, revisão estática independente e verificação do artefato atual. Faltam assinatura/Archive válido, privacidade/suporte in-app e públicos, dados da loja, material/vídeo/acesso, termos LG e F21. Verificador falhou em assinatura; sem código alterado, rebuild, PAT ou comandos reais. F20/F21 pendentes."
+    },
+    {
+      "at": "2026-10-16T10:12:49-03:00",
+      "feature": "F20",
+      "title": "Assinatura e submissão à Mac App Store",
+      "action": "pending",
+      "note": "Auditoria 16/10/2026: Team já configurado no Release local, mas conta/contratos não consultados. Artefato atual falhou em codesign (CSSMERR_TP_NOT_TRUSTED) e extração avisou entitlements inválidos; investigar assinatura/Archive e validar upload. Faltam URLs e links in-app de privacidade/suporte, declaração de dados, termos LG, vídeo/acesso App Review e material/cadastro. TestFlight recomendado; nenhuma submissão comprovada."
+    },
+    {
+      "at": "2026-10-16T10:12:06-03:00",
+      "feature": "F28",
+      "title": "Auditoria de requisitos da Mac App Store",
+      "action": "start",
+      "note": "Auditar configuração, artefato Release e pendências de privacidade, App Review e cadastro com fontes oficiais Apple; preservar alterações locais."
+    },
     {
       "at": "2026-10-15T08:23:37-03:00",
       "feature": "F27",
