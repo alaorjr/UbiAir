@@ -1,6 +1,6 @@
 {
   "project": "UbiAir para macOS",
-  "updatedAt": "2026-10-16T10:12:49-03:00",
+  "updatedAt": "2026-10-16T11:08:53-03:00",
   "goal": "Controlar os aparelhos LG pela barra de menus, com SwiftUI e a API oficial ThinQ Connect.",
   "features": [
     {
@@ -166,8 +166,8 @@
       "title": "Assinatura e submissão à Mac App Store",
       "description": "Conta ativa, certificados, TestFlight, cadastro comercial e revisão da Apple.",
       "status": "pending",
-      "note": "Auditoria 16/10/2026: Team já configurado no Release local, mas conta/contratos não consultados. Artefato atual falhou em codesign (CSSMERR_TP_NOT_TRUSTED) e extração avisou entitlements inválidos; investigar assinatura/Archive e validar upload. Faltam URLs e links in-app de privacidade/suporte, declaração de dados, termos LG, vídeo/acesso App Review e material/cadastro. TestFlight recomendado; nenhuma submissão comprovada.",
-      "updatedAt": "2026-10-16T10:12:49-03:00"
+      "note": "Team Release configurado localmente, mas Archive/upload/conta/contratos sem validação; assinatura atual falhou (CSSMERR_TP_NOT_TRUSTED e aviso de entitlements). F29 confirmou restrição PAT LG pessoal/não comercial e consentimento escrito para serviços adicionais não autorizados; pedir confirmação aplicável à distribuição/monetização do UbiAir. Pedido e notas App Review prontos, nada enviado. Privacidade/suporte, dados da loja, material e F21 seguem pendentes.",
+      "updatedAt": "2026-10-16T11:08:53-03:00"
     },
     {
       "id": "F21",
@@ -232,9 +232,38 @@
       "status": "done",
       "note": "Auditoria concluída em Docs/APP-STORE-AUDIT.md com fontes oficiais Apple, revisão estática independente e verificação do artefato atual. Faltam assinatura/Archive válido, privacidade/suporte in-app e públicos, dados da loja, material/vídeo/acesso, termos LG e F21. Verificador falhou em assinatura; sem código alterado, rebuild, PAT ou comandos reais. F20/F21 pendentes.",
       "updatedAt": "2026-10-16T10:12:49-03:00"
+    },
+    {
+      "id": "F29",
+      "title": "Termos LG PAT e documentação para App Review",
+      "description": "Investigar termos oficiais do ThinQ Connect/PAT e preparar evidências, pedido LG e notas para revisão.",
+      "status": "done",
+      "note": "Documentação PAT e FAQ oficial LG lidos no navegador: pessoal/não comercial, consentimento escrito para serviços adicionais não autorizados. Termos gerais e chave fixa documentada conferidos. Criados investigação, pedido LG em inglês e notas App Review com autorização condicionada à prova; revisão técnica independente e diff check. Sem envio, PAT, comandos reais ou alteração de código; consentimento/distribuição permanecem pendentes F20.",
+      "updatedAt": "2026-10-16T11:08:53-03:00"
     }
   ],
   "events": [
+    {
+      "at": "2026-10-16T11:08:53-03:00",
+      "feature": "F29",
+      "title": "Termos LG PAT e documentação para App Review",
+      "action": "done",
+      "note": "Documentação PAT e FAQ oficial LG lidos no navegador: pessoal/não comercial, consentimento escrito para serviços adicionais não autorizados. Termos gerais e chave fixa documentada conferidos. Criados investigação, pedido LG em inglês e notas App Review com autorização condicionada à prova; revisão técnica independente e diff check. Sem envio, PAT, comandos reais ou alteração de código; consentimento/distribuição permanecem pendentes F20."
+    },
+    {
+      "at": "2026-10-16T11:08:53-03:00",
+      "feature": "F20",
+      "title": "Assinatura e submissão à Mac App Store",
+      "action": "pending",
+      "note": "Team Release configurado localmente, mas Archive/upload/conta/contratos sem validação; assinatura atual falhou (CSSMERR_TP_NOT_TRUSTED e aviso de entitlements). F29 confirmou restrição PAT LG pessoal/não comercial e consentimento escrito para serviços adicionais não autorizados; pedir confirmação aplicável à distribuição/monetização do UbiAir. Pedido e notas App Review prontos, nada enviado. Privacidade/suporte, dados da loja, material e F21 seguem pendentes."
+    },
+    {
+      "at": "2026-10-16T11:05:55-03:00",
+      "feature": "F29",
+      "title": "Termos LG PAT e documentação para App Review",
+      "action": "start",
+      "note": "Investigar condições oficiais do PAT e distribuição do cliente macOS direto com token do usuário; preparar pedido LG e material fiel para App Review, sem enviar mensagens ou credenciais."
+    },
     {
       "at": "2026-10-16T10:12:49-03:00",
       "feature": "F28",
