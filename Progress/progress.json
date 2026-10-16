@@ -1,6 +1,6 @@
 {
   "project": "UbiAir para macOS",
-  "updatedAt": "2026-10-16T11:46:45-03:00",
+  "updatedAt": "2026-10-16T11:47:31-03:00",
   "goal": "Controlar os aparelhos LG pela barra de menus, com SwiftUI e a API oficial ThinQ Connect.",
   "features": [
     {
@@ -238,8 +238,8 @@
       "title": "Termos LG PAT e documentação para App Review",
       "description": "Investigar termos oficiais do ThinQ Connect/PAT e preparar evidências, pedido LG e notas para revisão.",
       "status": "done",
-      "note": "Pesquisa e material alinhados ao modelo confirmado: desenvolvedor individual, Brasil inicial em português, inglês e expansão internacional depois; compra única planejada de US$ 0,99 para cobrir desenvolvimento. Pedido LG explicita cobrança e solicita permissão para ambas as fases. Nome legal/contato faltam no rascunho; sem envio ou autorização externa. Documentação conferida com diff check; F20/F21 pendentes.",
-      "updatedAt": "2026-10-16T11:31:26-03:00"
+      "note": "Pedido LG atualizado com origem pessoal confirmada (controlar próprios aparelhos pelo Mac) e ausência de envio ao desenvolvedor: PAT, IDs, estados, comandos, histórico e telemetria. Destinos de rede do código conferidos; preservados compra única US$ 0,99, Brasil/expansão internacional e pedido de permissão PAT. Diff check; sem mensagem externa, mudança de produto ou autorização recebida. Nome/contato ainda faltam; F20/F21 pendentes.",
+      "updatedAt": "2026-10-16T11:47:31-03:00"
     },
     {
       "id": "F30",
@@ -251,6 +251,20 @@
     }
   ],
   "events": [
+    {
+      "at": "2026-10-16T11:47:31-03:00",
+      "feature": "F29",
+      "title": "Termos LG PAT e documentação para App Review",
+      "action": "done",
+      "note": "Pedido LG atualizado com origem pessoal confirmada (controlar próprios aparelhos pelo Mac) e ausência de envio ao desenvolvedor: PAT, IDs, estados, comandos, histórico e telemetria. Destinos de rede do código conferidos; preservados compra única US$ 0,99, Brasil/expansão internacional e pedido de permissão PAT. Diff check; sem mensagem externa, mudança de produto ou autorização recebida. Nome/contato ainda faltam; F20/F21 pendentes."
+    },
+    {
+      "at": "2026-10-16T11:47:09-03:00",
+      "feature": "F29",
+      "title": "Termos LG PAT e documentação para App Review",
+      "action": "start",
+      "note": "Ajustar email LG com origem pessoal do projeto no Mac e ausência de envio de dados ao desenvolvedor, preservando declaração de venda e restrições PAT; nenhuma mensagem externa."
+    },
     {
       "at": "2026-10-16T11:46:45-03:00",
       "feature": "F30",
