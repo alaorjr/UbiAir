@@ -1,6 +1,6 @@
 {
   "project": "UbiAir para macOS",
-  "updatedAt": "2026-10-16T11:31:26-03:00",
+  "updatedAt": "2026-10-16T11:46:45-03:00",
   "goal": "Controlar os aparelhos LG pela barra de menus, com SwiftUI e a API oficial ThinQ Connect.",
   "features": [
     {
@@ -240,9 +240,31 @@
       "status": "done",
       "note": "Pesquisa e material alinhados ao modelo confirmado: desenvolvedor individual, Brasil inicial em português, inglês e expansão internacional depois; compra única planejada de US$ 0,99 para cobrir desenvolvimento. Pedido LG explicita cobrança e solicita permissão para ambas as fases. Nome legal/contato faltam no rascunho; sem envio ou autorização externa. Documentação conferida com diff check; F20/F21 pendentes.",
       "updatedAt": "2026-10-16T11:31:26-03:00"
+    },
+    {
+      "id": "F30",
+      "title": "Capturas do aplicativo para pedido à LG",
+      "description": "Preparar screenshots reais da interface em demonstração, sem credenciais ou dados de aparelhos.",
+      "status": "done",
+      "note": "Preparados e inspecionados 2 PNGs nativos da view SwiftUI 0.1.10: conexão com PAT vazio e controles fictícios, 720x1480. ZIP conferido (2 PNG + README inglês) em build/UbiAir-LG-screenshots.zip; pedido LG atualizado. Helper isolado compilou/exportou; bash -n e diff check passaram. Camada nativa evita omissões do cache; terceiro estado inconsistente descartado. Sem PAT, aparelho real, chamadas LG ou envio externo; produto inalterado.",
+      "updatedAt": "2026-10-16T11:46:45-03:00"
     }
   ],
   "events": [
+    {
+      "at": "2026-10-16T11:46:45-03:00",
+      "feature": "F30",
+      "title": "Capturas do aplicativo para pedido à LG",
+      "action": "done",
+      "note": "Preparados e inspecionados 2 PNGs nativos da view SwiftUI 0.1.10: conexão com PAT vazio e controles fictícios, 720x1480. ZIP conferido (2 PNG + README inglês) em build/UbiAir-LG-screenshots.zip; pedido LG atualizado. Helper isolado compilou/exportou; bash -n e diff check passaram. Camada nativa evita omissões do cache; terceiro estado inconsistente descartado. Sem PAT, aparelho real, chamadas LG ou envio externo; produto inalterado."
+    },
+    {
+      "at": "2026-10-16T11:35:05-03:00",
+      "feature": "F30",
+      "title": "Capturas do aplicativo para pedido à LG",
+      "action": "start",
+      "note": "Capturar interface real em demonstração isolada: conexão sem PAT e controles fictícios; conferir imagens e preparar anexos com legenda inglesa para email LG, sem envio externo."
+    },
     {
       "at": "2026-10-16T11:31:26-03:00",
       "feature": "F29",
