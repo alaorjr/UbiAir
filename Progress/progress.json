@@ -1,6 +1,6 @@
 {
   "project": "UbiAir para macOS",
-  "updatedAt": "2026-10-16T11:08:53-03:00",
+  "updatedAt": "2026-10-16T11:31:26-03:00",
   "goal": "Controlar os aparelhos LG pela barra de menus, com SwiftUI e a API oficial ThinQ Connect.",
   "features": [
     {
@@ -238,11 +238,25 @@
       "title": "Termos LG PAT e documentação para App Review",
       "description": "Investigar termos oficiais do ThinQ Connect/PAT e preparar evidências, pedido LG e notas para revisão.",
       "status": "done",
-      "note": "Documentação PAT e FAQ oficial LG lidos no navegador: pessoal/não comercial, consentimento escrito para serviços adicionais não autorizados. Termos gerais e chave fixa documentada conferidos. Criados investigação, pedido LG em inglês e notas App Review com autorização condicionada à prova; revisão técnica independente e diff check. Sem envio, PAT, comandos reais ou alteração de código; consentimento/distribuição permanecem pendentes F20.",
-      "updatedAt": "2026-10-16T11:08:53-03:00"
+      "note": "Pesquisa e material alinhados ao modelo confirmado: desenvolvedor individual, Brasil inicial em português, inglês e expansão internacional depois; compra única planejada de US$ 0,99 para cobrir desenvolvimento. Pedido LG explicita cobrança e solicita permissão para ambas as fases. Nome legal/contato faltam no rascunho; sem envio ou autorização externa. Documentação conferida com diff check; F20/F21 pendentes.",
+      "updatedAt": "2026-10-16T11:31:26-03:00"
     }
   ],
   "events": [
+    {
+      "at": "2026-10-16T11:31:26-03:00",
+      "feature": "F29",
+      "title": "Termos LG PAT e documentação para App Review",
+      "action": "done",
+      "note": "Pesquisa e material alinhados ao modelo confirmado: desenvolvedor individual, Brasil inicial em português, inglês e expansão internacional depois; compra única planejada de US$ 0,99 para cobrir desenvolvimento. Pedido LG explicita cobrança e solicita permissão para ambas as fases. Nome legal/contato faltam no rascunho; sem envio ou autorização externa. Documentação conferida com diff check; F20/F21 pendentes."
+    },
+    {
+      "at": "2026-10-16T11:31:16-03:00",
+      "feature": "F29",
+      "title": "Termos LG PAT e documentação para App Review",
+      "action": "start",
+      "note": "Adequar pedido LG e notas Apple ao modelo informado: desenvolvedor individual, Brasil inicial, expansão internacional com inglês e compra única planejada de US$ 0,99 para cobrir custos; sem envio externo."
+    },
     {
       "at": "2026-10-16T11:08:53-03:00",
       "feature": "F29",
