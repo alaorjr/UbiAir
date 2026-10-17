@@ -1,6 +1,6 @@
 {
   "project": "UbiAir para macOS",
-  "updatedAt": "2026-10-16T11:57:51-03:00",
+  "updatedAt": "2026-10-16T12:03:17-03:00",
   "goal": "Controlar os aparelhos LG pela barra de menus, com SwiftUI e a API oficial ThinQ Connect.",
   "features": [
     {
@@ -238,8 +238,8 @@
       "title": "Termos LG PAT e documentação para App Review",
       "description": "Investigar termos oficiais do ThinQ Connect/PAT e preparar evidências, pedido LG e notas para revisão.",
       "status": "done",
-      "note": "Comparação Home Assistant incluída: guia confirma ThinQ Connect/PAT individual e LG cita HA como API consumidor. Email pede mesmo enquadramento para UbiAir, incluindo compra única US$ 0,99; reconhecida semelhança sem presumir licença comercial ou Business API obrigatória. Fontes/documentação e diff check; nada enviado. F20/F21 seguem pendentes.",
-      "updatedAt": "2026-10-16T11:57:51-03:00"
+      "note": "Criada versão objetiva em Docs/LG-PERMISSION-REQUEST-SHORT.md; versão completa preservada integralmente. Mantidos origem pessoal, PAT direto/sem dados ao desenvolvedor, US$ 0,99, Brasil/expansão, precedente Home Assistant e confirmação LG/Apple. Comparação de conteúdo e diff check; nada enviado; F20/F21 pendentes.",
+      "updatedAt": "2026-10-16T12:03:17-03:00"
     },
     {
       "id": "F30",
@@ -251,6 +251,20 @@
     }
   ],
   "events": [
+    {
+      "at": "2026-10-16T12:03:17-03:00",
+      "feature": "F29",
+      "title": "Termos LG PAT e documentação para App Review",
+      "action": "done",
+      "note": "Criada versão objetiva em Docs/LG-PERMISSION-REQUEST-SHORT.md; versão completa preservada integralmente. Mantidos origem pessoal, PAT direto/sem dados ao desenvolvedor, US$ 0,99, Brasil/expansão, precedente Home Assistant e confirmação LG/Apple. Comparação de conteúdo e diff check; nada enviado; F20/F21 pendentes."
+    },
+    {
+      "at": "2026-10-16T12:03:17-03:00",
+      "feature": "F29",
+      "title": "Termos LG PAT e documentação para App Review",
+      "action": "start",
+      "note": "Criar versão objetiva do email LG em arquivo separado, preservando integralmente a versão completa para escolha do usuário; sem envio externo."
+    },
     {
       "at": "2026-10-16T11:57:51-03:00",
       "feature": "F29",
