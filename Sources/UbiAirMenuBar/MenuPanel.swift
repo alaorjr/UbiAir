@@ -436,3 +436,8 @@ struct MenuPanel: View {
     }
     private func openPortal() { if let url = URL(string: "https://connect-pat.lgthinq.com/login") { NSWorkspace.shared.open(url) } }
 }
+
+//#Preview {
+    // Substitua pelo construtor correto do seu AppModel se ele exigir parâmetros
+//    MenuPanel(model: AppModel())
+//}

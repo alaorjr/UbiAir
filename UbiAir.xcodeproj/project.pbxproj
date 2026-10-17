@@ -1,7 +1,8 @@
 // !$*UTF8*$!
 {
 	archiveVersion = 1;
-	classes = {};
+	classes = {
+	};
 	objectVersion = 60;
 	objects = {
 
@@ -42,54 +43,258 @@
 		B10000000000000000000020 /* Debug.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Debug.xcconfig; sourceTree = "<group>"; };
 		B10000000000000000000021 /* Release.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Release.xcconfig; sourceTree = "<group>"; };
 		B10000000000000000000022 /* UbiAir.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = UbiAir.entitlements; sourceTree = "<group>"; };
-		B10000000000000000000030 /* Products */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = UbiAir.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		B10000000000000000000030 /* UbiAir.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = UbiAir.app; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
-		D10000000000000000000001 /* Frameworks */ = {isa = PBXFrameworksBuildPhase; buildActionMask = 2147483647; files = (A10000000000000000000014 /* ThinQCore in Frameworks */,); runOnlyForDeploymentPostprocessing = 0; };
+		D10000000000000000000001 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				A10000000000000000000014 /* ThinQCore in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		E10000000000000000000001 = {isa = PBXGroup; children = (E10000000000000000000002 /* Sources */, E10000000000000000000003 /* Resources */, E10000000000000000000004 /* Config */, B10000000000000000000013 /* THIRD_PARTY_NOTICES.md */,); sourceTree = "<group>"; };
-		E10000000000000000000002 /* Sources */ = {isa = PBXGroup; children = (E10000000000000000000005 /* UbiAirMenuBar */,); path = Sources; sourceTree = "<group>"; };
-		E10000000000000000000005 /* UbiAirMenuBar */ = {isa = PBXGroup; children = (B10000000000000000000001, B10000000000000000000002, B10000000000000000000003, B10000000000000000000004, B10000000000000000000005, B10000000000000000000006, B10000000000000000000007, B10000000000000000000008, B10000000000000000000009, B1000000000000000000000A, B1000000000000000000000B,); path = UbiAirMenuBar; sourceTree = "<group>"; };
-		E10000000000000000000003 /* Resources */ = {isa = PBXGroup; children = (B10000000000000000000010, B10000000000000000000011, B10000000000000000000012,); path = Resources; sourceTree = "<group>"; };
-		E10000000000000000000004 /* Config */ = {isa = PBXGroup; children = (B10000000000000000000020, B10000000000000000000021, B10000000000000000000022,); path = Config; sourceTree = "<group>"; };
-		E10000000000000000000030 /* Frameworks */ = {isa = PBXGroup; children = (); name = Frameworks; sourceTree = "<group>"; };
-		E10000000000000000000031 /* Products */ = {isa = PBXGroup; children = (B10000000000000000000030,); name = Products; sourceTree = "<group>"; };
+		E10000000000000000000001 = {
+			isa = PBXGroup;
+			children = (
+				E10000000000000000000002 /* Sources */,
+				E10000000000000000000003 /* Resources */,
+				E10000000000000000000004 /* Config */,
+				B10000000000000000000013 /* THIRD_PARTY_NOTICES.md */,
+				E10000000000000000000031 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		E10000000000000000000002 /* Sources */ = {
+			isa = PBXGroup;
+			children = (
+				E10000000000000000000005 /* UbiAirMenuBar */,
+			);
+			path = Sources;
+			sourceTree = "<group>";
+		};
+		E10000000000000000000003 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				B10000000000000000000010 /* Info.plist */,
+				B10000000000000000000011 /* PrivacyInfo.xcprivacy */,
+				B10000000000000000000012 /* Assets.xcassets */,
+			);
+			path = Resources;
+			sourceTree = "<group>";
+		};
+		E10000000000000000000004 /* Config */ = {
+			isa = PBXGroup;
+			children = (
+				B10000000000000000000020 /* Debug.xcconfig */,
+				B10000000000000000000021 /* Release.xcconfig */,
+				B10000000000000000000022 /* UbiAir.entitlements */,
+			);
+			path = Config;
+			sourceTree = "<group>";
+		};
+		E10000000000000000000005 /* UbiAirMenuBar */ = {
+			isa = PBXGroup;
+			children = (
+				B10000000000000000000001 /* UbiAirApp.swift */,
+				B10000000000000000000002 /* AppModel.swift */,
+				B10000000000000000000003 /* AppPreferences.swift */,
+				B10000000000000000000004 /* AppProblem.swift */,
+				B10000000000000000000005 /* CredentialStore.swift */,
+				B10000000000000000000006 /* PreferencesMigration.swift */,
+				B10000000000000000000007 /* DemoProblemService.swift */,
+				B10000000000000000000008 /* MenuPanel.swift */,
+				B10000000000000000000009 /* PanelVisibilityReader.swift */,
+				B1000000000000000000000A /* AirConditionerIllustration.swift */,
+				B1000000000000000000000B /* AppIdentity.swift */,
+			);
+			path = UbiAirMenuBar;
+			sourceTree = "<group>";
+		};
+		E10000000000000000000031 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				B10000000000000000000030 /* UbiAir.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		F10000000000000000000001 /* UbiAir */ = {isa = PBXNativeTarget; buildConfigurationList = G10000000000000000000002 /* Build configuration list for PBXNativeTarget "UbiAir" */; buildPhases = (D10000000000000000000002 /* Sources */, D10000000000000000000001 /* Frameworks */, D10000000000000000000003 /* Resources */,); buildRules = (); dependencies = (); name = UbiAir; packageProductDependencies = (C10000000000000000000001 /* ThinQCore */,); productName = UbiAir; productReference = B10000000000000000000030 /* UbiAir.app */; productType = "com.apple.product-type.application"; };
+		F10000000000000000000001 /* UbiAir */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = G10000000000000000000002 /* Build configuration list for PBXNativeTarget "UbiAir" */;
+			buildPhases = (
+				D10000000000000000000002 /* Sources */,
+				D10000000000000000000001 /* Frameworks */,
+				D10000000000000000000003 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = UbiAir;
+			packageProductDependencies = (
+				C10000000000000000000001 /* ThinQCore */,
+			);
+			productName = UbiAir;
+			productReference = B10000000000000000000030 /* UbiAir.app */;
+			productType = "com.apple.product-type.application";
+		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
-		F10000000000000000000002 /* Project object */ = {isa = PBXProject; attributes = {BuildIndependentTargetsInParallel = 1; LastSwiftUpdateCheck = 2700; LastUpgradeCheck = 2700; TargetAttributes = {F10000000000000000000001 = {CreatedOnToolsVersion = 27.0; }; }; }; buildConfigurationList = G10000000000000000000001 /* Build configuration list for PBXProject "UbiAir" */; compatibilityVersion = "Xcode 15.0"; developmentRegion = en; hasScannedForEncodings = 0; knownRegions = (en, Base,); mainGroup = E10000000000000000000001; packageReferences = (C10000000000000000000002 /* XCLocalSwiftPackageReference "." */,); productRefGroup = E10000000000000000000031 /* Products */; projectDirPath = ""; projectRoot = ""; targets = (F10000000000000000000001 /* UbiAir */,); };
+		F10000000000000000000002 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				BuildIndependentTargetsInParallel = 1;
+				LastSwiftUpdateCheck = 2700;
+				LastUpgradeCheck = 2700;
+				TargetAttributes = {
+					F10000000000000000000001 = {
+						CreatedOnToolsVersion = 27.0;
+					};
+				};
+			};
+			buildConfigurationList = G10000000000000000000001 /* Build configuration list for PBXProject "UbiAir" */;
+			compatibilityVersion = "Xcode 15.0";
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = E10000000000000000000001;
+			packageReferences = (
+				C10000000000000000000002 /* XCLocalSwiftPackageReference "." */,
+			);
+			productRefGroup = E10000000000000000000031 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				F10000000000000000000001 /* UbiAir */,
+			);
+		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
-		D10000000000000000000003 /* Resources */ = {isa = PBXResourcesBuildPhase; buildActionMask = 2147483647; files = (A10000000000000000000011, A10000000000000000000012, A10000000000000000000013,); runOnlyForDeploymentPostprocessing = 0; };
+		D10000000000000000000003 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				A10000000000000000000011 /* PrivacyInfo.xcprivacy in Resources */,
+				A10000000000000000000012 /* Assets.xcassets in Resources */,
+				A10000000000000000000013 /* THIRD_PARTY_NOTICES.md in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
-		D10000000000000000000002 /* Sources */ = {isa = PBXSourcesBuildPhase; buildActionMask = 2147483647; files = (A10000000000000000000001, A10000000000000000000002, A10000000000000000000003, A10000000000000000000004, A10000000000000000000005, A10000000000000000000006, A10000000000000000000007, A10000000000000000000008, A10000000000000000000009, A1000000000000000000000A, A1000000000000000000000B,); runOnlyForDeploymentPostprocessing = 0; };
+		D10000000000000000000002 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				A10000000000000000000001 /* UbiAirApp.swift in Sources */,
+				A10000000000000000000002 /* AppModel.swift in Sources */,
+				A10000000000000000000003 /* AppPreferences.swift in Sources */,
+				A10000000000000000000004 /* AppProblem.swift in Sources */,
+				A10000000000000000000005 /* CredentialStore.swift in Sources */,
+				A10000000000000000000006 /* PreferencesMigration.swift in Sources */,
+				A10000000000000000000007 /* DemoProblemService.swift in Sources */,
+				A10000000000000000000008 /* MenuPanel.swift in Sources */,
+				A10000000000000000000009 /* PanelVisibilityReader.swift in Sources */,
+				A1000000000000000000000A /* AirConditionerIllustration.swift in Sources */,
+				A1000000000000000000000B /* AppIdentity.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin XCBuildConfiguration section */
-		G10000000000000000000001 /* Project config list */ = {isa = XCConfigurationList; buildConfigurations = (H10000000000000000000001 /* Debug */, H10000000000000000000002 /* Release */,); defaultConfigurationIsVisible = 0; defaultConfigurationName = Release; };
-		G10000000000000000000002 /* Target config list */ = {isa = XCConfigurationList; buildConfigurations = (H10000000000000000000003 /* Debug */, H10000000000000000000004 /* Release */,); defaultConfigurationIsVisible = 0; defaultConfigurationName = Release; };
-		H10000000000000000000001 /* Debug */ = {isa = XCBuildConfiguration; buildSettings = {SDKROOT = macosx; MACOSX_DEPLOYMENT_TARGET = 14.0; SWIFT_VERSION = 6.0;}; name = Debug; };
-		H10000000000000000000002 /* Release */ = {isa = XCBuildConfiguration; buildSettings = {SDKROOT = macosx; MACOSX_DEPLOYMENT_TARGET = 14.0; SWIFT_VERSION = 6.0;}; name = Release; };
-		H10000000000000000000003 /* Debug */ = {isa = XCBuildConfiguration; baseConfigurationReference = B10000000000000000000020 /* Debug.xcconfig */; buildSettings = {PRODUCT_BUNDLE_IDENTIFIER = ai.ubiquu.UbiAir; PRODUCT_NAME = UbiAir; SKIP_INSTALL = NO;}; name = Debug; };
-		H10000000000000000000004 /* Release */ = {isa = XCBuildConfiguration; baseConfigurationReference = B10000000000000000000021 /* Release.xcconfig */; buildSettings = {PRODUCT_BUNDLE_IDENTIFIER = ai.ubiquu.UbiAir; PRODUCT_NAME = UbiAir; SKIP_INSTALL = NO;}; name = Release; };
+		H10000000000000000000001 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				MACOSX_DEPLOYMENT_TARGET = 14.0;
+				SDKROOT = macosx;
+				SWIFT_VERSION = 6.0;
+			};
+			name = Debug;
+		};
+		H10000000000000000000002 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				MACOSX_DEPLOYMENT_TARGET = 14.0;
+				SDKROOT = macosx;
+				SWIFT_VERSION = 6.0;
+			};
+			name = Release;
+		};
+		H10000000000000000000003 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = B10000000000000000000020 /* Debug.xcconfig */;
+			buildSettings = {
+				INFOPLIST_KEY_CFBundleDisplayName = UbiAir;
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.lifestyle";
+				PRODUCT_BUNDLE_IDENTIFIER = ai.ubiquu.UbiAir;
+				PRODUCT_NAME = UbiAir;
+				SKIP_INSTALL = NO;
+			};
+			name = Debug;
+		};
+		H10000000000000000000004 /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = B10000000000000000000021 /* Release.xcconfig */;
+			buildSettings = {
+				INFOPLIST_KEY_CFBundleDisplayName = UbiAir;
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.lifestyle";
+				PRODUCT_BUNDLE_IDENTIFIER = ai.ubiquu.UbiAir;
+				PRODUCT_NAME = UbiAir;
+				SKIP_INSTALL = NO;
+			};
+			name = Release;
+		};
 /* End XCBuildConfiguration section */
 
+/* Begin XCConfigurationList section */
+		G10000000000000000000001 /* Build configuration list for PBXProject "UbiAir" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				H10000000000000000000001 /* Debug */,
+				H10000000000000000000002 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		G10000000000000000000002 /* Build configuration list for PBXNativeTarget "UbiAir" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				H10000000000000000000003 /* Debug */,
+				H10000000000000000000004 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+
 /* Begin XCLocalSwiftPackageReference section */
-		C10000000000000000000002 /* XCLocalSwiftPackageReference "." */ = {isa = XCLocalSwiftPackageReference; relativePath = .; };
+		C10000000000000000000002 /* XCLocalSwiftPackageReference "." */ = {
+			isa = XCLocalSwiftPackageReference;
+			relativePath = .;
+		};
 /* End XCLocalSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
-		C10000000000000000000001 /* ThinQCore */ = {isa = XCSwiftPackageProductDependency; package = C10000000000000000000002 /* XCLocalSwiftPackageReference "." */; productName = ThinQCore; };
+		C10000000000000000000001 /* ThinQCore */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = C10000000000000000000002 /* XCLocalSwiftPackageReference "." */;
+			productName = ThinQCore;
+		};
 /* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = F10000000000000000000002 /* Project object */;
