@@ -55,3 +55,6 @@ Diagnostics/
 
 # Cópias privadas do histórico anterior à sanitização
 *.bundle
+
+# Capturas e medições locais da direção de arte
+.taste-skill/

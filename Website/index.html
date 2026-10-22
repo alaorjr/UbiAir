@@ -1,0 +1,134 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>UbiAir — seu ar-condicionado no Mac</title>
+  <meta name="description" content="Controle seu ar-condicionado LG ThinQ pela barra de menus do Mac. Conheça o UbiAir, veja a interface e siga o guia para começar.">
+  <meta name="theme-color" content="#edf4f8">
+  <meta property="og:title" content="UbiAir — seu ar. No seu Mac.">
+  <meta property="og:description" content="Os controles do seu LG ThinQ, bem à mão na barra de menus do macOS.">
+  <meta property="og:type" content="website">
+  <link rel="icon" href="assets/app-icon.png" type="image/png">
+  <link rel="preload" href="assets/fonts/switzer-400.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="assets/fonts/switzer-600.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="stylesheet" href="styles.css">
+  <script src="script.js" defer></script>
+</head>
+<body>
+  <a class="skip" href="#conteudo">Pular para o conteúdo</a>
+  <header class="site-header">
+    <a class="brand" href="#inicio" aria-label="UbiAir, início"><img src="assets/app-icon.png" width="40" height="40" alt="">UbiAir</a>
+    <nav aria-label="Navegação principal"><a href="#recursos">Recursos</a><a href="#aparencia">Aparência</a><a href="#comecar">Configuração</a></nav>
+    <a class="header-action" href="https://github.com/alaorjr/UbiAir">GitHub <span aria-hidden="true">↗</span></a>
+  </header>
+  <main id="conteudo">
+    <section class="hero" id="inicio" aria-labelledby="hero-title">
+      <div class="hero-copy">
+        <h1 id="hero-title">Seu ar.<br> No seu Mac.</h1>
+        <p class="lead">Controle seu ar-condicionado LG ThinQ na barra de menus, sem interromper o que você está fazendo.</p>
+        <a class="button" href="#comecar">Começar no Mac <span aria-hidden="true">↗</span></a>
+        <p class="hero-note">Nativo para macOS.<br>Código aberto, sob licença MIT.</p>
+      </div>
+      <div class="hero-media" data-ui>
+        <div class="menu-bar" aria-label="Ilustração da barra de menus do macOS"><span>UbiAir</span><div><svg class="snowflake" aria-hidden="true" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M12 2v20M3.34 7l17.32 10M3.34 17 20.66 7M8 4l4 3 4-3M8 20l4-3 4 3M3 11l4-2-1-5M21 13l-4 2 1 5M3 13l4 2-1 5M21 11l-4-2 1-5"/></svg><span>100%</span><span>15:30</span></div></div>
+        <div class="hero-panels">
+          <img class="hero-panel-light" src="assets/screenshots/controls-light.png" width="720" height="1480" alt="Painel claro do UbiAir mostrando a Sala em demonstração, temperatura e controles" fetchpriority="high">
+          <img class="hero-panel-dark" src="assets/screenshots/controls-dark.png" width="720" height="1480" alt="A mesma interface nativa do UbiAir no tema escuro">
+        </div>
+      </div>
+      <p class="hero-caption">Um clique no floco de neve.<br>Seu ambiente, sob controle.</p>
+    </section>
+
+    <section class="features section-pad" id="recursos" aria-labelledby="features-title">
+      <div class="feature-picture">
+        <img src="assets/home-office.webp" width="1536" height="1024" alt="Imagem ilustrativa de um escritório claro com ar-condicionado e um notebook sobre a mesa" loading="lazy">
+        <p>O conforto fica por perto.<br>O trabalho continua.</p>
+      </div>
+      <div class="feature-content">
+        <h2 id="features-title">O ajuste certo,<br>bem à mão</h2>
+        <div class="feature-points">
+          <div><h3>Energia</h3><p>Ligue ou desligue o aparelho selecionado, direto no painel.</p></div>
+          <div><h3>Temperatura</h3><p>Veja a atual e escolha a desejada, com prévia ao arrastar o controle.</p></div>
+          <div><h3>Modo de operação</h3><p>Escolha entre as opções que o seu modelo oferece.</p></div>
+          <div><h3>Ventilação</h3><p>Ajuste a velocidade do ventilador entre os níveis disponíveis.</p></div>
+          <div><h3>Direção do ar</h3><p>Acesse as oscilações horizontal e vertical, quando compatíveis.</p></div>
+          <div><h3>Seus ambientes</h3><p>Alterne entre os aparelhos de ar-condicionado da sua conta.</p></div>
+          <div><h3>Estado atualizado</h3><p>Leitura ao abrir e a cada 30 segundos enquanto o painel está visível.</p></div>
+          <div><h3>Comando confirmado</h3><p>Uma nova leitura verifica o resultado. Se algo falhar, o app orienta a recuperação.</p></div>
+        </div>
+        <p class="feature-note">Os controles acompanham os recursos informados por cada aparelho à LG ThinQ.</p>
+      </div>
+    </section>
+
+    <section class="showcase section-pad" id="aparencia" aria-labelledby="appearance-title">
+      <div class="showcase-copy">
+        <h2 id="appearance-title">Do seu jeito</h2>
+        <p class="lead">De dia ou à noite, a mesma interface nativa.</p>
+        <p>Explore os controles e a direção do ar nos temas claro e escuro. O aplicativo acompanha a aparência do macOS.</p>
+        <div class="preview-controls" hidden>
+          <fieldset><legend>Aparência da captura</legend><div class="segmented"><button type="button" data-theme="light" aria-pressed="true">Claro</button><button type="button" data-theme="dark" aria-pressed="false">Escuro</button></div></fieldset>
+          <fieldset><legend>Trecho do aplicativo</legend><div class="view-picker"><button type="button" data-view="controls" aria-pressed="true">Controles</button><button type="button" data-view="airflow" aria-pressed="false">Direção do ar</button></div></fieldset>
+        </div>
+        <p class="caption" id="preview-caption" aria-live="polite">Controles no tema claro. Captura da interface SwiftUI com aparelhos fictícios.</p>
+        <p class="caption">Esta prévia não envia comandos.</p>
+        <noscript><p>Veja também o <a href="assets/screenshots/controls-dark.png">painel escuro</a> e os controles de direção do ar nos temas <a href="assets/screenshots/airflow-light.png">claro</a> e <a href="assets/screenshots/airflow-dark.png">escuro</a>.</p></noscript>
+      </div>
+      <div class="preview-stage" data-appearance="light">
+        <div class="preview-photo" data-ui><img id="preview-image" src="assets/screenshots/controls-light.png" width="720" height="1480" alt="Controles do UbiAir no tema claro, em demonstração" loading="lazy"></div>
+        <span class="stage-note" aria-hidden="true">O macOS, como você gosta.</span>
+      </div>
+    </section>
+
+    <section class="onboard section-pad" id="comecar" aria-labelledby="onboard-title">
+      <div class="onboard-intro"><h2 id="onboard-title">Do Mac ao<br>primeiro ajuste</h2><p>Uma configuração pessoal.<br>Depois, é só abrir o painel.</p></div>
+      <ol class="onboard-steps">
+        <li>
+          <div class="step-visual install-visual"><img src="assets/app-icon.png" width="256" height="256" alt="Ícone do UbiAir, uma casa com ar-condicionado" loading="lazy"></div>
+          <h3>Instale no Mac</h3><p>Abra o projeto no Xcode, escolha o esquema <strong>UbiAir</strong> e o destino <strong>My Mac</strong>. Execute com <strong>⌘R</strong>.</p><a href="#instalacao">Ver instruções de instalação</a>
+        </li>
+        <li>
+          <div class="step-visual account-visual" data-ui><img src="assets/screenshots/connection-light.png" width="720" height="1480" alt="Formulário de conexão com orientação para a conta LG ThinQ" loading="lazy"></div>
+          <h3>Prepare sua conta</h3><p>Cadastre seu ar-condicionado no app <strong>LG ThinQ</strong>. Entre com a mesma conta no portal de tokens da LG.</p><a href="https://connect-pat.lgthinq.com/login" target="_blank" rel="noopener noreferrer">Abrir o portal da LG <span class="sr-only">(nova aba)</span></a>
+        </li>
+        <li>
+          <div class="step-visual token-visual" data-ui><img src="assets/screenshots/connection-dark.png" width="720" height="1480" alt="Campos de país e PAT no formulário escuro do UbiAir, sem credenciais" loading="lazy"></div>
+          <h3>Conecte o UbiAir</h3><p>Gere um <strong>Personal Access Token (PAT)</strong> no portal. No UbiAir, informe o país da conta (<strong>BR</strong> para Brasil) e cole o token.</p><p>Você escolhe se quer salvá-lo no Chaves do macOS. Mantenha seu PAT privado.</p>
+        </li>
+        <li>
+          <div class="step-visual ready-visual" data-ui><img src="assets/screenshots/airflow-light.png" width="720" height="1480" alt="Painel do UbiAir com aparelho selecionado e direção do ar expandida, em demonstração" loading="lazy"></div>
+          <h3>Escolha o ambiente</h3><p>Selecione o aparelho, confira o estado e faça o primeiro ajuste. Os controles disponíveis dependem do modelo.</p><p>Se quiser, ative <strong>Abrir ao iniciar sessão</strong> no menu da engrenagem.</p>
+        </li>
+      </ol>
+      <details class="installation" id="instalacao">
+        <summary>Instalação pelo Xcode</summary>
+        <div class="installation-body"><div><p>O código está disponível agora. A distribuição pela Mac App Store ainda está em preparação.</p><p>Ambiente testado: <strong>Xcode 27.1 e macOS 27.0.1</strong>. O projeto define macOS 14 como mínimo, mas versões anteriores ao macOS 27 ainda não foram validadas.</p><p>Instale e abra o Xcode uma vez para concluir os componentes. Depois, no Terminal:</p></div><div><pre><code>git clone https://github.com/alaorjr/UbiAir.git
+cd UbiAir
+open UbiAir.xcodeproj</code></pre><p>Selecione <strong>UbiAir → My Mac</strong> e pressione <strong>⌘R</strong>. O build Debug usa assinatura local e dispensa uma conta Apple Developer.</p><a href="https://github.com/alaorjr/UbiAir#instalar-e-executar-pelo-xcode">Consultar o guia no GitHub</a></div></div>
+      </details>
+      <aside class="demo-note"><p><strong>Quer conhecer antes de conectar?</strong> No Xcode, abra Product → Scheme → Edit Scheme → Run → Arguments e adicione <code>--demo</code> e <code>--show-panel</code>. Execute com ⌘R. A demonstração usa dois aparelhos fictícios e não precisa de PAT. Remova os argumentos e reinicie o app para conectar sua conta.</p></aside>
+    </section>
+
+    <section class="faq section-pad" id="duvidas" aria-labelledby="faq-title">
+      <div class="faq-content"><h2 id="faq-title">Antes de começar</h2><p class="faq-intro">Um Mac, sua conta LG ThinQ<br>e uma conexão com a internet.</p>
+        <details><summary>Funciona com qualquer ar-condicionado?</summary><p>O UbiAir lista ar-condicionados da conta LG ThinQ que a API disponibiliza. Os modos, limites de temperatura e oscilações variam por modelo. Outros tipos de aparelho não aparecem no painel.</p></details>
+        <details><summary>Preciso de internet?</summary><p>Sim. O controle usa o serviço LG ThinQ Connect pela internet. A demonstração é offline, mas a operação dos seus aparelhos depende da LG e da conexão.</p></details>
+        <details><summary>Onde fica meu token?</summary><p>Se você escolher salvá-lo, o PAT fica no Chaves do macOS. O UbiAir faz as chamadas diretamente à LG, sem um servidor próprio e sem enviar suas credenciais ao desenvolvedor.</p></details>
+        <details><summary>O painel fica atualizando o tempo todo?</summary><p>Ele consulta o estado ao abrir e a cada 30 segundos enquanto está visível. Com o painel fechado, as leituras periódicas param. Comandos são verificados por leituras posteriores e não são reenviados automaticamente.</p></details>
+        <details><summary>Já posso baixar na App Store?</summary><p>A distribuição na loja ainda está em preparação. Por enquanto, você pode compilar pelo Xcode usando o código aberto. O guia acima explica como começar.</p></details>
+      </div>
+      <div class="faq-picture"><img src="assets/home-office.webp" width="1536" height="1024" alt="Ar-condicionado na parede de um escritório doméstico, em imagem gerada por IA" loading="lazy"><div class="faq-detail" data-ui><img src="assets/screenshots/airflow-dark.png" width="720" height="1480" alt="Detalhe dos controles nativos de direção do ar no tema escuro" loading="lazy"></div></div>
+    </section>
+
+    <section class="closing section-pad" aria-labelledby="closing-title">
+      <div class="closing-object" data-ui><img src="assets/screenshots/controls-dark.png" width="720" height="1480" alt="Painel escuro do UbiAir com os controles de demonstração" loading="lazy"></div>
+      <div class="closing-copy"><h2 id="closing-title">Um lugar<br>no seu Mac</h2><p>O UbiAir nasceu da vontade de controlar o ar pelo computador. O código está disponível para você experimentar e contribuir.</p><a class="button" href="#comecar">Começar no Mac <span aria-hidden="true">↗</span></a><a class="text-action" href="https://github.com/alaorjr/UbiAir">Ver o projeto no GitHub</a></div>
+    </section>
+  </main>
+  <footer class="site-footer">
+    <p class="footer-wordmark" aria-hidden="true">UbiAir</p>
+    <div class="footer-content"><div><p>Feito por Alaor Jr.</p><p>Projeto independente, sem vínculo ou endosso da LG Electronics.</p></div><nav aria-label="Links do projeto"><a href="https://github.com/alaorjr/UbiAir">Código no GitHub</a><a href="https://buymeacoffee.com/alaorjr">Apoiar o projeto</a><a href="https://github.com/alaorjr/UbiAir/issues">Reportar um problema</a></nav></div>
+    <div class="footer-notes"><p>Capturas com dados fictícios. Imagem de ambiente gerada por IA. Ícone original do projeto. Fonte <a href="https://www.fontshare.com/fonts/switzer">Switzer, por Indian Type Foundry</a>.</p><p>© 2026 Alaor Jr. <a href="https://github.com/alaorjr/UbiAir/blob/main/LICENSE">Licença MIT</a>.</p></div>
+  </footer>
+</body>
+</html>

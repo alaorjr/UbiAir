@@ -22,6 +22,14 @@ serviço LG ThinQ Connect; consulte os termos aplicáveis da LG antes de usar o 
 [☕ Buy me a coffee](https://buymeacoffee.com/alaorjr) ·
 [♥ GitHub Sponsors](https://github.com/sponsors/alaorjr) · [Licença MIT](LICENSE)
 
+## Página do produto
+
+A [página estática do UbiAir](Website/index.html) apresenta os recursos, capturas
+nativas nos temas claro e escuro e o passo a passo de configuração. Todos os
+assets são locais e a hospedagem não precisa de backend. Consulte o
+[guia de publicação](Website/README.md) para gerar o ZIP ou publicar pelo workflow
+manual do GitHub Pages.
+
 ## Recursos
 
 - Seleciona entre aparelhos de ar-condicionado da conta e mostra o estado de energia,

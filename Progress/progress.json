@@ -1,6 +1,6 @@
 {
   "project": "UbiAir para macOS",
-  "updatedAt": "2026-10-22T14:33:39-03:00",
+  "updatedAt": "2026-10-22T15:52:20-03:00",
   "goal": "Controlar os aparelhos LG pela barra de menus, com SwiftUI e a API oficial ThinQ Connect.",
   "features": [
     {
@@ -280,9 +280,31 @@
       "status": "done",
       "note": "Histórico publicado e base Git ativa sem .codex. Após autorização explícita do usuário, três snapshots ainda afetados foram limpos (dois já limpos), reflogs expirados e gc/prune concluído. Todas refs/commits/árvores conferidas, sem objetos inalcançáveis; demais arquivos preservados e quatro arquivos .codex locais idênticos. Backups privados ignorados ficam fora da base ativa. Diff check passou; sem mudança no app.",
       "updatedAt": "2026-10-22T14:33:39-03:00"
+    },
+    {
+      "id": "F35",
+      "title": "Página estática do produto",
+      "description": "Página clara com funcionalidades, screenshots nativos claros/escuros e onboarding, pronta para hospedagem estática.",
+      "status": "done",
+      "note": "Página clara e responsiva em Website, 6 capturas nativas fictícias claro/escuro, onboarding completo, seletor, assets locais, ZIP ~958 KB e workflow manual Pages. Lint sem findings; inspector 1440/768/390 sem FAIL, revisão visual e interações passaram; referências/ZIP/sintaxe/diff conferidos. Sem deploy, comandos reais ou mudança do app. File:// não testado por restrição do navegador; HTTP local validado.",
+      "updatedAt": "2026-10-22T15:52:20-03:00"
     }
   ],
   "events": [
+    {
+      "at": "2026-10-22T15:52:20-03:00",
+      "feature": "F35",
+      "title": "Página estática do produto",
+      "action": "done",
+      "note": "Página clara e responsiva em Website, 6 capturas nativas fictícias claro/escuro, onboarding completo, seletor, assets locais, ZIP ~958 KB e workflow manual Pages. Lint sem findings; inspector 1440/768/390 sem FAIL, revisão visual e interações passaram; referências/ZIP/sintaxe/diff conferidos. Sem deploy, comandos reais ou mudança do app. File:// não testado por restrição do navegador; HTTP local validado."
+    },
+    {
+      "at": "2026-10-22T15:41:55-03:00",
+      "feature": "F35",
+      "title": "Página estática do produto",
+      "action": "start",
+      "note": "Criar Website estático em português, assets locais, exports nativos com dados fictícios em temas claro e escuro, onboarding e instruções de publicação sem backend."
+    },
     {
       "at": "2026-10-22T14:33:39-03:00",
       "feature": "F34",
