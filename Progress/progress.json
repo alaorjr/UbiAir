@@ -1,6 +1,6 @@
 {
   "project": "UbiAir para macOS",
-  "updatedAt": "2026-10-22T11:39:10-03:00",
+  "updatedAt": "2026-10-22T11:46:35-03:00",
   "goal": "Controlar os aparelhos LG pela barra de menus, com SwiftUI e a API oficial ThinQ Connect.",
   "features": [
     {
@@ -256,9 +256,31 @@
       "status": "done",
       "note": "README corrigido para Xcode 27, testado em Xcode 27.1/macOS 27.0.1. Mínimo real macOS 14 conferido nos arquivos de build; sistemas anteriores e Xcodes anteriores explicitamente não validados. Continuidade/decisões coerentes; diff check passou. Somente documentação, sem repetir testes ou builds.",
       "updatedAt": "2026-10-22T11:39:10-03:00"
+    },
+    {
+      "id": "F32",
+      "title": "Licença MIT e apoio ao projeto",
+      "description": "Licenciar o código sob MIT e adicionar contribuição voluntária por PayPal no repositório.",
+      "status": "done",
+      "note": "MIT integral em LICENSE (Alaor Jr, 2026), README e atribuições atualizados. Buy me a coffee orienta apoio via email PayPal cuja publicação foi autorizada. Link Donate retornou conta não qualificada e foi descartado; checkout direto depende de link emitido na conta. Links locais/âncora e diff check passaram; sem login, pagamento, mudança no produto ou novos builds/testes.",
+      "updatedAt": "2026-10-22T11:46:35-03:00"
     }
   ],
   "events": [
+    {
+      "at": "2026-10-22T11:46:35-03:00",
+      "feature": "F32",
+      "title": "Licença MIT e apoio ao projeto",
+      "action": "done",
+      "note": "MIT integral em LICENSE (Alaor Jr, 2026), README e atribuições atualizados. Buy me a coffee orienta apoio via email PayPal cuja publicação foi autorizada. Link Donate retornou conta não qualificada e foi descartado; checkout direto depende de link emitido na conta. Links locais/âncora e diff check passaram; sem login, pagamento, mudança no produto ou novos builds/testes."
+    },
+    {
+      "at": "2026-10-22T11:45:23-03:00",
+      "feature": "F32",
+      "title": "Licença MIT e apoio ao projeto",
+      "action": "start",
+      "note": "Adicionar licença MIT, chamada Buy me a coffee e link PayPal para o email explicitamente autorizado pelo usuário; verificar fluxo público sem efetuar pagamento."
+    },
     {
       "at": "2026-10-22T11:39:10-03:00",
       "feature": "F31",

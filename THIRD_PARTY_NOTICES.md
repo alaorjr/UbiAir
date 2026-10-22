@@ -1,6 +1,8 @@
 # Referências e atribuições
 
 O aplicativo é uma implementação Swift original, sem dependências externas de execução.
+O código original do UbiAir é distribuído sob a [licença MIT](LICENSE),
+copyright © 2026 Alaor Jr. As referências abaixo mantêm suas próprias licenças.
 
 - **pythinqconnect**, LG Electronics / organização thinq-connect,
   https://github.com/thinq-connect/pythinqconnect, licença Apache-2.0.

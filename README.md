@@ -19,6 +19,8 @@ O painel acompanha os recursos informados pelo perfil de cada aparelho. O UbiAir
 projeto independente, sem vínculo ou endosso da LG Electronics. A integração usa o
 serviço LG ThinQ Connect; consulte os termos aplicáveis da LG antes de usar o serviço.
 
+[☕ Buy me a coffee — apoie o projeto](#apoie-o-projeto) · [Licença MIT](LICENSE)
+
 ## Recursos
 
 - Seleciona entre aparelhos de ar-condicionado da conta e mostra o estado de energia,
@@ -126,11 +128,24 @@ executar o aplicativo instalado.
 - `Scripts`: compilação, verificação e captura da demonstração.
 - `Docs/Images`: capturas de demonstração geradas com dados fictícios.
 
+## Apoie o projeto
+
+### ☕ Buy me a coffee
+
+Se o UbiAir facilita seu dia, você pode pagar um café e ajudar a manter o
+desenvolvimento. O apoio é voluntário e não é necessário para usar o código.
+
+Entre no [PayPal](https://www.paypal.com/) e use este email como destinatário
+da sua contribuição: **alaorjr@gmail.com**.
+
 ## Referências
 
 - [Portal LG ThinQ Connect](https://smartsolution.developer.lge.com/en/apiManage/thinq_connect)
 - [SDK oficial LG pythinqconnect](https://github.com/thinq-connect/pythinqconnect)
 - [TCLimate](https://github.com/umarz317/TCLimate), referência de inspiração visual.
 
-O repositório ainda não declara uma licença de código aberto. Nenhuma licença de
-redistribuição deve ser presumida.
+## Licença
+
+O UbiAir é distribuído sob a [licença MIT](LICENSE).
+Copyright © 2026 Alaor Jr. As referências e atribuições de terceiros estão em
+[THIRD_PARTY_NOTICES.md](THIRD_PARTY_NOTICES.md).
