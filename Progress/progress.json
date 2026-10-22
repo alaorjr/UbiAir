@@ -1,6 +1,6 @@
 {
   "project": "UbiAir para macOS",
-  "updatedAt": "2026-10-16T12:03:17-03:00",
+  "updatedAt": "2026-10-22T11:02:21-03:00",
   "goal": "Controlar os aparelhos LG pela barra de menus, com SwiftUI e a API oficial ThinQ Connect.",
   "features": [
     {
@@ -248,9 +248,24 @@
       "status": "done",
       "note": "Preparados e inspecionados 2 PNGs nativos da view SwiftUI 0.1.10: conexão com PAT vazio e controles fictícios, 720x1480. ZIP conferido (2 PNG + README inglês) em build/UbiAir-LG-screenshots.zip; pedido LG atualizado. Helper isolado compilou/exportou; bash -n e diff check passaram. Camada nativa evita omissões do cache; terceiro estado inconsistente descartado. Sem PAT, aparelho real, chamadas LG ou envio externo; produto inalterado.",
       "updatedAt": "2026-10-16T11:46:45-03:00"
+    },
+    {
+      "id": "F31",
+      "title": "Publicação segura no GitHub",
+      "description": "Revisar dados sensíveis e histórico, configurar exclusões, documentar Xcode e GIF fictício e publicar repositório público.",
+      "status": "active",
+      "note": "Auditar checkout e histórico, proteger credenciais/configuração pessoal, preparar README com GIF de demonstração e instruções Xcode, criar repositório público e enviar commits.",
+      "updatedAt": "2026-10-22T11:02:21-03:00"
     }
   ],
   "events": [
+    {
+      "at": "2026-10-22T11:02:21-03:00",
+      "feature": "F31",
+      "title": "Publicação segura no GitHub",
+      "action": "start",
+      "note": "Auditar checkout e histórico, proteger credenciais/configuração pessoal, preparar README com GIF de demonstração e instruções Xcode, criar repositório público e enviar commits."
+    },
     {
       "at": "2026-10-16T12:03:17-03:00",
       "feature": "F29",

@@ -1,17 +1,56 @@
+# macOS e estado pessoal dos editores
 .DS_Store
+.AppleDouble
+._*
+*.swp
+*.swo
+.idea/
+.vscode/
+
+# Builds e caches Swift/Xcode
 .build/
 build/
 DerivedData/
+*.app/
+*.dSYM/
+*.xcarchive/
+*.xcresult/
 *.xcuserstate
 xcuserdata/
 .swiftpm/
+
+# Credenciais, assinatura e configuração local (somente exemplos sanitizados)
 .env
 .env.*
 !.env.example
 *.key
 *.pem
 *.p12
+*.pfx
+*.p8
+*.cer
+*.crt
 *.mobileprovision
+*.provisionprofile
+*.keychain
+*.keychain-db
+AuthKey_*
 secrets/
+credentials/
 local-settings.json
 Config/Local.xcconfig
+
+# Capturas de rede, respostas reais de aparelhos e diagnósticos privados
+private/
+local-data/
+DeviceData/
+Diagnostics/
+*.har
+*.pcap
+*.pcapng
+*.log
+*.trace
+*.crash
+
+# Cópias privadas do histórico anterior à sanitização
+*.bundle

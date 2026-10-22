@@ -1,21 +1,84 @@
-# UbiAir para macOS
+# UbiAir
 
-UbiAir é um aplicativo nativo SwiftUI para controlar ar-condicionado LG pela barra de menus.
-Inspirado na experiência do [TCLimate](https://github.com/umarz317/TCLimate), usa cliente
-Swift original para o serviço LG ThinQ Connect, sem executar Python. Versão 0.1.10 (build 11).
+UbiAir é um aplicativo nativo para macOS, feito em Swift e SwiftUI, que coloca os
+controles de ar-condicionado LG ThinQ na barra de menus. Requer macOS 14 ou posterior
+e é desenvolvido com Swift 6 e Xcode 16 ou posterior. Versão atual: **0.1.10 (build 11)**.
 
-## Preparação para a Mac App Store
+<p align="center">
+  <img src="Docs/Images/ubiair-demo.gif" width="360" alt="Demonstração animada do UbiAir">
+  <br>
+  <sub>Prévia exportada da interface nativa com aparelhos e estados fictícios; nenhum comando é enviado a aparelhos reais.</sub>
+</p>
 
-Há um target macOS em `UbiAir.xcodeproj`, com sandbox, rede de saída, ícone Ar em casa,
-manifesto e build universal. A preparação e os itens que dependem da conta Apple ativa
-estão em [Docs/APP-STORE.md](Docs/APP-STORE.md).
+O painel acompanha os recursos informados pelo perfil de cada aparelho. O UbiAir é um
+projeto independente, sem vínculo ou endosso da LG Electronics. A integração usa o
+serviço LG ThinQ Connect; consulte os termos aplicáveis da LG antes de usar o serviço.
 
-Para compilar na interface Xcode, abra `UbiAir.xcodeproj`, esquema **UbiAir**,
-destino **My Mac**, e pressione `⌘B`. O bundle Debug sandboxed é atualizado em
-`build/XcodeSandbox/Build/Products/Debug/UbiAir.app`; `⌘R` também o executa.
-O esquema `UbiAirMenuBar` pertence ao pacote e não gera esse bundle.
+## Recursos
 
-Para gerar o Release universal com assinatura local:
+- Seleciona entre aparelhos de ar-condicionado da conta e mostra o estado de energia,
+  temperatura atual e temperatura desejada.
+- Ajusta energia, temperatura, modo, ventilação e direção do ar quando o perfil do
+  aparelho oferece esses controles.
+- Respeita limites, passos e opções suportadas por cada aparelho, com prévia da
+  temperatura enquanto o controle deslizante é arrastado.
+- Confirma comandos por uma leitura posterior do estado. Em caso de falha, informa
+  como recuperar e não repete comandos automaticamente.
+- Atualiza o painel quando ele é aberto e a cada 30 segundos enquanto permanece visível.
+- Oferece abrir ao iniciar sessão, ativado pelo usuário.
+- Guarda o PAT no Chaves do macOS, oferece uma demonstração offline e respeita a
+  preferência de acessibilidade para reduzir movimento.
+
+## Instalar e executar pelo Xcode
+
+1. Instale o Xcode 16 ou posterior em uma versão do macOS compatível com ele.
+   O aplicativo compilado requer macOS 14 ou posterior. Abra o Xcode uma vez para
+   concluir a instalação dos componentes e, se solicitado, selecione suas Command Line Tools.
+2. Clone este repositório e abra o projeto:
+
+   ```sh
+   git clone https://github.com/alaorjr/UbiAir.git
+   cd UbiAir
+   open UbiAir.xcodeproj
+   ```
+
+3. No Xcode, escolha o esquema **UbiAir** e o destino **My Mac**.
+4. Pressione `⌘B` para compilar ou `⌘R` para compilar e executar.
+
+O build **Debug** usa assinatura local, sem exigir uma conta Apple Developer ou um
+Team configurado. Depois de compilar, o aplicativo fica em
+`build/XcodeSandbox/Build/Products/Debug/UbiAir.app`. O floco de neve do UbiAir aparece
+na barra de menus; clique nele para abrir o painel.
+
+## Experimentar a demonstração
+
+A demonstração usa dois aparelhos fictícios, não precisa de PAT e não faz chamadas à LG.
+Para abrir o painel automaticamente na primeira execução pelo Xcode:
+
+1. Antes de pressionar `⌘R`, abra **Product > Scheme > Edit Scheme…**.
+2. Selecione **Run > Arguments** e adicione estes argumentos em **Arguments Passed On Launch**:
+   `--demo` e `--show-panel`.
+3. Feche a edição do esquema e pressione `⌘R`.
+
+O painel será aberto já no modo de demonstração. Encerre o UbiAir antes de alterar os
+argumentos de inicialização. Para voltar à conexão normal, remova os dois argumentos
+do esquema e inicie o aplicativo novamente.
+
+## Conectar à conta LG ThinQ
+
+1. No painel do UbiAir, informe o país da conta; para uma conta do Brasil, use `BR`.
+2. Abra o [portal de PAT da LG](https://connect-pat.lgthinq.com/login), entre com a
+   conta LG ThinQ e crie um Personal Access Token (PAT).
+3. Cole o PAT no UbiAir e escolha se deseja salvá-lo no Chaves do macOS.
+
+Os aparelhos precisam estar cadastrados na conta do aplicativo LG ThinQ. A listagem e
+a atualização leem os estados; os comandos só são enviados quando você usa os controles.
+O PAT é uma credencial pessoal: não o publique em issues, logs, capturas, commits ou
+pedidos de contribuição.
+
+## Compilar Release e executar os testes
+
+Para compilar a variante Release universal com assinatura local de desenvolvimento:
 
 ```sh
 bash Scripts/build-sandbox-app.sh
@@ -23,158 +86,46 @@ python3 Scripts/verify-distribution.py
 open build/XcodeSandbox/Build/Products/Release/UbiAir.app
 ```
 
-A assinatura desse script é ad hoc local, sem envio à loja. O sandbox usa seu próprio
-container de preferências; país/PAT podem precisar ser configurados novamente na primeira
-execução. Não executa a importação do domínio anterior. Chaves e início automático com a
-assinatura final ainda precisam ser validados. Política e material de loja são rascunhos.
-
-## Executar
-
-Requisitos: macOS 14 ou posterior, Xcode/Command Line Tools com Swift 6 ou posterior.
+Para executar os testes offline do pacote:
 
 ```sh
 swift test
-bash Scripts/build-app.sh
-open build/UbiAir.app
 ```
 
-O ícone de floco de neve aparece na barra de menus. Abra o painel, informe seu
-Personal Access Token (PAT) e o país da conta (Brasil: `BR`). Para obter o PAT, abra o
-[portal LG](https://connect-pat.lgthinq.com/login), entre com sua conta LG ThinQ,
-crie um PAT e cole-o no campo do UbiAir. Se ainda não tiver conta, o portal orienta criar
-uma pelo app LG ThinQ. O token pode ser salvo no Chaves do macOS.
-“Desconectar e remover token” remove a credencial salva.
-Os aparelhos precisam estar previamente cadastrados na sua conta do app LG ThinQ.
-Conectar e atualizar fazem apenas leitura; comandos são enviados ao clicar nos controles.
+O script de Release não envia o aplicativo à loja nem o prepara para distribuição final.
+O envio à Mac App Store ainda está em preparação; assinatura e validação finais, além da
+validação da integração para distribuição, continuam pendentes.
 
-Para experimentar sem token e sem conexão com aparelhos reais:
+## Privacidade e contribuições
 
-```sh
-open build/UbiAir.app --args --demo
-```
+O aplicativo não usa um servidor próprio. O PAT fica no Chaves do macOS quando você
+escolhe salvá-lo; as chamadas de conta e aparelho vão diretamente ao serviço da LG.
+Preferências locais, builds e configurações pessoais de desenvolvimento não devem ser
+incluídos em commits. O `.gitignore` exclui `Config/Local.xcconfig`; use
+`Config/Local.example.xcconfig` como referência para configuração local do Xcode quando
+necessário. Esse arquivo de configuração não deve conter PATs. Não envie diagnósticos
+que exponham tokens, identificadores ou estados reais de aparelhos.
 
-`--demo` usa dois aparelhos fictícios; abra o painel pelo ícone da barra de menus. Para
-avaliação visual automatizada, `--show-panel` abre esse mesmo popover após a inicialização.
-`--ui-smoke-test` exige `--demo`, verifica abertura, fechamento e reabertura do popover e
-encerra o app; opcionalmente, `UBIAIR_UI_PREVIEW_PATH=/caminho/arquivo.png` salva uma captura
-somente da view do painel. Exemplo: `open build/UbiAir.app --args --demo --ui-smoke-test`.
-Cenários locais de erro também exigem `--demo`, por exemplo:
-`open build/UbiAir.app --args --demo --demo-error offline --show-panel`.
-Valores: `offline`, `internet`, `timeout`, `authentication`, `limit`, `service`, `empty`.
-Esses cenários usam dados fictícios, não leem PAT e não chamam a LG.
-Não há janela de prévia separada. Encerre o app antes de iniciar com argumentos diferentes.
+Contribuições são bem-vindas. Use apenas dados fictícios em exemplos, capturas e
+relatórios; nunca inclua PAT nem dados reais de aparelhos.
 
-O painel é um popover nativo ancorado ao ícone de floco de neve e não pode ser destacado.
-Ele fecha ao clicar fora ou mudar de aplicação, inclusive após usar o menu da engrenagem.
-[Veja a prévia com aparelhos fictícios](Docs/Images/menu-panel-demo.png).
-O visual compacto traz seletor horizontal de aparelhos, temperatura alvo e ambiente,
-controles de temperatura e cartões de modo/ventilação. Oscilação aparece quando suportada;
-os controles são determinados pelas capabilities de cada aparelho. Sleep e energia não são
-expostos sem suporte confirmado pela API.
+Para regenerar o GIF, execute `Scripts/capture-readme-demo.sh`; é necessário ter ffmpeg
+no `PATH` (ou definir a variável `FFMPEG` com o caminho do executável). O script compila o helper de captura e não exige abrir ou
+executar o aplicativo instalado.
 
-## Recursos da versão 0.1.10
+## Estrutura do projeto
 
-- Seleção de ar-condicionado, estado de energia e temperatura ambiente/alvo.
-- Mensagens e recuperação para aparelho offline, internet/timeout, PAT inválido, permissões
-  e indisponibilidade da LG; contas sem ar-condicionados mostram o suporte do UbiAir.
-- Controles bloqueados após falha de leitura/verificação até atualizar o estado; comandos
-  nunca são reenviados automaticamente. PAT inválido e limite pausam atualização automática.
-- Painel ampliado para caber confirmação de comandos e direção do ar expandida, sem barra de rolagem.
-- Círculos de energia independentes da seleção: verde ligado, vermelho desligado e cinza
-  quando o estado está desconhecido ou a leitura falhou. O destaque do botão indica a seleção.
-- Ligar/desligar, ajustar temperatura, modo, ventilação e oscilação, quando o perfil permitir.
-- Prévia da temperatura em tempo real ao arrastar o slider; envio ao soltar.
-- Respeito aos enums, intervalos, passos e valores excluídos do perfil do aparelho.
-- Verificação do comando por leitura posterior do estado da nuvem; o sucesso do POST sozinho
-  não é anunciado como confirmação.
-- Atualização ao abrir e a cada 30 segundos com o painel visível, sem polling de aparelhos
-  quando todos os painéis estão fechados.
-- PAT no Chaves, Client ID persistente e opção de abrir ao iniciar sessão.
-- Demonstração offline, sem chamadas LG.
-- Ilustração original do ar-condicionado em SwiftUI, com animação de fluxo de ar que respeita
-  a preferência de acessibilidade para reduzir movimento.
+- `Sources/ThinQCore`: cliente ThinQ, capacidades, estados, comandos e serviço de demonstração.
+- `Sources/UbiAirMenuBar`: interface SwiftUI, sessão, preferências, Chaves e Login Items.
+- `Tests`: testes offline com serviços e transporte fictícios.
+- `Scripts`: compilação, verificação e captura da demonstração.
+- `Docs/Images`: capturas de demonstração geradas com dados fictícios.
 
-## Acompanhar e retomar
+## Referências
 
-Abra [Progress/index.html](Progress/index.html) no navegador. O arquivo funciona sem servidor
-e recarrega a cada 15 segundos. Para acompanhamento durante o desenvolvimento:
+- [Portal LG ThinQ Connect](https://smartsolution.developer.lge.com/en/apiManage/thinq_connect)
+- [SDK oficial LG pythinqconnect](https://github.com/thinq-connect/pythinqconnect)
+- [TCLimate](https://github.com/umarz317/TCLimate), referência de inspiração visual.
 
-```sh
-python3 -m http.server 8765 --bind 127.0.0.1
-```
-
-Abra `http://127.0.0.1:8765/Progress/`; o painel lê o progresso atualizado a cada 3 segundos.
-O servidor é somente local. Use `Ctrl+C` para encerrá-lo.
-
-O coordenador registra cada início e conclusão com:
-
-```sh
-python3 Scripts/progress.py start F03 --note 'Escopo do trabalho'
-python3 Scripts/progress.py done F03 --note 'Resultado e verificações'
-```
-
-A fonte de verdade é `Progress/progress.json`. Leia [Docs/CONTINUITY.md](Docs/CONTINUITY.md)
-para retomar em outra sessão, e [Docs/DECISIONS.md](Docs/DECISIONS.md) para as decisões.
-O repositório Git é local, branch `main`; não existe remoto configurado.
-
-## Arquitetura
-
-```text
-Sources/ThinQCore        Cliente REST, JSON flexível, capacidades, comandos e demonstração
-Sources/UbiAirMenuBar    SwiftUI, coordenação de sessão, Chaves, preferências e Login Items
-Tests/ThinQCoreTests    Testes offline com transporte simulado
-Tests/UbiAirTests       Preferências, indicadores e recuperação de falhas com serviços fictícios
-Scripts                Empacotamento e atualização do progresso
-Docs                   Pesquisa, decisões e continuidade
-Progress               Painel local e histórico das etapas
-```
-
-## Quando algo falhar
-
-Offline significa que a LG informou que o aparelho não está conectado ao ThinQ. Uma falha
-de internet ou timeout aparece como problema de conexão, sem marcar o aparelho como
-desligado. O círculo fica cinza quando não há leitura confiável; seu texto acessível e
-a dica do seletor explicam a falha. O cartão do aparelho oferece atualização manual.
-
-PAT inválido oferece “Conectar novamente” para informar um novo token. Essa ação preserva
-o registro do Chaves; “Desconectar e remover token” continua sendo a ação de remoção.
-Ao atingir o limite de chamadas, o app pausa leituras automáticas e orienta aguardar antes
-de tentar novamente. A API não fornece aqui um prazo de espera confirmado.
-
-Após falha no envio ou na confirmação de um comando, atualize o estado antes de repetir.
-O aplicativo não anuncia sucesso nem reenvia a ação automaticamente. Respostas técnicas
-da API não são exibidas nas mensagens ao usuário.
-
-## Compatibilidade e distribuição
-
-O nome do aplicativo é **UbiAir** e seu Bundle Identifier é **`ai.ubiquu.UbiAir`**.
-Na versão Swift Package de desenvolvimento, país e Client ID válidos da versão anterior do UbiAir são importados
-quando esses campos ainda não existem na configuração nova. Escolhas atuais têm prioridade.
-O domínio anterior é consultado apenas para essas preferências; o identificador pessoal
-da versão inicial foi retirado do código.
-O serviço do Chaves também usa `ai.ubiquu.UbiAir`. A credencial da versão anterior não é importada;
-informe e salve novamente seu PAT na interface do UbiAir. O registro antigo fica no Chaves,
-mas não é consultado por este aplicativo. A nova assinatura pode exigir autorização do Chaves
-pelo usuário. Login Items não é ativado automaticamente pela migração; confira essa opção
-após instalar UbiAir no local definitivo.
-
-O protocolo segue o [SDK oficial pythinqconnect](https://github.com/thinq-connect/pythinqconnect).
-Veja [Docs/API-RESEARCH.md](Docs/API-RESEARCH.md) para fontes e limitações. Os testes offline
-validam o protocolo modelado. O usuário também confirmou testes em três aparelhos reais,
-com tudo funcionando; a validação básica F08 está concluída. Energia, MQTT e funções
-extras permanecem como evoluções futuras. Dados ausentes não são apresentados como
-zero, e o modo de demonstração é identificado na interface. Nenhum PAT, identificador real
-de aparelho ou dado real de aparelho é armazenado na documentação do projeto.
-
-O build padrão usa assinatura ad hoc para teste local, sem notarização. Para manter uma
-identidade estável no Chaves e preparar distribuição com certificado:
-
-```sh
-UBIAIR_CODESIGN_IDENTITY='Nome do certificado' bash Scripts/build-app.sh
-```
-
-Alterar a identidade/assinatura de builds pode impedir o acesso ao token salvo anteriormente.
-Para início automático, mova o aplicativo para seu local definitivo em Aplicativos antes de
-habilitar a opção. Assinatura Developer ID e notarização são etapas posteriores de distribuição.
-
-UbiAir é um projeto independente, sem vínculo ou endosso da LG Electronics.
+O repositório ainda não declara uma licença de código aberto. Nenhuma licença de
+redistribuição deve ser presumida.
