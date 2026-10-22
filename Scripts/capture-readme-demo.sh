@@ -6,7 +6,7 @@ BUILD_DIR="$ROOT/build/ReadmeCapture"
 CORE_DIR="$BUILD_DIR/ThinQCore"
 APP_DIR="$BUILD_DIR/UbiAirMenuBar"
 FRAME_DIR="$BUILD_DIR/frames"
-OUTPUT="$ROOT/Docs/Images/ubiair-demo.gif"
+OUTPUT="$ROOT/Resources/ubiair-demo.gif"
 FFMPEG="${FFMPEG:-$(command -v ffmpeg || true)}"
 
 [[ -x "$FFMPEG" ]] || { echo "Instale ffmpeg e adicione-o ao PATH, ou defina FFMPEG=/caminho/ffmpeg" >&2; exit 1; }

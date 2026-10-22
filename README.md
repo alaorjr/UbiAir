@@ -10,7 +10,7 @@ foram testadas. Essa configuração não representa compatibilidade validada com
 essas versões. A compilação com versões anteriores do Xcode também não foi validada.
 
 <p align="center">
-  <img src="Docs/Images/ubiair-demo.gif" width="360" alt="Demonstração animada do UbiAir">
+  <img src="Resources/ubiair-demo.gif" width="360" alt="Demonstração animada do UbiAir">
   <br>
   <sub>Prévia exportada da interface nativa com aparelhos e estados fictícios; nenhum comando é enviado a aparelhos reais.</sub>
 </p>
@@ -26,9 +26,13 @@ serviço LG ThinQ Connect; consulte os termos aplicáveis da LG antes de usar o 
 
 A [página estática do UbiAir](Website/index.html) apresenta os recursos, capturas
 nativas nos temas claro e escuro e o passo a passo de configuração. Todos os
-assets são locais e a hospedagem não precisa de backend. Consulte o
-[guia de publicação](Website/README.md) para gerar o ZIP ou publicar pelo workflow
-manual do GitHub Pages.
+assets são locais e a hospedagem não precisa de backend. Execute
+`python3 Scripts/package-website.py` para gerar `build/Website/` e o ZIP
+`build/UbiAir-website.zip`, pronto para uma hospedagem estática.
+
+Para GitHub Pages, selecione **GitHub Actions** em **Settings → Pages** e execute
+**Actions → Publicar página UbiAir → Run workflow**. A publicação é manual.
+As orientações internas em `Docs/`, `Website/*.md` e `AGENTS.md` permanecem somente locais.
 
 ## Recursos
 
@@ -135,7 +139,8 @@ executar o aplicativo instalado.
 - `Sources/UbiAirMenuBar`: interface SwiftUI, sessão, preferências, Chaves e Login Items.
 - `Tests`: testes offline com serviços e transporte fictícios.
 - `Scripts`: compilação, verificação e captura da demonstração.
-- `Docs/Images`: capturas de demonstração geradas com dados fictícios.
+- `Resources/ubiair-demo.gif`: demonstração nativa com dados fictícios.
+- `Website/assets`: imagens públicas da página do produto.
 
 ## Apoie o projeto
 

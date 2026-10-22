@@ -1,6 +1,6 @@
 {
   "project": "UbiAir para macOS",
-  "updatedAt": "2026-10-22T15:57:55-03:00",
+  "updatedAt": "2026-10-23T09:34:38-03:00",
   "goal": "Controlar os aparelhos LG pela barra de menus, com SwiftUI e a API oficial ThinQ Connect.",
   "features": [
     {
@@ -288,9 +288,38 @@
       "status": "done",
       "note": "Botão oficial Buy Me a Coffee ao fim do rodapé, asset local e link alaorjr; link textual redundante removido. ZIP regenerado (~962 KB) e conferido; lint e inspector 1440/768/390 sem FAIL, rodapé revisado visualmente. Sem publicação remota.",
       "updatedAt": "2026-10-22T15:57:55-03:00"
+    },
+    {
+      "id": "F36",
+      "title": "Documentação somente local",
+      "description": "Ignorar Docs, Markdown orientativo de Website e AGENTS.md da raiz, preservando arquivos locais e removendo-os do histórico Git.",
+      "status": "done",
+      "note": "Docs/, Website/**/*.md e AGENTS.md da raiz ignorados e removidos dos 39 commits e seis snapshots locais. Trinta arquivos locais preservados por hash; demais arquivos, autores, datas, mensagens e parentesco conferidos. GIF público movido sem alteração para Resources, links públicos corrigidos. Commit: Ajuste de documentação.",
+      "updatedAt": "2026-10-23T09:34:38-03:00"
     }
   ],
   "events": [
+    {
+      "at": "2026-10-23T09:34:38-03:00",
+      "feature": "F36",
+      "title": "Documentação somente local",
+      "action": "done",
+      "note": "Docs/, Website/**/*.md e AGENTS.md da raiz ignorados e removidos dos 39 commits e seis snapshots locais. Trinta arquivos locais preservados por hash; demais arquivos, autores, datas, mensagens e parentesco conferidos. GIF público movido sem alteração para Resources, links públicos corrigidos. Commit: Ajuste de documentação."
+    },
+    {
+      "at": "2026-10-23T09:32:56-03:00",
+      "feature": "F36",
+      "title": "Documentação somente local",
+      "action": "start",
+      "note": "Concluir remoção de Docs/, Website/**/*.md e AGENTS.md da raiz em todos os commits e snapshots, mantendo cópias locais e backup privado. Publicar com lease e mensagem exata: Ajuste de documentação."
+    },
+    {
+      "at": "2026-10-22T16:00:58-03:00",
+      "feature": "F36",
+      "title": "Documentação somente local",
+      "action": "start",
+      "note": "Remover Docs/ e Website/**/*.md de todos os commits e refs, preservando cópias locais; corrigir links públicos e publicar histórico limpo com proteção de concorrência. Mensagem exata: Ajuste de documentação."
+    },
     {
       "at": "2026-10-22T15:57:55-03:00",
       "feature": "F35",
@@ -887,7 +916,7 @@
       "note": "Git criado antes da implementação. Conta Brasil e autenticação por PAT confirmadas pelo usuário."
     }
   ],
-  "resume": "Leia Docs/CONTINUITY.md, Docs/DECISIONS.md e este painel. Confira git status e o último commit antes de continuar.",
+  "resume": "Leia Progress/progress.json. Consulte AGENTS.md, Docs/CONTINUITY.md e Docs/DECISIONS.md quando presentes localmente; esses arquivos não são versionados. Confira git status e o último commit.",
   "references": [
     {
       "label": "TCLimate",

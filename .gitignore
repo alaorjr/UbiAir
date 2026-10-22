@@ -58,3 +58,10 @@ Diagnostics/
 
 # Capturas e medições locais da direção de arte
 .taste-skill/
+
+# Documentação e orientações locais, fora do histórico público
+/Docs/
+/docs/
+/Website/**/*.md
+/AGENTS.md
+/agents.md
