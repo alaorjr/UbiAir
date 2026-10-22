@@ -1,6 +1,6 @@
 {
   "project": "UbiAir para macOS",
-  "updatedAt": "2026-10-22T14:27:08-03:00",
+  "updatedAt": "2026-10-22T14:30:22-03:00",
   "goal": "Controlar os aparelhos LG pela barra de menus, com SwiftUI e a API oficial ThinQ Connect.",
   "features": [
     {
@@ -277,12 +277,19 @@
       "id": "F34",
       "title": "Remoção de .codex do histórico Git",
       "description": "Ignorar configuração local Codex e remover a pasta de todos os commits versionados e publicados.",
-      "status": "active",
-      "note": "Adicionar .codex/ ao gitignore, preservar arquivos locais, remover do índice e reescrever histórico local/publicado; publicar com force-with-lease e verificar commits e branches.",
-      "updatedAt": "2026-10-22T14:27:08-03:00"
+      "status": "pending",
+      "note": "GitHub/main limpos: .codex removida dos 34 commits por filter-repo; clone independente e comparação integral do backup passaram. Gitignore cobre a pasta; quatro arquivos locais preservados. Auto-review rejeitou limpar cinco snapshots internos e expirar reflogs/gc por risco à recuperação local. Essa etapa não foi executada e aguarda autorização específica solicitada ao usuário.",
+      "updatedAt": "2026-10-22T14:30:22-03:00"
     }
   ],
   "events": [
+    {
+      "at": "2026-10-22T14:30:22-03:00",
+      "feature": "F34",
+      "title": "Remoção de .codex do histórico Git",
+      "action": "pending",
+      "note": "GitHub/main limpos: .codex removida dos 34 commits por filter-repo; clone independente e comparação integral do backup passaram. Gitignore cobre a pasta; quatro arquivos locais preservados. Auto-review rejeitou limpar cinco snapshots internos e expirar reflogs/gc por risco à recuperação local. Essa etapa não foi executada e aguarda autorização específica solicitada ao usuário."
+    },
     {
       "at": "2026-10-22T14:27:08-03:00",
       "feature": "F34",
