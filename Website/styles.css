@@ -25,3 +25,10 @@
   }
 }
 @media(prefers-reduced-motion:reduce){a,button{transition:none}}
+
+.footer-support{margin-top:40px;display:flex;align-items:center;gap:28px;flex-wrap:wrap}
+.footer-support p{max-width:48ch}
+.coffee-button{display:inline-block;flex-shrink:0}
+.coffee-button img{width:217px;height:60px}
+@media(hover:hover) and (pointer:fine){.coffee-button:hover{transform:translateY(-2px)}}
+@media(max-width:700px){.footer-support{align-items:flex-start;flex-direction:column;gap:18px}}
