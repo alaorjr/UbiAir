@@ -138,6 +138,7 @@ desenvolvimento. O apoio é voluntário e não é necessário para usar o códig
   <a href="https://buymeacoffee.com/alaorjr">
     <img src="https://cdn.buymeacoffee.com/buttons/v2/default-yellow.png" alt="Buy me a coffee" height="60" width="217">
   </a>
+  </ br>
   <a href="https://github.com/sponsors/alaorjr">
     <img src="https://img.shields.io/badge/GitHub%20Sponsors-Apoiar-ea4aaa?style=for-the-badge&amp;logo=githubsponsors&amp;logoColor=white" alt="Apoiar pelo GitHub Sponsors" height="32">
   </a>
