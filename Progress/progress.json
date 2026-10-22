@@ -1,6 +1,6 @@
 {
   "project": "UbiAir para macOS",
-  "updatedAt": "2026-10-22T13:58:38-03:00",
+  "updatedAt": "2026-10-22T14:00:12-03:00",
   "goal": "Controlar os aparelhos LG pela barra de menus, com SwiftUI e a API oficial ThinQ Connect.",
   "features": [
     {
@@ -270,11 +270,18 @@
       "title": "Buy Me a Coffee e GitHub Sponsors",
       "description": "Adicionar botões de apoio no README e configurar .github/FUNDING.yml.",
       "status": "done",
-      "note": "README com botões estáticos oficiais Buy Me a Coffee e badge GitHub Sponsors; .github/FUNDING.yml com github [alaorjr] e buy_me_a_coffee alaorjr, conforme documentação oficial. Ambos perfis públicos abertos e conferidos no navegador. Diff check passou; sem script no README, login, pagamento ou alteração do app.",
-      "updatedAt": "2026-10-22T13:58:38-03:00"
+      "note": "Botões README e FUNDING.yml publicados com alaorjr nas duas plataformas. Perfis e imagens conferidos; Sponsorships ativado nas configurações do repositório e painel nativo Sponsor this project confirmado com GitHub Sponsors e Buy Me a Coffee. Diff check passou; sem pagamento ou mudança no app.",
+      "updatedAt": "2026-10-22T14:00:12-03:00"
     }
   ],
   "events": [
+    {
+      "at": "2026-10-22T14:00:12-03:00",
+      "feature": "F33",
+      "title": "Buy Me a Coffee e GitHub Sponsors",
+      "action": "done",
+      "note": "Botões README e FUNDING.yml publicados com alaorjr nas duas plataformas. Perfis e imagens conferidos; Sponsorships ativado nas configurações do repositório e painel nativo Sponsor this project confirmado com GitHub Sponsors e Buy Me a Coffee. Diff check passou; sem pagamento ou mudança no app."
+    },
     {
       "at": "2026-10-22T13:58:38-03:00",
       "feature": "F33",
