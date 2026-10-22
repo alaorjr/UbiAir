@@ -6,6 +6,7 @@
 *.swo
 .idea/
 .vscode/
+.codex/
 
 # Builds e caches Swift/Xcode
 .build/
