@@ -1,6 +1,6 @@
 {
   "project": "UbiAir para macOS",
-  "updatedAt": "2026-10-22T11:11:06-03:00",
+  "updatedAt": "2026-10-22T11:39:10-03:00",
   "goal": "Controlar os aparelhos LG pela barra de menus, com SwiftUI e a API oficial ThinQ Connect.",
   "features": [
     {
@@ -254,11 +254,25 @@
       "title": "Publicação segura no GitHub",
       "description": "Revisar dados sensíveis e histórico, configurar exclusões, documentar Xcode e GIF fictício e publicar repositório público.",
       "status": "done",
-      "note": "Repositório público alaorjr/UbiAir criado e main enviada. Histórico sanitizado (email noreply, caminho e Team removidos), backup privado ignorado, gitignore ampliado e assinatura local preservada. README com funcionalidades, GIF fictício reproduzível e passos Xcode; 37 testes offline, build Debug sem Team, auditoria histórica/imagens e diff check passaram. F20/F21 pendentes.",
-      "updatedAt": "2026-10-22T11:11:06-03:00"
+      "note": "README corrigido para Xcode 27, testado em Xcode 27.1/macOS 27.0.1. Mínimo real macOS 14 conferido nos arquivos de build; sistemas anteriores e Xcodes anteriores explicitamente não validados. Continuidade/decisões coerentes; diff check passou. Somente documentação, sem repetir testes ou builds.",
+      "updatedAt": "2026-10-22T11:39:10-03:00"
     }
   ],
   "events": [
+    {
+      "at": "2026-10-22T11:39:10-03:00",
+      "feature": "F31",
+      "title": "Publicação segura no GitHub",
+      "action": "done",
+      "note": "README corrigido para Xcode 27, testado em Xcode 27.1/macOS 27.0.1. Mínimo real macOS 14 conferido nos arquivos de build; sistemas anteriores e Xcodes anteriores explicitamente não validados. Continuidade/decisões coerentes; diff check passou. Somente documentação, sem repetir testes ou builds."
+    },
+    {
+      "at": "2026-10-22T11:39:08-03:00",
+      "feature": "F31",
+      "title": "Publicação segura no GitHub",
+      "action": "start",
+      "note": "Corrigir README para ambiente real Xcode 27.1/macOS 27.0.1; distinguir mínimo configurado macOS 14 de compatibilidade não testada em versões anteriores."
+    },
     {
       "at": "2026-10-22T11:11:06-03:00",
       "feature": "F31",

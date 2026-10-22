@@ -1,8 +1,13 @@
 # UbiAir
 
 UbiAir é um aplicativo nativo para macOS, feito em Swift e SwiftUI, que coloca os
-controles de ar-condicionado LG ThinQ na barra de menus. Requer macOS 14 ou posterior
-e é desenvolvido com Swift 6 e Xcode 16 ou posterior. Versão atual: **0.1.10 (build 11)**.
+controles de ar-condicionado LG ThinQ na barra de menus. É desenvolvido com Swift 6
+e Xcode 27. Versão atual: **0.1.10 (build 11)**.
+
+**Ambiente testado:** Xcode 27.1 e macOS 27.0.1. O projeto está configurado com
+versão mínima de implantação macOS 14, mas versões anteriores ao macOS 27 não
+foram testadas. Essa configuração não representa compatibilidade validada com
+essas versões. A compilação com versões anteriores do Xcode também não foi validada.
 
 <p align="center">
   <img src="Docs/Images/ubiair-demo.gif" width="360" alt="Demonstração animada do UbiAir">
@@ -31,9 +36,9 @@ serviço LG ThinQ Connect; consulte os termos aplicáveis da LG antes de usar o 
 
 ## Instalar e executar pelo Xcode
 
-1. Instale o Xcode 16 ou posterior em uma versão do macOS compatível com ele.
-   O aplicativo compilado requer macOS 14 ou posterior. Abra o Xcode uma vez para
-   concluir a instalação dos componentes e, se solicitado, selecione suas Command Line Tools.
+1. Use o Xcode 27 em uma versão do macOS compatível com ele. O ambiente utilizado
+   nos testes foi Xcode 27.1 no macOS 27.0.1. Abra o Xcode uma vez para concluir
+   a instalação dos componentes e, se solicitado, selecione suas Command Line Tools.
 2. Clone este repositório e abra o projeto:
 
    ```sh
