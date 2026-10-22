@@ -1,6 +1,6 @@
 {
   "project": "UbiAir para macOS",
-  "updatedAt": "2026-10-22T11:02:21-03:00",
+  "updatedAt": "2026-10-22T11:11:06-03:00",
   "goal": "Controlar os aparelhos LG pela barra de menus, com SwiftUI e a API oficial ThinQ Connect.",
   "features": [
     {
@@ -253,12 +253,19 @@
       "id": "F31",
       "title": "Publicação segura no GitHub",
       "description": "Revisar dados sensíveis e histórico, configurar exclusões, documentar Xcode e GIF fictício e publicar repositório público.",
-      "status": "active",
-      "note": "Auditar checkout e histórico, proteger credenciais/configuração pessoal, preparar README com GIF de demonstração e instruções Xcode, criar repositório público e enviar commits.",
-      "updatedAt": "2026-10-22T11:02:21-03:00"
+      "status": "done",
+      "note": "Repositório público alaorjr/UbiAir criado e main enviada. Histórico sanitizado (email noreply, caminho e Team removidos), backup privado ignorado, gitignore ampliado e assinatura local preservada. README com funcionalidades, GIF fictício reproduzível e passos Xcode; 37 testes offline, build Debug sem Team, auditoria histórica/imagens e diff check passaram. F20/F21 pendentes.",
+      "updatedAt": "2026-10-22T11:11:06-03:00"
     }
   ],
   "events": [
+    {
+      "at": "2026-10-22T11:11:06-03:00",
+      "feature": "F31",
+      "title": "Publicação segura no GitHub",
+      "action": "done",
+      "note": "Repositório público alaorjr/UbiAir criado e main enviada. Histórico sanitizado (email noreply, caminho e Team removidos), backup privado ignorado, gitignore ampliado e assinatura local preservada. README com funcionalidades, GIF fictício reproduzível e passos Xcode; 37 testes offline, build Debug sem Team, auditoria histórica/imagens e diff check passaram. F20/F21 pendentes."
+    },
     {
       "at": "2026-10-22T11:02:21-03:00",
       "feature": "F31",

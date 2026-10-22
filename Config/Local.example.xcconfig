@@ -2,6 +2,5 @@
 // Debug funciona com assinatura local sem uma conta Apple Developer.
 // Para assinar seu próprio Release no Xcode, substitua YOURTEAMID pelo seu Team.
 // DEVELOPMENT_TEAM[config=Release] = YOURTEAMID
-// PRODUCT_BUNDLE_IDENTIFIER[config=Release] = com.example.UbiAir
 // CODE_SIGN_STYLE[config=Release] = Automatic
 // Nunca coloque PAT, chaves privadas ou senhas neste arquivo de exemplo.
