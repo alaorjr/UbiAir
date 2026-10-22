@@ -1,6 +1,6 @@
 {
   "project": "UbiAir para macOS",
-  "updatedAt": "2026-10-22T14:30:22-03:00",
+  "updatedAt": "2026-10-22T14:33:39-03:00",
   "goal": "Controlar os aparelhos LG pela barra de menus, com SwiftUI e a API oficial ThinQ Connect.",
   "features": [
     {
@@ -277,12 +277,26 @@
       "id": "F34",
       "title": "Remoção de .codex do histórico Git",
       "description": "Ignorar configuração local Codex e remover a pasta de todos os commits versionados e publicados.",
-      "status": "pending",
-      "note": "GitHub/main limpos: .codex removida dos 34 commits por filter-repo; clone independente e comparação integral do backup passaram. Gitignore cobre a pasta; quatro arquivos locais preservados. Auto-review rejeitou limpar cinco snapshots internos e expirar reflogs/gc por risco à recuperação local. Essa etapa não foi executada e aguarda autorização específica solicitada ao usuário.",
-      "updatedAt": "2026-10-22T14:30:22-03:00"
+      "status": "done",
+      "note": "Histórico publicado e base Git ativa sem .codex. Após autorização explícita do usuário, três snapshots ainda afetados foram limpos (dois já limpos), reflogs expirados e gc/prune concluído. Todas refs/commits/árvores conferidas, sem objetos inalcançáveis; demais arquivos preservados e quatro arquivos .codex locais idênticos. Backups privados ignorados ficam fora da base ativa. Diff check passou; sem mudança no app.",
+      "updatedAt": "2026-10-22T14:33:39-03:00"
     }
   ],
   "events": [
+    {
+      "at": "2026-10-22T14:33:39-03:00",
+      "feature": "F34",
+      "title": "Remoção de .codex do histórico Git",
+      "action": "done",
+      "note": "Histórico publicado e base Git ativa sem .codex. Após autorização explícita do usuário, três snapshots ainda afetados foram limpos (dois já limpos), reflogs expirados e gc/prune concluído. Todas refs/commits/árvores conferidas, sem objetos inalcançáveis; demais arquivos preservados e quatro arquivos .codex locais idênticos. Backups privados ignorados ficam fora da base ativa. Diff check passou; sem mudança no app."
+    },
+    {
+      "at": "2026-10-22T14:33:08-03:00",
+      "feature": "F34",
+      "title": "Remoção de .codex do histórico Git",
+      "action": "start",
+      "note": "Usuário autorizou explicitamente limpeza local completa: remover .codex dos snapshots internos e expirar reflogs/objetos antigos, preservando arquivos locais e demais arquivos dos snapshots."
+    },
     {
       "at": "2026-10-22T14:30:22-03:00",
       "feature": "F34",
