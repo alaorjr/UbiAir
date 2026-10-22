@@ -1,6 +1,6 @@
 {
   "project": "UbiAir para macOS",
-  "updatedAt": "2026-10-22T11:46:35-03:00",
+  "updatedAt": "2026-10-22T13:58:38-03:00",
   "goal": "Controlar os aparelhos LG pela barra de menus, com SwiftUI e a API oficial ThinQ Connect.",
   "features": [
     {
@@ -264,9 +264,31 @@
       "status": "done",
       "note": "MIT integral em LICENSE (Alaor Jr, 2026), README e atribuições atualizados. Buy me a coffee orienta apoio via email PayPal cuja publicação foi autorizada. Link Donate retornou conta não qualificada e foi descartado; checkout direto depende de link emitido na conta. Links locais/âncora e diff check passaram; sem login, pagamento, mudança no produto ou novos builds/testes.",
       "updatedAt": "2026-10-22T11:46:35-03:00"
+    },
+    {
+      "id": "F33",
+      "title": "Buy Me a Coffee e GitHub Sponsors",
+      "description": "Adicionar botões de apoio no README e configurar .github/FUNDING.yml.",
+      "status": "done",
+      "note": "README com botões estáticos oficiais Buy Me a Coffee e badge GitHub Sponsors; .github/FUNDING.yml com github [alaorjr] e buy_me_a_coffee alaorjr, conforme documentação oficial. Ambos perfis públicos abertos e conferidos no navegador. Diff check passou; sem script no README, login, pagamento ou alteração do app.",
+      "updatedAt": "2026-10-22T13:58:38-03:00"
     }
   ],
   "events": [
+    {
+      "at": "2026-10-22T13:58:38-03:00",
+      "feature": "F33",
+      "title": "Buy Me a Coffee e GitHub Sponsors",
+      "action": "done",
+      "note": "README com botões estáticos oficiais Buy Me a Coffee e badge GitHub Sponsors; .github/FUNDING.yml com github [alaorjr] e buy_me_a_coffee alaorjr, conforme documentação oficial. Ambos perfis públicos abertos e conferidos no navegador. Diff check passou; sem script no README, login, pagamento ou alteração do app."
+    },
+    {
+      "at": "2026-10-22T13:58:10-03:00",
+      "feature": "F33",
+      "title": "Buy Me a Coffee e GitHub Sponsors",
+      "action": "start",
+      "note": "Adicionar botões estáticos para Buy Me a Coffee alaorjr e GitHub Sponsors alaorjr; configurar chaves nativas em .github/FUNDING.yml e conferir links públicos."
+    },
     {
       "at": "2026-10-22T11:46:35-03:00",
       "feature": "F32",

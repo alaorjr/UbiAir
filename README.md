@@ -19,7 +19,8 @@ O painel acompanha os recursos informados pelo perfil de cada aparelho. O UbiAir
 projeto independente, sem vínculo ou endosso da LG Electronics. A integração usa o
 serviço LG ThinQ Connect; consulte os termos aplicáveis da LG antes de usar o serviço.
 
-[☕ Buy me a coffee — apoie o projeto](#apoie-o-projeto) · [Licença MIT](LICENSE)
+[☕ Buy me a coffee](https://buymeacoffee.com/alaorjr) ·
+[♥ GitHub Sponsors](https://github.com/sponsors/alaorjr) · [Licença MIT](LICENSE)
 
 ## Recursos
 
@@ -130,13 +131,17 @@ executar o aplicativo instalado.
 
 ## Apoie o projeto
 
-### ☕ Buy me a coffee
-
 Se o UbiAir facilita seu dia, você pode pagar um café e ajudar a manter o
 desenvolvimento. O apoio é voluntário e não é necessário para usar o código.
 
-Entre no [PayPal](https://www.paypal.com/) e use este email como destinatário
-da sua contribuição: **alaorjr@gmail.com**.
+<p>
+  <a href="https://buymeacoffee.com/alaorjr">
+    <img src="https://cdn.buymeacoffee.com/buttons/v2/default-yellow.png" alt="Buy me a coffee" height="60" width="217">
+  </a>
+  <a href="https://github.com/sponsors/alaorjr">
+    <img src="https://img.shields.io/badge/GitHub%20Sponsors-Apoiar-ea4aaa?style=for-the-badge&amp;logo=githubsponsors&amp;logoColor=white" alt="Apoiar pelo GitHub Sponsors" height="32">
+  </a>
+</p>
 
 ## Referências
 
